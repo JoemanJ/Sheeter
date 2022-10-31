@@ -18,3 +18,4 @@ Decidir sobre a página da pokedex
     faltando vão exibir uma mensagem de "Contribua para o projeto adicionando os dados desse pokemon!"
 
 ? Um slot na ficha de pokemon para o item segurado
+
