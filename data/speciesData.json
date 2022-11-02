@@ -1,0 +1,21 @@
+{
+  "zangoose": {
+    "Number": 335,
+    "Name": "Zangoose",
+    "Type": [
+      "normal"
+    ],
+    "Diet": "Carnívoro",
+    "AverageHeight": 13,
+    "AverageWeight": 403,
+    "BaseStats": {
+      "ATK": 12,
+      "DEF": 6,
+      "HP": 7,
+      "SPATK": 6,
+      "SPD": 9,
+      "SPDEF": 6
+    },
+    "Abilities": []
+  }
+}

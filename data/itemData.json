@@ -1,0 +1,7 @@
+{
+  "test item": {
+    "Quantity": 0,
+    "Name": "test item",
+    "Description": "This item tests if item registration works"
+  }
+}

@@ -10,18 +10,31 @@ The PokeAPI API by ...
 package main
 
 import (
-	actions "Joe/sheet-hole/pkg/general"
 	"Joe/sheet-hole/pkg/pokemon/PTA1"
 	"fmt"
+	"log"
 )
 
+type application struct {
+	infoLog       *log.Logger
+	errorLog      *log.Logger
+	templateCache string //map[string]*template.Template
+}
+
 func main() {
-	teste := []string{"string1", "string2", "string3"}
+	// infoLogger := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
+	// errorLogger := log.New(os.Stderr, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
 
-	testMove, err := PTA1.RegisterMove("Nome", "TIPO", "aptitude", teste, 2, actions.CreateDiceSet(2, 6, 6), "Corpo-a-corpo", "Diaria", "Foda-se contest", "Mata o oponente. Mas mata bem morto mesmo.")
-	if err != nil {
-		panic(err)
-	}
+	// app := &application{
+	// 	infoLog:  infoLogger,
+	// 	errorLog: errorLogger,
+	// }
 
-	fmt.Println(testMove)
+	// PTA1.RegisterAbility("Metabolização", "Constante", "Imunidade a Venenos")
+	// PTA1.RegisterAbility("Alucinógeno", "Constante", "quando este pokémon recebe Veneno, eleve duas Fases do Ataque dele. Se ele for curado da Condição, ele perde as duas Fases do Ataque.")
+	PTA1.RegisterItem("test item", "This item tests if item registration works")
+
+	i, _ := PTA1.GetItem("test item")
+
+	fmt.Printf("%+v\n", i)
 }

@@ -6,17 +6,17 @@ import (
 
 // POKEMON STRUCTURES
 type PokemonSpecies struct {
-	number int
-	name   string
+	Number int
+	Name   string
 
-	Type [2]string
+	Type []string
 	Diet string
 
 	AverageHeight int
 	AverageWeight int
 	BaseStats     map[string]int
 
-	Abilities []PokemonAbility
+	Abilities []*PokemonAbility
 }
 
 type PokemonStatusTable struct {
@@ -26,8 +26,6 @@ type PokemonStatusTable struct {
 	Stages map[string]int
 
 	BaseRelation [6]string
-
-	Modifiers map[string]int
 
 	Distributable [2]int
 }
