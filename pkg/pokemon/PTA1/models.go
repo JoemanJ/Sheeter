@@ -4,13 +4,20 @@ import (
 	actions "Joe/sheet-hole/pkg/general"
 )
 
+var TRAINERLVLTABLE map[string][51]int = map[string][51]int{
+	"classes": {0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4},
+	"status":  {0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 2, 0, 1, 0, 2, 0, 1, 0, 2, 0, 1, 0, 2, 0, 1, 0, 2, 0, 1, 0, 2, 0, 1, 0, 2, 0, 1, 0, 2, 0, 1, 0, 2, 0, 1, 0, 2, 0, 1, 0, 3},
+	"talents": {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
+}
+
 // POKEMON STRUCTURES
 type PokemonSpecies struct {
 	Number int
 	Name   string
 
-	Type []string
-	Diet string
+	Type       []string
+	Diet       string
+	Capacities *CapacityTable
 
 	AverageHeight int
 	AverageWeight int
@@ -51,7 +58,7 @@ type PokemonAbility struct {
 	Description string
 }
 
-type PokemonSHeet struct {
+type PokemonSheet struct {
 	Nick    string
 	Species string
 	Height  int
@@ -106,7 +113,7 @@ type TrainerSheet struct {
 
 	Inventory []*Item
 
-	PokemonList []*PokemonSHeet
+	PokemonList []*PokemonSheet
 
 	Prizes string
 
@@ -122,7 +129,7 @@ type TrainerClass struct {
 	BasicTalents    [2]*TrainerTalent
 	PossibleTalents []*TrainerTalent
 
-	Expertises   string
+	Expertises   []*Expertise
 	Requirements string
 }
 
@@ -136,6 +143,8 @@ type TrainerStatusTable struct {
 }
 
 type TrainerTalent struct {
+	Name string
+
 	IsClassSpecific bool
 
 	Requirements string
@@ -158,4 +167,26 @@ type Item struct {
 
 	Name        string
 	Description string
+}
+
+type Expertise struct {
+	Double bool
+
+	AssociatedStat string
+
+	Name        string
+	Description string
+}
+
+type Capacity struct {
+	Name        string
+	Description string
+}
+
+type CapacityTable struct {
+	Strength    int
+	Inteligence int
+	Jump        int
+
+	Others []Capacity
 }

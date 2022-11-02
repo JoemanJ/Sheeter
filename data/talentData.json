@@ -1,0 +1,30 @@
+{
+  "pokéagenda": {
+    "Name": "Pokéagenda",
+    "IsClassSpecific": false,
+    "Requirements": "Nenhum",
+    "Frqeuency": "À vontade",
+    "Target": "Um pokemon ainda não identificado por sua pokeagenda a até 10 metros",
+    "Description": "apontando sua pokéagenda a um pokémon não identificado, ela o identifica. Uma vez que um pokémon possui variações de aparência – desde forma, coloração, pelugem, etc. – mesmo dentro de uma mesma espécie, uma pokéagenda demora um pouco para fazer a análise visual. O tempo necessário é de 12 segundos, ou duas rodadas de combate, para que ela lhe dê as informações. Pokéagendas são aparelhos personalizados, e constituem a identificação oficial de um alguém, portanto são licenciadas para serem entregues a pessoas a partir de 10\tanos, e se espera que estejam sempre portadas por alguém para que este indivíduo não tenha problemas com autoridades. Elas são produzidas pela Liga Pokémon e pelas autoridades governamentais e informam a todos que aquele indivíduo possui autorização legal para passear por aí, é quem ele diz ser e porta pokémons. Elas são atualizadas por pesquisadores profissionais e contribuintes leigos. Todas as pokéagendas são a prova d’água, e extremamente\tresistentes a calor, ácido e muitas outras formas de dano. Costuma ser do melhor interesse de alguém manter uma\tpokéagenda íntegra, e as autoridades terão que se envolver se uma pokéagenda for destruída, perdida ou roubada.",
+    "IsContinuous": false,
+    "IsStandart": false,
+    "IsFree": true,
+    "IsInterrupt": false,
+    "IsExtended": false,
+    "IsLegal": true
+  },
+  "pokéagenda2": {
+    "Name": "Pokéagenda2",
+    "IsClassSpecific": false,
+    "Requirements": "Nenhum",
+    "Frqeuency": "À vontade",
+    "Target": "Um pokemon ainda não identificado por sua pokeagenda a até 10 metros",
+    "Description": "apontando sua pokéagenda a um pokémon não identificado, ela o identifica. Uma vez que um pokémon possui variações de aparência – desde forma, coloração, pelugem, etc. – mesmo dentro de uma mesma espécie, uma pokéagenda demora um pouco para fazer a análise visual. O tempo necessário é de 12 segundos, ou duas rodadas de combate, para que ela lhe dê as informações. Pokéagendas são aparelhos personalizados, e constituem a identificação oficial de um alguém, portanto são licenciadas para serem entregues a pessoas a partir de 10\tanos, e se espera que estejam sempre portadas por alguém para que este indivíduo não tenha problemas com autoridades. Elas são produzidas pela Liga Pokémon e pelas autoridades governamentais e informam a todos que aquele indivíduo possui autorização legal para passear por aí, é quem ele diz ser e porta pokémons. Elas são atualizadas por pesquisadores profissionais e contribuintes leigos. Todas as pokéagendas são a prova d’água, e extremamente\tresistentes a calor, ácido e muitas outras formas de dano. Costuma ser do melhor interesse de alguém manter uma\tpokéagenda íntegra, e as autoridades terão que se envolver se uma pokéagenda for destruída, perdida ou roubada.",
+    "IsContinuous": false,
+    "IsStandart": false,
+    "IsFree": true,
+    "IsInterrupt": false,
+    "IsExtended": false,
+    "IsLegal": true
+  }
+}
