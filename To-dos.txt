@@ -4,14 +4,7 @@ Arrumar uma maneira boa de lidar com os erros de pkg/pokemon/PTA1/functions.go
 ? Possibilitar Registrar espécie de pokemon por id alem de nome por "completion"
     Usar tentar converter a string nome pra int
 
-funções getData dos tipos de dados
-
-Aprender a salvar os dados como .json invés de .txt porcamente formatado
-
-funções setData dos tipos de dados
-    como eu vou fazer isso? Editar o arquivo existente? Fazer uma cópia e excluir a original?
-
-Pensar num nome melhor que "sheet-hole"
+Mudar o nome pra Sheeter
 
 Decidir sobre a página da pokedex
     Pode ser uma página pra indicar o progresso dos registros, os pokemons que tiverem informação
@@ -19,4 +12,6 @@ Decidir sobre a página da pokedex
 
 ? Um slot na ficha de pokemon para o item segurado
 
-Atualizar esse arquivo
+Salvar as fichas em algum lugar
+
+Gerar um id pras fichas
