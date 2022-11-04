@@ -6,7 +6,18 @@
       "normal"
     ],
     "Diet": "Carnívoro",
-    "AverageHeight": 13,
+    "Capacities": {
+      "Strength": 3,
+      "Inteligence": 4,
+      "Jump": 4,
+      "Others": []
+    },
+    "Movement": {
+      "escavação": 8,
+      "natação": 6,
+      "terrestre": 10
+    },
+    "AverageHeight": 130,
     "AverageWeight": 403,
     "BaseStats": {
       "ATK": 12,
@@ -16,6 +27,19 @@
       "SPD": 9,
       "SPDEF": 6
     },
-    "Abilities": []
+    "Abilities": [
+      {
+        "Name": "Metabolização",
+        "Activation": "Constante",
+        "Description": "Imunidade a venenos"
+      }
+    ],
+    "HighAbilities": [
+      {
+        "Name": "Alucinógeno",
+        "Activation": "Constante",
+        "Description": "Quando este pokémon recebe Veneno, eleve duas Fases do Ataque dele. Se ele for curado da Condição, ele perde as duas Fases do Ataque."
+      }
+    ]
   }
 }

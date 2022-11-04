@@ -19,7 +19,7 @@ func Roll(X int, N int, mod int) int {
 }
 
 // Rolls a preset roll object (type DiceSet)
-func RollSet(roll DiceSet) int {
+func RollSet(roll *DiceSet) int {
 	total := 0
 	for i := 0; i < roll.X; i++ {
 		total += rand.Intn(roll.N) + 1
@@ -30,4 +30,12 @@ func RollSet(roll DiceSet) int {
 
 func CreateDiceSet(X int, N int, mod int) *DiceSet {
 	return &DiceSet{X: X, N: N, Mod: mod}
+}
+
+func Capped(value, cap int) int {
+	if value < cap {
+		return value
+	}
+
+	return cap
 }

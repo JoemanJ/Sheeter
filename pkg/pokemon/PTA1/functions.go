@@ -1,6 +1,7 @@
 package PTA1
 
 import (
+	"errors"
 	"sort"
 	"strings"
 
@@ -9,7 +10,7 @@ import (
 	actions "Joe/sheet-hole/pkg/general"
 )
 
-const ABILITYDATA string = "./data/abilitieData.json"
+const ABILITYDATA string = "./data/abilityData.json"
 const MOVEDATA string = "./data/moveData.json"
 const SPECIESDATA string = "./data/speciesData.json"
 const ITEMDATA string = "./data/itemData.json"
@@ -20,10 +21,9 @@ const CAPACITYDATA string = "./data/capacityData.json"
 
 func RegisterAbility(name string, activation string, description string) (*PokemonAbility, error) {
 	newAbility := &PokemonAbility{
-		IsHighAbility: false,
-		Name:          strings.Title(name),
-		Activation:    activation,
-		Description:   description,
+		Name:        strings.Title(name),
+		Activation:  activation,
+		Description: description,
 	}
 
 	var abilities map[string]PokemonAbility
@@ -92,7 +92,7 @@ func GetMove(name string) (PokemonMove, error) {
 	return moves[strings.ToLower(name)], nil
 }
 
-func RegisterSpecies(name string, diet string, capacities [3]int, others []Capacity, abilities []*PokemonAbility) (*PokemonSpecies, error) {
+func RegisterSpecies(name string, diet string, capacities [3]int, others []Capacity, abilities []*PokemonAbility, highAbilities []*PokemonAbility, movement map[string]int) (*PokemonSpecies, error) {
 	pokemon, err := pokeapi.Pokemon(strings.ToLower(name))
 	if err != nil {
 		return nil, err
@@ -115,12 +115,14 @@ func RegisterSpecies(name string, diet string, capacities [3]int, others []Capac
 		Type:       types,
 		Diet:       diet,
 		Capacities: capacitieTable,
+		Movement:   movement,
 
-		AverageHeight: pokemon.Height,
+		AverageHeight: pokemon.Height * 10,
 		AverageWeight: pokemon.Weight,
 		BaseStats:     map[string]int{"HP": (pokemon.Stats[0].BaseStat + 5) / 10, "ATK": (pokemon.Stats[1].BaseStat + 5) / 10, "DEF": (pokemon.Stats[2].BaseStat + 5) / 10, "SPATK": (pokemon.Stats[3].BaseStat + 5) / 10, "SPDEF": (pokemon.Stats[4].BaseStat + 5) / 10, "SPD": (pokemon.Stats[5].BaseStat + 5) / 10},
 
-		Abilities: abilities,
+		Abilities:     abilities,
+		HighAbilities: highAbilities,
 	}
 
 	var species map[string]PokemonSpecies
@@ -151,7 +153,7 @@ func RegisterItem(name string, description string) (*Item, error) {
 	i := &Item{
 		Quantity: 0,
 
-		Name:        name,
+		Name:        strings.Title(name),
 		Description: description,
 	}
 
@@ -184,7 +186,7 @@ func GetItem(name string) (Item, error) {
 
 func RegisterTrainerTalent(name string, classSpecific bool, requirements, frequency, target, description string, continuous, standart, free, interrupt, extended, legal bool) (*TrainerTalent, error) {
 	talent := &TrainerTalent{
-		Name: name,
+		Name: strings.Title(name),
 
 		IsClassSpecific: classSpecific,
 
@@ -229,7 +231,7 @@ func GetTrainerTalent(name string) (TrainerTalent, error) {
 
 func RegisterTrainerClass(name, description, parentClass string, basicTalents [2]*TrainerTalent, possibleTalents []*TrainerTalent, expertise []*Expertise, requirements string) (*TrainerClass, error) {
 	newClass := &TrainerClass{
-		Name:        name,
+		Name:        strings.Title(name),
 		Description: description,
 		ParentClass: parentClass,
 
@@ -268,7 +270,7 @@ func GetTrainerClass(name string) (TrainerClass, error) {
 
 func RegisterExpertise(name string, associatedStat, description string) (*Expertise, error) {
 	newExpertise := &Expertise{
-		Name:        name,
+		Name:        strings.Title(name),
 		Description: description,
 
 		Double: false,
@@ -304,7 +306,7 @@ func GetExpertise(name string) (Expertise, error) {
 
 func RegisterCapacity(name, description string) (*Capacity, error) {
 	newCapacity := &Capacity{
-		Name:        name,
+		Name:        strings.Title(name),
 		Description: description,
 	}
 
@@ -397,4 +399,53 @@ func newCapacityTable(capacities [3]int, others []Capacity) *CapacityTable {
 	}
 
 	return table
+}
+
+////////////////////////////////////////////////////////////////////////
+
+func CreatePokemonSheet(nickname, species, gender, nature string, abilities []*PokemonAbility, lvl int) (*PokemonSheet, error) {
+	speciesData, err := GetSpecies(species)
+	if err != nil {
+		return nil, err
+	}
+
+	if speciesData.Number == 0 {
+		return nil, errors.New("Espécie não registrada")
+	}
+
+	randomFactor := actions.RollSet(&actions.DiceSet{X: 10, N: 20, Mod: -10})
+	H := int((float32(randomFactor)/float32(190)*0.4-0.2)*float32(speciesData.AverageHeight)) + speciesData.AverageHeight
+
+	randomFactor = actions.RollSet(&actions.DiceSet{X: 10, N: 20, Mod: -10})
+	W := int((float32(randomFactor)/float32(190)*0.4-0.2)*float32(speciesData.AverageWeight)) + speciesData.AverageWeight
+
+	status := newPokemonStatusTable(speciesData.BaseStats)
+	status.Distributable = [2]int{0, lvl - 1}
+
+	newSheet := &PokemonSheet{
+		Nick:    nickname,
+		Species: species,
+		Height:  H,
+		Weight:  W,
+		Gender:  gender,
+
+		Nature: nature,
+
+		Lvl: lvl,
+		Exp: 0,
+
+		Status: status,
+		Hp:     [2]int{(lvl + status.Base["HP"]) * 4},
+
+		Movement:  speciesData.Movement,
+		Evasion:   [3]int{actions.Capped(status.Base["DEF"]/5, 6), actions.Capped(status.Base["SPDEF"]/5, 6), actions.Capped(status.Base["SPD"]/5, 6)},
+		ElemBonus: lvl / 5,
+
+		Abilities: abilities,
+		Moves:     [2][4]*PokemonMove{},
+
+		Notes: "",
+	}
+
+	return newSheet, nil
 }

@@ -1,0 +1,6 @@
+{
+  "test capacity": {
+    "Name": "test capacity",
+    "Description": "Tests the RegisterCapacity function"
+  }
+}

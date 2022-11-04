@@ -18,12 +18,14 @@ type PokemonSpecies struct {
 	Type       []string
 	Diet       string
 	Capacities *CapacityTable
+	Movement   map[string]int
 
 	AverageHeight int
 	AverageWeight int
 	BaseStats     map[string]int
 
-	Abilities []*PokemonAbility
+	Abilities     []*PokemonAbility
+	HighAbilities []*PokemonAbility
 }
 
 type PokemonStatusTable struct {
@@ -51,8 +53,6 @@ type PokemonMove struct {
 }
 
 type PokemonAbility struct {
-	IsHighAbility bool
-
 	Name        string
 	Activation  string
 	Description string
@@ -77,7 +77,7 @@ type PokemonSheet struct {
 	Evasion   [3]int
 	ElemBonus int
 
-	Abilities [2]*PokemonAbility
+	Abilities []*PokemonAbility
 	Moves     [2][4]*PokemonMove
 
 	Notes string
