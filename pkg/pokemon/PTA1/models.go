@@ -4,6 +4,8 @@ import (
 	actions "Joe/sheet-hole/pkg/general"
 )
 
+var WEAPONDAMAGETABLE [8]*actions.DiceSet = [8]*actions.DiceSet{{X: 1, N: 10, Mod: 4}, {X: 1, N: 12, Mod: 6}, {X: 2, N: 8, Mod: 6}, {X: 2, N: 10, Mod: 8}, {X: 3, N: 8, Mod: 10}, {X: 3, N: 10, Mod: 12}, {X: 3, N: 12, Mod: 14}, {X: 4, N: 12, Mod: 16}}
+
 var TRAINERLVLTABLE map[string][51]int = map[string][51]int{
 	"classes": {0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4},
 	"status":  {0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 2, 0, 1, 0, 2, 0, 1, 0, 2, 0, 1, 0, 2, 0, 1, 0, 2, 0, 1, 0, 2, 0, 1, 0, 2, 0, 1, 0, 2, 0, 1, 0, 2, 0, 1, 0, 2, 0, 1, 0, 3},
@@ -88,8 +90,8 @@ type TrainerSheet struct {
 	Name   string
 	Player string
 
-	Age    int
 	Gender string
+	Age    int
 	Height int
 	Weight int
 
@@ -99,9 +101,10 @@ type TrainerSheet struct {
 	Status *TrainerStatusTable
 	Hp     [2]int
 
-	Movement     map[string]int
-	Evasion      [3]int
-	WeaponDamage int
+	Movement             map[string]int
+	Evasion              [3]int
+	WeaponDamageCategory int
+	WeaponDamage         *actions.DiceSet
 
 	Talents     []*TrainerTalent
 	TalentSlots int

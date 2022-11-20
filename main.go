@@ -35,9 +35,12 @@ func main() {
 	// }
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
-	ab, _ := PTA1.GetAbility("metabolização")
+	// ab, _ := PTA1.GetAbility("metabolização")
 
-	zangoose, _ := PTA1.CreatePokemonSheet("Fofucha", "zangoose", "F", "adamant", []*PTA1.PokemonAbility{&ab}, 30)
+	sheet, err := PTA1.CreateTrainerSheet("Joe Teste", "Joe", "M", 0, 20, 180, 800, map[string]int{"HP": 10, "ATK": 10, "DEF": 10, "SPATK": 16, "SPDEF": 10, "SPD": 10})
+	if err != nil {
+		fmt.Println(err)
+	}
 
-	fmt.Printf("\n\n%+v\n\n", zangoose)
+	fmt.Printf("\n\n%+v\n\n", sheet)
 }

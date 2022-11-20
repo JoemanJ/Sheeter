@@ -2,6 +2,7 @@ package PTA1
 
 import (
 	"errors"
+	"fmt"
 	"sort"
 	"strings"
 
@@ -30,12 +31,17 @@ func RegisterAbility(name string, activation string, description string) (*Pokem
 
 	err := getJsonData(ABILITYDATA, &abilities)
 	if err != nil {
-		return nil, err
+		s := fmt.Sprintf("Error reading file %s:\n%s", ABILITYDATA, err.Error())
+		return nil, errors.New(s)
 	}
 
 	abilities[strings.ToLower(name)] = *newAbility
 
-	setJsonData(ABILITYDATA, abilities)
+	err = setJsonData(ABILITYDATA, abilities)
+	if err != nil {
+		s := fmt.Sprintf("Error writing file %s:\n%s", ABILITYDATA, err.Error())
+		return nil, errors.New(s)
+	}
 
 	return newAbility, nil
 }
@@ -44,7 +50,8 @@ func GetAbility(name string) (PokemonAbility, error) {
 	var abilities map[string]PokemonAbility
 	err := getJsonData(ABILITYDATA, &abilities)
 	if err != nil {
-		return PokemonAbility{}, err
+		s := fmt.Sprintf("Error reading file %s:\n%s", ABILITYDATA, err.Error())
+		return PokemonAbility{}, errors.New(s)
 	}
 
 	return abilities[strings.ToLower(name)], nil
@@ -69,14 +76,16 @@ func RegisterMove(name string, Type string, aptitude string, descriptors []strin
 
 	err := getJsonData(MOVEDATA, &moves)
 	if err != nil {
-		return nil, err
+		s := fmt.Sprintf("Error reading file %s:\n%s", MOVEDATA, err.Error())
+		return nil, errors.New(s)
 	}
 
 	moves[strings.ToLower(name)] = *newMove
 
 	err = setJsonData(MOVEDATA, moves)
 	if err != nil {
-		return nil, err
+		s := fmt.Sprintf("Error writing file %s:\n%s", MOVEDATA, err.Error())
+		return nil, errors.New(s)
 	}
 
 	return newMove, nil
@@ -86,7 +95,8 @@ func GetMove(name string) (PokemonMove, error) {
 	var moves map[string]PokemonMove
 	err := getJsonData(MOVEDATA, &moves)
 	if err != nil {
-		return PokemonMove{}, err
+		s := fmt.Sprintf("Error reading file %s:\n%s", MOVEDATA, err.Error())
+		return PokemonMove{}, errors.New(s)
 	}
 
 	return moves[strings.ToLower(name)], nil
@@ -95,7 +105,8 @@ func GetMove(name string) (PokemonMove, error) {
 func RegisterSpecies(name string, diet string, capacities [3]int, others []Capacity, abilities []*PokemonAbility, highAbilities []*PokemonAbility, movement map[string]int) (*PokemonSpecies, error) {
 	pokemon, err := pokeapi.Pokemon(strings.ToLower(name))
 	if err != nil {
-		return nil, err
+		s := fmt.Sprintf("Error getting data from PokeAPI:\n%s", err.Error())
+		return nil, errors.New(s)
 	}
 
 	typesData := pokemon.Types
@@ -129,12 +140,17 @@ func RegisterSpecies(name string, diet string, capacities [3]int, others []Capac
 
 	err = getJsonData(SPECIESDATA, &species)
 	if err != nil {
-		return nil, err
+		s := fmt.Sprintf("Error reading file %s:\n%s", SPECIESDATA, err.Error())
+		return nil, errors.New(s)
 	}
 
 	species[strings.ToLower(name)] = *newSpecies
 
 	err = setJsonData(SPECIESDATA, species)
+	if err != nil {
+		s := fmt.Sprintf("Error writing file %s:\n%s", SPECIESDATA, err.Error())
+		return nil, errors.New(s)
+	}
 
 	return newSpecies, nil
 }
@@ -143,7 +159,8 @@ func GetSpecies(name string) (PokemonSpecies, error) {
 	var species map[string]PokemonSpecies
 	err := getJsonData(SPECIESDATA, &species)
 	if err != nil {
-		return PokemonSpecies{}, err
+		s := fmt.Sprintf("Error reading file %s:\n%s", SPECIESDATA, err.Error())
+		return PokemonSpecies{}, errors.New(s)
 	}
 
 	return species[strings.ToLower(name)], nil
@@ -161,14 +178,16 @@ func RegisterItem(name string, description string) (*Item, error) {
 
 	err := getJsonData(ITEMDATA, &items)
 	if err != nil {
-		return nil, err
+		s := fmt.Sprintf("Error reading file %s:\n%s", ITEMDATA, err.Error())
+		return nil, errors.New(s)
 	}
 
 	items[strings.ToLower(name)] = *i
 
 	err = setJsonData(ITEMDATA, items)
 	if err != nil {
-		return nil, err
+		s := fmt.Sprintf("Error writing file %s:\n%s", ITEMDATA, err.Error())
+		return nil, errors.New(s)
 	}
 
 	return i, nil
@@ -178,7 +197,8 @@ func GetItem(name string) (Item, error) {
 	var items map[string]Item
 	err := getJsonData(ITEMDATA, &items)
 	if err != nil {
-		return Item{}, err
+		s := fmt.Sprintf("Error reading file %s:\n%s", ITEMDATA, err.Error())
+		return Item{}, errors.New(s)
 	}
 
 	return items[strings.ToLower(name)], nil
@@ -206,14 +226,16 @@ func RegisterTrainerTalent(name string, classSpecific bool, requirements, freque
 	var talents map[string]TrainerTalent
 	err := getJsonData(TALENTDATA, &talents)
 	if err != nil {
-		return nil, err
+		s := fmt.Sprintf("Error reading file %s:\n%s", TALENTDATA, err.Error())
+		return nil, errors.New(s)
 	}
 
 	talents[strings.ToLower(name)] = *talent
 
 	err = setJsonData(TALENTDATA, talents)
 	if err != nil {
-		return nil, err
+		s := fmt.Sprintf("Error writing file %s:\n%s", TALENTDATA, err.Error())
+		return nil, errors.New(s)
 	}
 
 	return talent, nil
@@ -223,7 +245,8 @@ func GetTrainerTalent(name string) (TrainerTalent, error) {
 	var talents map[string]TrainerTalent
 	err := getJsonData(TALENTDATA, *&talents)
 	if err != nil {
-		return TrainerTalent{}, err
+		s := fmt.Sprintf("Error writing file %s:\n%s", TALENTDATA, err.Error())
+		return TrainerTalent{}, errors.New(s)
 	}
 
 	return talents[strings.ToLower(name)], nil
@@ -245,14 +268,16 @@ func RegisterTrainerClass(name, description, parentClass string, basicTalents [2
 	var classes map[string]TrainerClass
 	err := getJsonData(CLASSDATA, &classes)
 	if err != nil {
-		return nil, err
+		s := fmt.Sprintf("Error reading file %s:\n%s", CLASSDATA, err.Error())
+		return nil, errors.New(s)
 	}
 
 	classes[strings.ToLower(name)] = *newClass
 
 	err = setJsonData(CLASSDATA, classes)
 	if err != nil {
-		return nil, err
+		s := fmt.Sprintf("Error writing file %s:\n%s", CLASSDATA, err.Error())
+		return nil, errors.New(s)
 	}
 
 	return newClass, nil
@@ -262,7 +287,8 @@ func GetTrainerClass(name string) (TrainerClass, error) {
 	var classes map[string]TrainerClass
 	err := getJsonData(CLASSDATA, &classes)
 	if err != nil {
-		return TrainerClass{}, err
+		s := fmt.Sprintf("Error reading file %s:\n%s", CLASSDATA, err.Error())
+		return TrainerClass{}, errors.New(s)
 	}
 
 	return classes[strings.ToLower(name)], nil
@@ -281,14 +307,16 @@ func RegisterExpertise(name string, associatedStat, description string) (*Expert
 	var expertises map[string]Expertise
 	err := getJsonData(EXPERTISEDATA, &expertises)
 	if err != nil {
-		return nil, err
+		s := fmt.Sprintf("Error reading file %s:\n%s", EXPERTISEDATA, err.Error())
+		return nil, errors.New(s)
 	}
 
 	expertises[strings.ToLower(name)] = *newExpertise
 
 	err = setJsonData(EXPERTISEDATA, expertises)
 	if err != nil {
-		return nil, err
+		s := fmt.Sprintf("Error writing file %s:\n%s", EXPERTISEDATA, err.Error())
+		return nil, errors.New(s)
 	}
 
 	return newExpertise, nil
@@ -298,7 +326,8 @@ func GetExpertise(name string) (Expertise, error) {
 	var expertises map[string]Expertise
 	err := getJsonData(EXPERTISEDATA, &expertises)
 	if err != nil {
-		return Expertise{}, err
+		s := fmt.Sprintf("Error reading file %s:\n%s", EXPERTISEDATA, err.Error())
+		return Expertise{}, errors.New(s)
 	}
 
 	return expertises[strings.ToLower(name)], nil
@@ -313,14 +342,16 @@ func RegisterCapacity(name, description string) (*Capacity, error) {
 	var capacities map[string]Capacity
 	err := getJsonData(CAPACITYDATA, &capacities)
 	if err != nil {
-		return nil, err
+		s := fmt.Sprintf("Error reading file %s:\n%s", CAPACITYDATA, err.Error())
+		return nil, errors.New(s)
 	}
 
 	capacities[strings.ToLower(name)] = *newCapacity
 
 	err = setJsonData(CAPACITYDATA, capacities)
 	if err != nil {
-		return nil, err
+		s := fmt.Sprintf("Error writing file %s:\n%s", CAPACITYDATA, err.Error())
+		return nil, errors.New(s)
 	}
 
 	return newCapacity, nil
@@ -330,7 +361,8 @@ func GetCapacity(name string) (Capacity, error) {
 	var capacities map[string]Capacity
 	err := getJsonData(CAPACITYDATA, &capacities)
 	if err != nil {
-		return Capacity{}, err
+		s := fmt.Sprintf("Error reading file %s:\n%s", CAPACITYDATA, err.Error())
+		return Capacity{}, errors.New(s)
 	}
 
 	return capacities[strings.ToLower(name)], nil
@@ -406,11 +438,12 @@ func newCapacityTable(capacities [3]int, others []Capacity) *CapacityTable {
 func CreatePokemonSheet(nickname, species, gender, nature string, abilities []*PokemonAbility, lvl int) (*PokemonSheet, error) {
 	speciesData, err := GetSpecies(species)
 	if err != nil {
-		return nil, err
+		s := fmt.Sprintf("Error reading file %s:\n%s", SPECIESDATA, err.Error())
+		return nil, errors.New(s)
 	}
 
 	if speciesData.Number == 0 {
-		return nil, errors.New("Espécie não registrada")
+		return nil, errors.New("Species not registered: number = 0")
 	}
 
 	randomFactor := actions.RollSet(&actions.DiceSet{X: 10, N: 20, Mod: -10})
@@ -438,13 +471,73 @@ func CreatePokemonSheet(nickname, species, gender, nature string, abilities []*P
 		Hp:     [2]int{(lvl + status.Base["HP"]) * 4},
 
 		Movement:  speciesData.Movement,
-		Evasion:   [3]int{actions.Capped(status.Base["DEF"]/5, 6), actions.Capped(status.Base["SPDEF"]/5, 6), actions.Capped(status.Base["SPD"]/5, 6)},
+		Evasion:   [3]int{actions.Capped(status.Base["DEF"]/5, 0, 6), actions.Capped(status.Base["SPDEF"]/5, 0, 6), actions.Capped(status.Base["SPD"]/5, 0, 6)},
 		ElemBonus: lvl / 5,
 
 		Abilities: abilities,
 		Moves:     [2][4]*PokemonMove{},
 
 		Notes: "",
+	}
+
+	err = setJsonData("./data/sheets/"+nickname+"_sheet.json", newSheet)
+	if err != nil {
+		s := fmt.Sprintf("Error writing file %s:\n%s", "./data/sheets/"+nickname+"_sheet.json", err.Error())
+		return nil, errors.New(s)
+	}
+
+	return newSheet, nil
+}
+
+func CreateTrainerSheet(name, player, gender string, lvl, age, height, weight int, stats map[string]int) (*TrainerSheet, error) {
+	stts := newTrainerStatusTable(stats)
+	movement := map[string]int{"land": 0, "swimming": actions.Capped(stts.Modifiers["DEF"]/2+3, 4, 100), "underwater": 0}
+
+	pokedex, err := GetTrainerTalent("Pokéagenda")
+	if err != nil {
+		return nil, err
+	}
+
+	weapons, err := GetTrainerTalent("armas")
+	if err != nil {
+		return nil, err
+	}
+
+	stdTalents := []*TrainerTalent{&pokedex, &weapons}
+
+	if stts.Modifiers["ATK"] >= stts.Modifiers["SPD"] {
+		movement["land"] = actions.Capped(stts.Modifiers["ATK"]/2+2, 4, 100)
+	} else {
+		movement["land"] = actions.Capped(stts.Modifiers["SPD"]/2+2, 4, 100)
+	}
+
+	if stts.Modifiers["ATK"] >= 3 || stts.Modifiers["DEF"] >= 3 {
+		movement["underwater"] = 4
+	} else {
+		movement["underwater"] = 3
+	}
+
+	newSheet := &TrainerSheet{
+		Name:   name,
+		Player: player,
+
+		Gender: gender,
+		Age:    age,
+		Height: height,
+		Weight: weight,
+
+		Lvl: lvl,
+
+		Status: stts,
+		Hp:     [2]int{(lvl + stats["HP"]) * 4},
+
+		Movement:             movement,
+		Evasion:              [3]int{actions.Capped(stts.Status["DEF"]/5, 0, 6), actions.Capped(stts.Status["SPDEF"]/5, 0, 6), actions.Capped(stts.Status["SPD"]/5, 0, 6)},
+		WeaponDamageCategory: lvl/7 + 1,
+		WeaponDamage:         WEAPONDAMAGETABLE[lvl/7],
+
+		Talents:     stdTalents,
+		TalentSlots: 0,
 	}
 
 	return newSheet, nil

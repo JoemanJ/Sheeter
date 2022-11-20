@@ -7,11 +7,14 @@ Arrumar uma maneira boa de lidar com os erros de pkg/pokemon/PTA1/functions.go
 Mudar o nome pra Sheeter
 
 Decidir sobre a página da pokedex
-    Pode ser uma página pra indicar o progresso dos registros, os pokemons que tiverem informação
-    faltando vão exibir uma mensagem de "Contribua para o projeto adicionando os dados desse pokemon!"
+    Mostrar uma mensagem da pokedex dizendo que a especie ainda nao foi catalogada
 
 ? Um slot na ficha de pokemon para o item segurado
 
 Salvar as fichas em algum lugar
 
 Gerar um id pras fichas
+
+Cadastrar os talentos "Pokeagenda" e "Armas" e colocar eles na função de criar trainerSheet
+
+retornar um erro caso o map[string]int de status não tenha os campos certos

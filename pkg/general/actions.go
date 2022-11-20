@@ -32,10 +32,14 @@ func CreateDiceSet(X int, N int, mod int) *DiceSet {
 	return &DiceSet{X: X, N: N, Mod: mod}
 }
 
-func Capped(value, cap int) int {
-	if value < cap {
-		return value
+func Capped(value, minCap, maxCap int) int {
+	if value < minCap {
+		return minCap
 	}
 
-	return cap
+	if value > maxCap {
+		return maxCap
+	}
+
+	return value
 }

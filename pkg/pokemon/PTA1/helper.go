@@ -3,6 +3,7 @@ package PTA1
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"os"
 )
 
@@ -30,12 +31,14 @@ func getJsonData(path string, m interface{}) error {
 func setJsonData(path string, m interface{}) error {
 	jsonText, err := json.MarshalIndent(m, "", "  ")
 	if err != nil {
-		return err
+		s := fmt.Sprintf("Error marshalling file %s:\n%s", path, err.Error())
+		return errors.New(s)
 	}
 
 	err = os.WriteFile(path, jsonText, 0666)
 	if err != nil {
-		return err
+		s := fmt.Sprintf("Error writing file %s:\n%s", path, err.Error())
+		return errors.New(s)
 	}
 
 	return nil
