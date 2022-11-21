@@ -1,20 +1,8 @@
-Arrumar uma maneira boa de lidar com os erros de pkg/pokemon/PTA1/functions.go
-    Dar uma olhada naquele "erro customizado" do snippetbox
-
-? Possibilitar Registrar espécie de pokemon por id alem de nome por "completion"
-    Usar tentar converter a string nome pra int
-
-Mudar o nome pra Sheeter
-
 Decidir sobre a página da pokedex
     Mostrar uma mensagem da pokedex dizendo que a especie ainda nao foi catalogada
+    Forkar o repositório do Athila
 
 ? Um slot na ficha de pokemon para o item segurado
+    Por hora deixar nas notas mesmo...
 
-Salvar as fichas em algum lugar
-
-Gerar um id pras fichas
-
-Cadastrar os talentos "Pokeagenda" e "Armas" e colocar eles na função de criar trainerSheet
-
-retornar um erro caso o map[string]int de status não tenha os campos certos
+Trocar slice de pokemons na ficha de treinador por lista encadeada

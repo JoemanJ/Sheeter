@@ -61,6 +61,8 @@ type PokemonAbility struct {
 }
 
 type PokemonSheet struct {
+	Id int
+
 	Nick    string
 	Species string
 	Height  int
@@ -87,6 +89,8 @@ type PokemonSheet struct {
 
 // TRAINER STRUCTURES
 type TrainerSheet struct {
+	Id int
+
 	Name   string
 	Player string
 
@@ -192,4 +196,22 @@ type CapacityTable struct {
 	Jump        int
 
 	Others []Capacity
+}
+
+////////////////////////////////////////////////////////
+
+func (s *PokemonSheet) render() {
+
+}
+
+func (s *PokemonSheet) id() int {
+	return s.id()
+}
+
+func (s *TrainerSheet) render() {
+
+}
+
+func (s *TrainerSheet) id() int {
+	return s.id()
 }
