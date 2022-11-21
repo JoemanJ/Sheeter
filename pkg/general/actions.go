@@ -53,8 +53,8 @@ func Capped(value, minCap, maxCap int) int {
 	return value
 }
 
-func GetSheet(id int) (*g_sheet, error) {
-	var sheet g_sheet
+func GetSheet(id int) (*G_sheet, error) {
+	var sheet G_sheet
 
 	err := GetJsonData("./data/sheets/"+strconv.Itoa(id)+"_sheet.json", &sheet)
 	if err != nil {

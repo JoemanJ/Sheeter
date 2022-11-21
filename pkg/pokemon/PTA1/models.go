@@ -197,21 +197,3 @@ type CapacityTable struct {
 
 	Others []Capacity
 }
-
-////////////////////////////////////////////////////////
-
-func (s *PokemonSheet) render() {
-
-}
-
-func (s *PokemonSheet) id() int {
-	return s.id()
-}
-
-func (s *TrainerSheet) render() {
-
-}
-
-func (s *TrainerSheet) id() int {
-	return s.id()
-}
