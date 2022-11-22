@@ -2,6 +2,9 @@ package PTA1
 
 import (
 	actions "Joe/sheet-hole/pkg/general"
+	"fmt"
+	"html/template"
+	"log"
 )
 
 var WEAPONDAMAGETABLE [8]*actions.DiceSet = [8]*actions.DiceSet{{X: 1, N: 10, Mod: 4}, {X: 1, N: 12, Mod: 6}, {X: 2, N: 8, Mod: 6}, {X: 2, N: 10, Mod: 8}, {X: 3, N: 8, Mod: 10}, {X: 3, N: 10, Mod: 12}, {X: 3, N: 12, Mod: 14}, {X: 4, N: 12, Mod: 16}}
@@ -125,6 +128,18 @@ type TrainerSheet struct {
 	Prizes string
 
 	Notes string
+}
+
+func (s *TrainerSheet) SheetBody() (*template.Template, error) {
+	t, err := template.New("sheet_body").ParseFiles("./pkg/pokemon/PTA1/trainerSheet.partial.html")
+
+	log.Printf("\n\n%v\n\n", t)
+
+	if err != nil {
+		return template.New("sheet_body").Parse(fmt.Sprintf("<div>Could not open sheet!\nerror: %s</div>", err.Error()))
+	}
+
+	return t, nil
 }
 
 type TrainerClass struct {

@@ -53,7 +53,7 @@ func Capped(value, minCap, maxCap int) int {
 	return value
 }
 
-func GetSheet(id int) (*G_sheet, error) {
+func GetSheet(id int) (G_sheet, error) {
 	var sheet G_sheet
 
 	err := GetJsonData("./data/sheets/"+strconv.Itoa(id)+"_sheet.json", &sheet)
@@ -61,22 +61,22 @@ func GetSheet(id int) (*G_sheet, error) {
 		return nil, err
 	}
 
-	return &sheet, nil
+	return sheet, nil
 }
 
 // Saves the unmarshalled content of json file "path" to the variable pointed by "m"
 func GetJsonData(path string, m interface{}) error {
 	_, err := os.Stat(path)
 
-	content, err := os.ReadFile(path)
-
-	if err != nil && !errors.Is(err, os.ErrNotExist) {
+	if errors.Is(err, os.ErrNotExist) {
+		json.Unmarshal([]byte("{}"), m)
 		return err
 	}
 
-	if errors.Is(err, os.ErrNotExist) {
-		json.Unmarshal([]byte("{}"), m)
-		return nil
+	content, err := os.ReadFile(path)
+
+	if err != nil {
+		return err
 	}
 
 	json.Unmarshal(content, m)
@@ -119,13 +119,18 @@ func GetRD(key string) (string, error) {
 
 func SetRD(key, value string) error {
 	var data map[string]string
+	var file []byte
 
-	file, err := os.ReadFile("./data/RD.json")
-	if err == os.ErrNotExist { //FILE DOESNT EXIST: DATA = EMPTY MAP
+	_, err := os.Stat(RDPATH)
+
+	if errors.Is(err, os.ErrNotExist) { //FILE DOESNT EXIST: DATA = EMPTY MAP
 		data = map[string]string{}
-	} else if err != nil { //RANDOM ERROR: RETURN IT
-		return err
-	} else { //FILE EXISTS: DATA = FILE
+	} else {
+		file, err = os.ReadFile(RDPATH)
+		if err != nil { //RANDOM ERROR: RETURN IT
+			return err
+		}
+		//FILE EXISTS: DATA = FILE
 		err = json.Unmarshal(file, &data)
 		if err != nil {
 			return err

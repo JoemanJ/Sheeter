@@ -1,29 +1,64 @@
 {{define sheet_body}}
-<div class="header">
-    <img src="../../../../ui/static/img/logo.png">
-
-    <div class="personal_info">
-        Nome: Pokemaster<br>Player: Joe<br>Gendedr: M<br>Altura: 1,83m<br>Peso: 60.5Kg
-    </div>
-
-    <div class="header_stats">
-        <div class="HP_lvl">
-            HP: <input type="number">/100<br>lvl: 50
-        </div>
-
-        <div class="class_table">
-            <table id="class_table">
-                <tr>
-                    <td>class1</td>
-                    <td>class2</td>
-                </tr>
-                <tr>
-                    <td>class3</td>
-                    <td>class4</td>
-                </tr>
-            </table>
-        </div>
-    </div>
-
+<div class="tabs">
+    <button class="tab" id="id" onclick="openTab(event, 'id')">ID</button>
+    <button class="tab" id="pokes" onclick="openTab(event, 'pokes')">pokes</button>
+    <button class="tab" id="bag" onclick="openTab(event, 'bag')">bag</button>
+    <button class="tab" id="prizes" onclick="openTab(event, 'prizes')">prizes</button>
+    <button class="tab" id="dex" onclick="openTab(event, 'dex')">dex</button>
+    <button class="tab" id="stats" onclick="openTab(event, 'stats')">stats</button>
+    <button class="tab" id="notes" onclick="openTab(event, 'notes')">notes</button>
 </div>
+
+<div id="id_tab">
+    <div class="header">
+        <img src="../../../../ui/static/img/logo.png">
+
+        <div class="personal_info">
+            Nome: Pokemaster<br>Player: Joe (M)<br>Altura: 1,83m<br>Peso: 60.5Kg
+        </div>
+
+        <div class="header_stats">
+            <span id="lvl">lvl: 50</span>
+
+            <div class="class_table">
+                <table id="class_table">
+                    <tr>
+                        <td>class1</td>
+                        <td>class2</td>
+                    </tr>
+                    <tr>
+                        <td>class3</td>
+                        <td>class4</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="pokemon_tab">
+    <div class="party">
+        <div id="poke_1">Pokemon1</div>
+        <div id="poke_2">Pokemon2</div>
+        <div id="poke_3">Pokemon3</div>
+        <div id="poke_4">Pokemon4</div>
+        <div id="poke_5">Pokemon5</div>
+    </div>
+    <div class="poke_sheet">
+        placeholder
+    </div>
+    <div class="pc">
+        <div id="poke_6">Pokemon6</div>
+        <div id="poke_7">Pokemon7</div>
+        <div id="poke_8">Pokemon8</div>
+        <div id="poke_9">Pokemon9</div>
+        <div id="poke_10">Pokemon10</div>
+        <div id="poke_11">Pokemon11</div>
+        <div id="poke_12">Pokemon12</div>
+        <div id="poke_13">Pokemon13</div>
+        <div id="poke_14">Pokemon14</div>
+        <div id="poke_15">Pokemon15</div>
+    </div>
+</div>
+
 {{end}}

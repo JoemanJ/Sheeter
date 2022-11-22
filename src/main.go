@@ -10,27 +10,56 @@ The PokeAPI API by ...
 package main
 
 import (
+	sheeters "Joe/sheet-hole/pkg/general"
+	"fmt"
+	"html/template"
 	"log"
+	"math/rand"
+	"net/http"
+	"os"
+	"time"
 )
 
 type application struct {
 	infoLog       *log.Logger
 	errorLog      *log.Logger
-	templateCache string //map[string]*template.Template
+	templateCache map[string]*template.Template
 }
 
 const PORT string = ":4000"
 
-// func main() {
-// 	rand.Seed(time.Now().UnixNano())
+func main() {
+	rand.Seed(time.Now().UnixNano())
 
-// 	mux := http.NewServeMux()
+	infoLog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
+	errorLog := log.New(os.Stderr, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
 
-// 	mux.HandleFunc("/", Sheet)
+	app := &application{
+		infoLog:       infoLog,
+		errorLog:      errorLog,
+		templateCache: map[string]*template.Template{},
+	}
 
-// 	fmt.Printf("starting server on port %s\n", PORT)
-// 	err := http.ListenAndServe(PORT, mux)
-// 	if err != nil {
-// 		println(err.Error())
-// 	}
-// }
+	cache, err := app.newTemplateCache("./ui/html")
+	if err != nil {
+		panic(err)
+	}
+
+	app.templateCache = cache
+
+	mux := http.NewServeMux()
+
+	err = sheeters.SetRD("sheetCount", "0")
+	if err != nil {
+		app.errorLog.Panic(err)
+	}
+
+	mux.HandleFunc("/new/", app.login)
+	mux.HandleFunc("/", app.sheet)
+
+	fmt.Printf("starting server on port %s\n", PORT)
+	err = http.ListenAndServe(PORT, mux)
+	if err != nil {
+		println(err.Error())
+	}
+}

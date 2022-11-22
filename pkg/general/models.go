@@ -1,5 +1,7 @@
 package sheeters
 
+import "html/template"
+
 type LLCel struct {
 	key  *any
 	next *LLCel
@@ -12,7 +14,5 @@ type LL struct {
 }
 
 type G_sheet interface {
-	id() int
-	render()
-	data() any
+	SheetBody() (*template.Template, error)
 }
