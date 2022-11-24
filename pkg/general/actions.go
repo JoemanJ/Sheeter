@@ -6,10 +6,12 @@ import (
 	"fmt"
 	"math/rand"
 	"os"
+	"path/filepath"
 	"strconv"
 )
 
 const RDPATH string = "./data/RD.json"
+const SHEETSPATH string = "./data/sheets/"
 
 type DiceSet struct {
 	X   int
@@ -53,15 +55,17 @@ func Capped(value, minCap, maxCap int) int {
 	return value
 }
 
-func GetSheet(id int) (G_sheet, error) {
+func GetSheet(id int) (*G_sheet, error) {
 	var sheet G_sheet
 
-	err := GetJsonData("./data/sheets/"+strconv.Itoa(id)+"_sheet.json", &sheet)
+	fileName := filepath.Join(SHEETSPATH, strconv.Itoa(id)+"_sheet.json")
+
+	err := GetJsonData(fileName, &sheet)
 	if err != nil {
 		return nil, err
 	}
 
-	return sheet, nil
+	return &sheet, nil
 }
 
 // Saves the unmarshalled content of json file "path" to the variable pointed by "m"
@@ -70,6 +74,7 @@ func GetJsonData(path string, m interface{}) error {
 
 	if errors.Is(err, os.ErrNotExist) {
 		json.Unmarshal([]byte("{}"), m)
+		SetJsonData(path, m)
 		return err
 	}
 
@@ -79,7 +84,10 @@ func GetJsonData(path string, m interface{}) error {
 		return err
 	}
 
-	json.Unmarshal(content, m)
+	err = json.Unmarshal(content, m)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }
@@ -92,7 +100,7 @@ func SetJsonData(path string, m interface{}) error {
 		return errors.New(s)
 	}
 
-	err = os.WriteFile(path, jsonText, 0666)
+	err = os.WriteFile(path, jsonText, 0755)
 	if err != nil {
 		s := fmt.Sprintf("Error writing file %s:\n%s", path, err.Error())
 		return errors.New(s)
@@ -144,7 +152,7 @@ func SetRD(key, value string) error {
 		return err
 	}
 
-	err = os.WriteFile(RDPATH, jsonTxt, 0666)
+	err = os.WriteFile(RDPATH, jsonTxt, 0755)
 	if err != nil {
 		return err
 	}

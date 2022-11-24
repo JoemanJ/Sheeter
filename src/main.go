@@ -11,6 +11,7 @@ package main
 
 import (
 	sheeters "Joe/sheet-hole/pkg/general"
+	"errors"
 	"fmt"
 	"html/template"
 	"log"
@@ -29,6 +30,16 @@ type application struct {
 const PORT string = ":4000"
 
 func main() {
+	_, err := os.Stat("./data")
+	if errors.Is(err, os.ErrNotExist) {
+		os.Mkdir("data", 0755)
+	}
+
+	_, err = os.Stat("./data/sheets")
+	if errors.Is(err, os.ErrNotExist) {
+		os.Mkdir("data", 0755)
+	}
+
 	rand.Seed(time.Now().UnixNano())
 
 	infoLog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
@@ -54,8 +65,11 @@ func main() {
 		app.errorLog.Panic(err)
 	}
 
+	fileServer := http.FileServer(http.Dir("./ui/static/"))
+
+	mux.Handle("/static/", http.StripPrefix("/static", fileServer))
 	mux.HandleFunc("/new/", app.login)
-	mux.HandleFunc("/", app.sheet)
+	mux.HandleFunc("/sheet", app.sheet)
 
 	fmt.Printf("starting server on port %s\n", PORT)
 	err = http.ListenAndServe(PORT, mux)

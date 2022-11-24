@@ -12,14 +12,14 @@ import (
 	general "Joe/sheet-hole/pkg/general"
 )
 
-const ABILITYDATA string = "./data/abilityData.json"
-const MOVEDATA string = "./data/moveData.json"
-const SPECIESDATA string = "./data/speciesData.json"
-const ITEMDATA string = "./data/itemData.json"
-const TALENTDATA string = "./data/talentData.json"
-const CLASSDATA string = "./data/classData.json"
-const EXPERTISEDATA string = "./data/expertiseData.json"
-const CAPACITYDATA string = "./data/capacityData.json"
+const ABILITYDATA string = "./data/PTA1/abilityData.json"
+const MOVEDATA string = "./data/PTA1/moveData.json"
+const SPECIESDATA string = "./data/PTA1/speciesData.json"
+const ITEMDATA string = "./data/PTA1/itemData.json"
+const TALENTDATA string = "./data/PTA1/talentData.json"
+const CLASSDATA string = "./data/PTA1/classData.json"
+const EXPERTISEDATA string = "./data/PTA1/expertiseData.json"
+const CAPACITYDATA string = "./data/PTA1/capacityData.json"
 
 func RegisterAbility(name string, activation string, description string) (*PokemonAbility, error) {
 	newAbility := &PokemonAbility{
@@ -252,9 +252,9 @@ func RegisterTrainerTalent(name string, classSpecific bool, requirements, freque
 
 func GetTrainerTalent(name string) (*TrainerTalent, error) {
 	var talents map[string]TrainerTalent
-	err := general.GetJsonData(TALENTDATA, *&talents)
+	err := general.GetJsonData(TALENTDATA, &talents)
 	if err != nil {
-		s := fmt.Sprintf("Error writing file %s:\n%s", TALENTDATA, err.Error())
+		s := fmt.Sprintf("Error reading file %s:\n%s", TALENTDATA, err.Error())
 		return &TrainerTalent{}, errors.New(s)
 	}
 
@@ -567,7 +567,7 @@ func CreatePokemonSheet(nickname, species, gender, nature string, abilities []*P
 
 	err = general.SetJsonData("./data/sheets/"+aux+"_sheet.json", newSheet)
 	if err != nil {
-		s := fmt.Sprintf("Error writing file %s:\n%s", "./data/sheets/"+aux+"_sheet.json", err.Error())
+		s := fmt.Sprintf("Error writing file %s:\n%s", "./data/sheets/"+aux+" sheet.json", err.Error())
 		return nil, errors.New(s)
 	}
 
@@ -643,13 +643,21 @@ func CreateTrainerSheet(name, player, gender string, lvl, age, height, weight in
 		TalentSlots: 0,
 	}
 
-	err = general.SetJsonData("./data/sheets/"+aux+"_sheet.json", newSheet)
-	if err != nil {
-		s := fmt.Sprintf("Error writing file %s:\n%s", "./data/sheets/"+aux+"_sheet.json", err.Error())
-		return nil, errors.New(s)
+	gSheet := general.G_sheet{
+		Type: "PTA1_trainerSheet",
+		Data: newSheet,
 	}
 
-	general.SetRD("sheetCount", strconv.Itoa(id+1))
+	err = general.SetRD("sheetCount", strconv.Itoa(id+1))
+	if err != nil {
+		return nil, err
+	}
+
+	err = general.SetJsonData(general.SHEETSPATH+aux+"_sheet.json", gSheet)
+	if err != nil {
+		s := fmt.Sprintf("Error writing file %s:\n%s", general.SHEETSPATH+aux+"_sheet.json", err.Error())
+		return nil, errors.New(s)
+	}
 
 	return newSheet, nil
 }

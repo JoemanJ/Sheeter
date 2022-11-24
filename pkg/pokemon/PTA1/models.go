@@ -2,9 +2,9 @@ package PTA1
 
 import (
 	actions "Joe/sheet-hole/pkg/general"
-	"fmt"
+	"bytes"
 	"html/template"
-	"log"
+	"net/http"
 )
 
 var WEAPONDAMAGETABLE [8]*actions.DiceSet = [8]*actions.DiceSet{{X: 1, N: 10, Mod: 4}, {X: 1, N: 12, Mod: 6}, {X: 2, N: 8, Mod: 6}, {X: 2, N: 10, Mod: 8}, {X: 3, N: 8, Mod: 10}, {X: 3, N: 10, Mod: 12}, {X: 3, N: 12, Mod: 14}, {X: 4, N: 12, Mod: 16}}
@@ -130,16 +130,26 @@ type TrainerSheet struct {
 	Notes string
 }
 
-func (s *TrainerSheet) SheetBody() (*template.Template, error) {
-	t, err := template.New("sheet_body").ParseFiles("./pkg/pokemon/PTA1/trainerSheet.partial.html")
+func (s *TrainerSheet) Render(w http.ResponseWriter, pageTemplate *template.Template) error {
+	var template *template.Template = &template.Template{}
 
-	log.Printf("\n\n%v\n\n", t)
+	*template = *pageTemplate
 
+	template, err := template.ParseFiles("./pkg/pokemon/PTA1/html/trainerSheet.partial.html")
 	if err != nil {
-		return template.New("sheet_body").Parse(fmt.Sprintf("<div>Could not open sheet!\nerror: %s</div>", err.Error()))
+		return err
 	}
 
-	return t, nil
+	buf := new(bytes.Buffer)
+
+	err = template.Execute(buf, nil)
+	if err != nil {
+		return err
+	}
+
+	buf.WriteTo(w)
+
+	return nil //, "./pkg/pokemon/PTA1/html/trainerSheet.partial.html"
 }
 
 type TrainerClass struct {
