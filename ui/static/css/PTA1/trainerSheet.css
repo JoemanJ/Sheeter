@@ -1,0 +1,466 @@
+*{
+    margin: 0;
+    font-family:sans-serif
+}
+
+.sheet_space{
+    margin: 1%;
+    min-width: 90vw;
+}
+
+.tabs{
+    margin-left: 50px;
+    display: flex;
+    flex-direction: row;
+}
+
+.tab{
+    width: 100px;
+    height: 30px;
+    border-radius: 15px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    transform-origin: bottom center;
+    border-bottom: none;
+    transition: all 50ms;
+}
+.tab:hover{
+    
+    transform: scale(1.2);
+}
+
+.tab_body{
+    background-color: aquamarine;
+    border-radius: 40px;
+    border-color: black;
+    border-style: solid;
+    border-width: 2px;
+    min-width:75em;
+    display: flex;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#id_tab{
+    width: 100%;
+}
+
+#id_tab .header{
+    width: 100%;
+    display: flex;
+    margin: 20px;
+}
+
+#id_tab .header *{
+    margin: 10px;
+}
+
+#trainer_photo{
+    width: 300px;
+    height: 300px;
+    border-style: solid;
+    border-color: black;
+    border-radius: 1px;
+    border-color: rgba(0, 0, 0, .3);
+    background-color: white;
+    padding: 5px;
+}
+
+.personal_info{
+   font-size: 40px;
+   height: 300px;
+   min-width: 30%;
+}
+
+.header_stats{
+    flex-grow: 1;
+    background-color: pink;
+    display: flex;
+    flex-direction: column;
+
+}
+
+#lvl{
+    align-self: center;
+    font-size: 40px;
+}
+
+.class_table{
+    display: flex;
+    align-self:center;
+    flex-grow: 1;
+    max-width: 100%;
+}
+
+#class_table{
+    align-self: flex-end;
+    width: max-content;
+    min-width: 600px;
+    max-width: 300px;
+    font-size: 30px;
+    border-collapse: collapse;
+}
+
+#class_table *{
+    border-style: solid;
+    border-width: 1px;
+    text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#pokemon_tab{
+    flex-direction: column;
+    align-items: center;
+}
+
+.party{
+    margin: 10px;
+    display: grid;
+    grid-template-columns:33% 33% 33%;
+    grid-template-rows: 150px;
+    column-gap: 50px;
+    width: 90%;
+    background-color: rgb(255, 75, 75);
+    height: calc()
+}
+
+.poke_box{
+    background-image:url("./poke_box.png");
+    width: 300px;
+    height: 102px;
+    margin: 20px;
+    display: grid;
+    grid-template-columns: 1px max-content;
+    transition: scale 50ms;
+}
+
+.poke_box:hover{
+    scale: 1.1;
+    border: solid;
+    border-color: lightgreen;
+    border-width: 5px;
+}
+
+.box_icons{
+    margin: 10px;
+    position: relative;
+}
+
+.ball_icon{
+    margin: 10px;
+    position: relative;
+    scale: 0.8;
+    left: -40px;
+    top: -40px;
+}
+
+.poke_icon{
+    position: relative;
+    margin: 10px;
+    top: -60%;
+}
+
+.box_stats{
+    margin: 10px;
+    width: 75%;
+    position: relative;
+    top: -15px;
+    padding-left: 90px;
+    max-height: 102px;
+
+}
+
+.HP_box{
+    margin: 0;
+}
+
+.HP_bar{
+    color: green;
+    width: 160px;
+}
+
+.HP_box p{
+    width: 160px;
+    text-align: center;
+}
+
+.poke_lvl{
+    display: flex;
+    justify-content: space-between;
+    height: 13px;
+    margin: 10px;
+}
+
+.gender_icon{
+    margin: 10px;
+    position: relative;
+    height: 12px;
+    top: 0;
+    scale: 1.75;
+}
+
+.poke_name{
+    margin: 10px;
+}
+
+.poke_sheet{
+    width: 90%;
+    height: 200px;
+    text-align: center;
+    padding-top: 50px;
+    background-color: black;
+    color: white;
+}
+
+.party#pc{
+    background-color: rgb(161, 161, 161);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.item_grid{
+    display: grid;
+    margin: 20px;
+    background-color: orange;
+    grid-template-columns: 50% 50%;
+    align-content: center;
+}
+
+.item_box{
+    width: 80%;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 5px 10px;
+    border: solid;
+    border-width: 2px;
+    border-color: black;
+}
+
+.item_box_header{
+    height: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.item_qtt{
+    width: 20px;
+}
+
+.qtt_input{
+    width: 40px;
+}
+
+.item_description{
+    width: auto;
+    margin: 10px 10px 0px 0px;
+}
+
+.item_description textarea{
+    width: 100%;
+    height: 75px;
+    resize: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#prizes_tab{
+    /* display: flex; */
+    flex-direction: column;
+}
+
+.prize_box{
+    margin: 20px;
+    border: solid;
+    border-width: 3px;
+    border-color: black;
+    flex-grow: 1;
+    display: flex;
+}
+
+.prize_img{
+    width: 200px;
+}
+
+.prize_description{
+    margin: 20px;
+    flex-grow: 1;
+}
+
+.prize_description{
+    resize: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#notes_textbox{
+    margin: 20px;
+    width: 100%;
+    min-height: 300px;
+    padding: 5px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#stats_tab{
+    /* display: flex; */
+    flex-direction: column;
+}
+
+
+
+.stats_space{
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+}
+
+.HP_DA{
+    display: flex;
+    justify-content: space-between;
+}
+
+.HP_display{
+    display: flex;
+    height: 1.5em;
+    border-style: solid;
+    padding: 2px 5px;
+}
+
+.HP_display h2{
+    margin-right: 10px;
+}
+
+.HP_display input[type=number]{
+    width: 50px;
+    font-size: 20px;
+}
+
+.DA_display{
+    display: flex;
+    align-items: center;
+    border-style: solid;
+}
+
+.DA_display h2{
+    padding: 5px;
+}
+
+.DA_display input[type=number]{
+    width: 20px;
+}
+
+.dice_sides{
+    list-style-type: none;
+}
+
+.roll_button{
+    margin: 5px;
+    width: auto;
+}
+
+.die_icon{
+    width: 20px;
+}
+
+.stats_table{
+    border-style: solid;
+    border-collapse: collapse;
+    width: fit-content;
+}
+
+.stats_table th,td{
+    padding: 10px;
+    border-style: solid;
+    text-align: center;
+    width: fit-content;
+}
+
+.stat_field{
+    width: 30px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    appearance: none;
+    -webkit-appearance: none;
+    margin: 0;
+}
