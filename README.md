@@ -51,8 +51,8 @@ a public, free-to-fork repo with a complete working version of the project.
 I am making a tool hat will be useful for me and i hope many more tabletop RPG
 enthusiasts may benefit from it as well.
 
-## I have a cool idea for a feature
-## I want to report a problem
+## I have a cool idea for a feature or;
+## I want to report a problem or
 ## I want to contact you for whatever other reason
 Fell free to contact me for any feedback on this project through my email:
 diogodelazare@hotmail.com
