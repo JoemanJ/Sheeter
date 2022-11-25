@@ -10,7 +10,7 @@ The PokeAPI API by ...
 package main
 
 import (
-	sheeters "Joe/sheet-hole/pkg/general"
+	sheeters "Joe/sheeter/pkg/general"
 	"errors"
 	"fmt"
 	"html/template"

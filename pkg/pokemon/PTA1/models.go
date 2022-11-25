@@ -1,13 +1,14 @@
 package PTA1
 
 import (
-	actions "Joe/sheet-hole/pkg/general"
+	general "Joe/sheeter/pkg/general"
+	sheeters "Joe/sheeter/pkg/general"
 	"bytes"
 	"html/template"
 	"net/http"
 )
 
-var WEAPONDAMAGETABLE [8]*actions.DiceSet = [8]*actions.DiceSet{{X: 1, N: 10, Mod: 4}, {X: 1, N: 12, Mod: 6}, {X: 2, N: 8, Mod: 6}, {X: 2, N: 10, Mod: 8}, {X: 3, N: 8, Mod: 10}, {X: 3, N: 10, Mod: 12}, {X: 3, N: 12, Mod: 14}, {X: 4, N: 12, Mod: 16}}
+var WEAPONDAMAGETABLE [8]*general.DiceSet = [8]*general.DiceSet{{X: 1, N: 10, Mod: 4}, {X: 1, N: 12, Mod: 6}, {X: 2, N: 8, Mod: 6}, {X: 2, N: 10, Mod: 8}, {X: 3, N: 8, Mod: 10}, {X: 3, N: 10, Mod: 12}, {X: 3, N: 12, Mod: 14}, {X: 4, N: 12, Mod: 16}}
 
 var TRAINERLVLTABLE map[string][51]int = map[string][51]int{
 	"classes": {0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4},
@@ -50,7 +51,7 @@ type PokemonMove struct {
 	Aptitude    string
 	Descriptors []string
 	AccDiff     int
-	Damage      *actions.DiceSet
+	Damage      *general.DiceSet
 	Reach       string
 	Frequency   string
 	Contests    string
@@ -111,7 +112,7 @@ type TrainerSheet struct {
 	Movement             map[string]int
 	Evasion              [3]int
 	WeaponDamageCategory int
-	WeaponDamage         *actions.DiceSet
+	WeaponDamage         *general.DiceSet
 
 	Talents     []*TrainerTalent
 	TalentSlots int
@@ -130,15 +131,15 @@ type TrainerSheet struct {
 	Notes string
 }
 
-func (s *TrainerSheet) Render(w http.ResponseWriter, pageTemplate *template.Template) error {
-	var template *template.Template = &template.Template{}
+func (s *TrainerSheet) Render(w http.ResponseWriter) error {
+	template := new(template.Template)
 
-	*template = *pageTemplate
-
-	template, err := template.ParseFiles("./pkg/pokemon/PTA1/html/trainerSheet.partial.html")
+	template, err := sheeters.RenderVolatile("sheet.page.html", "./ui/html")
 	if err != nil {
 		return err
 	}
+
+	template, err = template.ParseFiles("./pkg/pokemon/PTA1/html/trainerSheet.partial.html")
 
 	buf := new(bytes.Buffer)
 
@@ -149,7 +150,7 @@ func (s *TrainerSheet) Render(w http.ResponseWriter, pageTemplate *template.Temp
 
 	buf.WriteTo(w)
 
-	return nil //, "./pkg/pokemon/PTA1/html/trainerSheet.partial.html"
+	return nil
 }
 
 type TrainerClass struct {

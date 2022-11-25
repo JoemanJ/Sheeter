@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"html/template"
 	"math/rand"
 	"os"
 	"path/filepath"
@@ -158,4 +159,27 @@ func SetRD(key, value string) error {
 	}
 
 	return nil
+}
+
+func RenderVolatile(pageFile, dir string) (*template.Template, error) {
+	name := filepath.Base(pageFile)
+
+	template := template.New(name)
+
+	template, err := template.ParseFiles(filepath.Join(dir, "volatile/", pageFile))
+	if err != nil {
+		return nil, err
+	}
+
+	template, err = template.ParseGlob(filepath.Join(dir, "*.layout.html"))
+	if err != nil {
+		return nil, err
+	}
+
+	template, err = template.ParseGlob(filepath.Join(dir, "*.partial.html"))
+	if err != nil {
+		return nil, err
+	}
+
+	return template, nil
 }

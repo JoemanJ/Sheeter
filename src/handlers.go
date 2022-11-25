@@ -1,16 +1,14 @@
 package main
 
 import (
-	general "Joe/sheet-hole/pkg/general"
-	"Joe/sheet-hole/pkg/pokemon/PTA1"
+	general "Joe/sheeter/pkg/general"
+	"Joe/sheeter/pkg/pokemon/PTA1"
 	"encoding/json"
 	"fmt"
 	"net/http"
 )
 
 func (a *application) sheet(w http.ResponseWriter, r *http.Request) {
-	ts := a.templateCache["sheet.page.html"]
-
 	sheet, err := general.GetSheet(0)
 	if err != nil {
 		fmt.Print(err.Error())
@@ -33,17 +31,14 @@ func (a *application) sheet(w http.ResponseWriter, r *http.Request) {
 
 		}
 
-		err = s.Render(w, ts)
+		err = s.Render(w)
 		if err != nil {
 			a.serverError(w, err)
 			return
 		}
 
-		w.Write([]byte("Unknown sheet type"))
-		return
 	}
-
-	w.Write([]byte("Something went wrong!"))
+	w.Write([]byte("Unknown sheet type"))
 	return
 }
 

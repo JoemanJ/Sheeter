@@ -1,4 +1,4 @@
-module Joe/sheet-hole
+module Joe/sheeter
 
 go 1.19
 

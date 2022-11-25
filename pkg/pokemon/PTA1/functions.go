@@ -9,7 +9,7 @@ import (
 
 	"github.com/mtslzr/pokeapi-go"
 
-	general "Joe/sheet-hole/pkg/general"
+	general "Joe/sheeter/pkg/general"
 )
 
 const ABILITYDATA string = "./data/PTA1/abilityData.json"
