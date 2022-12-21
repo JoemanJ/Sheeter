@@ -11,6 +11,8 @@ package main
 
 import (
 	sheeters "Joe/sheeter/pkg/general"
+	"Joe/sheeter/pkg/pokemon/PTA1"
+	// "Joe/sheeter/pkg/pokemon/PTA1"
 	"errors"
 	"fmt"
 	"html/template"
@@ -37,7 +39,7 @@ func main() {
 
 	_, err = os.Stat("./data/sheets")
 	if errors.Is(err, os.ErrNotExist) {
-		os.Mkdir("data", 0755)
+		os.Mkdir("data/sheets", 0755)
 	}
 
 	rand.Seed(time.Now().UnixNano())
@@ -71,6 +73,12 @@ func main() {
 	mux.HandleFunc("/new/", app.login)
 	mux.HandleFunc("/sheet", app.sheet)
 
+	sheet, err := PTA1.CreateTrainerSheet("Pokemaster", "joe", "M", 0, 20, 180, 900, map[string]int{"HP": 10, "ATK": 10, "DEF": 10, "SPATK": 10, "SPDEF": 10, "SPD": 10})
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(sheet)
 	fmt.Printf("starting server on port %s\n", PORT)
 	err = http.ListenAndServe(PORT, mux)
 	if err != nil {

@@ -10,8 +10,3 @@ type LL struct {
 	last  *LLCel
 	count int
 }
-
-type G_sheet struct {
-	Type string
-	Data any
-}

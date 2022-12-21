@@ -14,436 +14,441 @@
 
 {{define "sheet_body"}}
 <section class="sheet_space">
-    <link rel="stylesheet" href="./static/css/PTA1/trainerSheet.css">
-    <link rel="shortcut icon" href="./static/img/PTA1/Sheeter.ico">
-    <script src="./static/js/PTA1/trainerSheet.js"></script>
-    <div class="tabs">
-        <button class="tab" id="id" onclick="openTab(event, 'id')">ID</button>
-        <button class="tab" id="pokes" onclick="openTab(event, 'pokemon')">pokes</button>
-        <button class="tab" id="bag" onclick="openTab(event, 'bag')">bag</button>
-        <button class="tab" id="prizes" onclick="openTab(event, 'prizes')">prizes</button>
-        <button class="tab" id="dex" onclick="openTab(event, 'dex')">dex</button>
-        <button class="tab" id="stats" onclick="openTab(event, 'stats')">stats</button>
-        <button class="tab" id="notes" onclick="openTab(event, 'notes')">notes</button>
-    </div>
-    
-    <div class="tab_body" id="id_tab">
-        <div class="header">
-            <img src="./static/img/logo.png" id="trainer_photo">
-    
-            <div class="personal_info">
-                Nome: Pokemaster<br>Player: Joe (M)<br><br>Altura: 1,83m<br>Peso: 60.5Kg
-            </div>
-    
-            <div class="header_stats">
-                <div id="lvl">
-                    lvl: 50
-                </div>
-    
-                <div class="class_table">
-                    <table id="class_table">
-                        <th colspan="2">Classes</th>
-                        <tr>
-                            <td>Guerreiro</td>
-                            <td>Elementalista (água)</td>
-                        </tr>
-                        <tr>
-                            <td>Caçador</td>
-                            <td>Musa</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="tab_body" id="pokemon_tab">
-        <div class="party">
-            <div class="poke_box" id="poke_1">
-                <div class="box_icons">
-                    <img class="ball_icon" src="./static/img/PTA1/Pokeball_open_icon.png">
-                    <img class="poke_icon" src="./static/img/PTA1/Pokeball_icon.png">
-                </div>
-                <div class="box_stats">
-                    <div class="poke_lvl">
-                        lvl: 5
-                        <img class="gender_icon" src="./static/img/PTA1/male_icon.png">
-                    </div>
-                    <div class="poke_name">Pokemon1</div>
-                    <div class="HP_box">
-                        <meter class="HP_bar" value="50" max="100"></meter>
-                        <p>50/100</p>
-                    </div>
-                </div>
-            </div>
-            <div class="poke_box" id="poke_1">
-                <div class="box_icons">
-                    <img class="ball_icon" src="./static/img/PTA1/Pokeball_icon.png">
-                    <img class="poke_icon" src="./static/img/PTA1/Pokeball_icon.png">
-                </div>
-                <div class="box_stats">
-                    <div class="poke_lvl">
-                        lvl: 5
-                        <img class="gender_icon" src="./static/img/PTA1/female_icon.png">
-                    </div>
-                    <div class="poke_name">Pokemon2</div>
-                    <div class="HP_box">
-                        <meter class="HP_bar" value="50" max="100"></meter>
-                        <p>50/100</p>
-                    </div>
-                </div>
-            </div>
-            <div class="poke_box" id="poke_1">
-                <div class="box_icons">
-                    <img class="ball_icon" src="./static/img/PTA1/Pokeball_icon.png">
-                    <img class="poke_icon" src="./static/img/PTA1/Pokeball_icon.png">
-                </div>
-                <div class="box_stats">
-                    <div class="poke_lvl">
-                        lvl: 5
-                        <img class="gender_icon" src="./static/img/PTA1/male_icon.png">
-                    </div>
-                    <div class="poke_name">Pokemon3</div>
-                    <div class="HP_box">
-                        <meter class="HP_bar" value="50" max="100"></meter>
-                        <p>50/100</p>
-                    </div>
-                </div>
-            </div>
-            <div class="poke_box" id="poke_1">
-                <div class="box_icons">
-                    <img class="ball_icon" src="./static/img/PTA1/Pokeball_icon.png">
-                    <img class="poke_icon" src="./static/img/PTA1/Pokeball_icon.png">
-                </div>
-                <div class="box_stats">
-                    <div class="poke_lvl">
-                        lvl: 5
-                        <img class="gender_icon" src="./static/img/PTA1/female_icon.png">
-                    </div>
-                    <div class="poke_name">Pokemon4</div>
-                    <div class="HP_box">
-                        <meter class="HP_bar" value="50" max="100"></meter>
-                        <p>50/100</p>
-                    </div>
-                </div>
-            </div>
-            <div class="poke_box" id="poke_1">
-                <div class="box_icons">
-                    <img class="ball_icon" src="./static/img/PTA1/Pokeball_icon.png">
-                    <img class="poke_icon" src="./static/img/PTA1/Pokeball_icon.png">
-                </div>
-                <div class="box_stats">
-                    <div class="poke_lvl">
-                        lvl: 5
-                        <img class="gender_icon" src="./static/img/PTA1/male_icon.png">
-                    </div>
-                    <div class="poke_name">Pokemon5</div>
-                    <div class="HP_box">
-                        <meter class="HP_bar" value="50" max="100"></meter>
-                        <p>50/100</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="poke_sheet">
-            POKEMON SHEET
-        </div>
-        <div class="party" id="pc">
-            <div class="poke_box" id="poke_1">
-                <div class="box_icons">
-                    <img class="ball_icon" src="./static/img/PTA1/Pokeball_open_icon.png">
-                    <img class="poke_icon" src="./static/img/PTA1/Pokeball_icon.png">
-                </div>
-                <div class="box_stats">
-                    <div class="poke_lvl">
-                        lvl: 5
-                        <img class="gender_icon" src="./static/img/PTA1/male_icon.png">
-                    </div>
-                    <div class="poke_name">Pokemon1</div>
-                    <div class="HP_box">
-                        <meter class="HP_bar" value="50" max="100"></meter>
-                        <p>50/100</p>
-                    </div>
-                </div>
-            </div>
-            <div class="poke_box" id="poke_1">
-                <div class="box_icons">
-                    <img class="ball_icon" src="./static/img/PTA1/Pokeball_open_icon.png">
-                    <img class="poke_icon" src="./static/img/PTA1/Pokeball_icon.png">
-                </div>
-                <div class="box_stats">
-                    <div class="poke_lvl">
-                        lvl: 5
-                        <img class="gender_icon" src="./static/img/PTA1/male_icon.png">
-                    </div>
-                    <div class="poke_name">Pokemon1</div>
-                    <div class="HP_box">
-                        <meter class="HP_bar" value="50" max="100"></meter>
-                        <p>50/100</p>
-                    </div>
-                </div>
-            </div>
-            <div class="poke_box" id="poke_1">
-                <div class="box_icons">
-                    <img class="ball_icon" src="./static/img/PTA1/Pokeball_open_icon.png">
-                    <img class="poke_icon" src="./static/img/PTA1/Pokeball_icon.png">
-                </div>
-                <div class="box_stats">
-                    <div class="poke_lvl">
-                        lvl: 5
-                        <img class="gender_icon" src="./static/img/PTA1/male_icon.png">
-                    </div>
-                    <div class="poke_name">Pokemon1</div>
-                    <div class="HP_box">
-                        <meter class="HP_bar" value="50" max="100"></meter>
-                        <p>50/100</p>
-                    </div>
-                </div>
-            </div>
-            <div class="poke_box" id="poke_1">
-                <div class="box_icons">
-                    <img class="ball_icon" src="./static/img/PTA1/Pokeball_open_icon.png">
-                    <img class="poke_icon" src="./static/img/PTA1/Pokeball_icon.png">
-                </div>
-                <div class="box_stats">
-                    <div class="poke_lvl">
-                        lvl: 5
-                        <img class="gender_icon" src="./static/img/PTA1/male_icon.png">
-                    </div>
-                    <div class="poke_name">Pokemon1</div>
-                    <div class="HP_box">
-                        <meter class="HP_bar" value="50" max="100"></meter>
-                        <p>50/100</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+  <link rel="stylesheet" href="./static/css/PTA1/trainerSheet.css">
+  <link rel="shortcut icon" href="./static/img/PTA1/Sheeter.ico">
+  <script src="./static/js/PTA1/trainerSheet.js"></script>
+  <div class="tabs">
+    <button class="tab" id="id" onclick="openTab(event, 'id')">ID</button>
+    <button class="tab" id="pokes" onclick="openTab(event, 'pokemon')">pokes</button>
+    <button class="tab" id="bag" onclick="openTab(event, 'bag')">bag</button>
+    <button class="tab" id="prizes" onclick="openTab(event, 'prizes')">prizes</button>
+    <button class="tab" id="dex" onclick="openTab(event, 'dex')">dex</button>
+    <button class="tab" id="stats" onclick="openTab(event, 'stats')">stats</button>
+    <button class="tab" id="notes" onclick="openTab(event, 'notes')">notes</button>
+  </div>
 
-    <div class="tab_body" id="bag_tab">
-        <span style="display: grid; width: 100%;">
-            <div class="item_grid">
-                <div class="item_box">
-                    <div class="item_box_header">
-                            <span>
-                                <input class="item_qtt" type="number" disabled="true" placeholder="1">
-                                <input class="item_name" type="text" placeholder="item name" disabled="true">
-                            </span>
-                        <span>
-                            <input class="qtt_input" type="number" placeholder="qtd" min="0" inputmode="numeric" step="1"> <input class="+-btn" type="button" value="+">
-                            <input type="button" value="-">
-                        </span>
-                    </div>
-                    <div class="item_description">
-                        <textarea name="description" disabled="true">Item description</textarea>
-                    </div>
-                </div>
-                <div class="item_box">
-                    <div class="item_box_header">
-                        <span>
-                            <input class="item_qtt" type="number" disabled="true" placeholder="1">
-                            <input class="item_name" type="text" placeholder="item name" disabled="true">
-                        </span>
-                        <span>
-                            <input class="qtt_input" type="number" placeholder="qtd" min="0" inputmode="numeric" step="1"> <input class="+-btn" type="button" value="+">
-                            <input type="button" value="-">
-                        </span>
-                    </div>
-                    <div class="item_description">
-                        <textarea name="description" disabled="true">Item description</textarea>
-                    </div>
-                </div>
-                <div class="item_box">
-                    <div class="item_box_header">
-                        <span>
-                            <input class="item_qtt" type="number" disabled="true" placeholder="1">
-                            <input class="item_name" type="text" placeholder="item name" disabled="true">
-                        </span>
-                        <span>
-                            <input class="qtt_input" type="number" placeholder="qtd" min="0" inputmode="numeric" step="1"> <input class="+-btn" type="button" value="+">
-                            <input type="button" value="-">
-                        </span>
-                    </div>
-                    <div class="item_description">
-                        <textarea name="description" disabled="true">Item description</textarea>
-                    </div>
-                </div>
-                <div class="item_box">
-                    <div class="item_box_header">
-                        <span>
-                            <input class="item_qtt" type="number" disabled="true" placeholder="1">
-                            <input class="item_name" type="text" placeholder="item name" disabled="true">
-                        </span>
-                        <span>
-                            <input class="qtt_input" type="number" placeholder="qtd" min="0" inputmode="numeric" step="1"> <input class="+-btn" type="button" value="+">
-                            <input type="button" value="-">
-                        </span>
-                    </div>
-                    <div class="item_description">
-                        <textarea name="description" disabled="true">Item description</textarea>
-                    </div>
-                </div>
-                <div class="item_box">
-                    <div class="item_box_header">
-                        <span>
-                            <input class="item_qtt" type="number" disabled="true" placeholder="1">
-                            <input class="item_name" type="text" placeholder="item name" disabled="true">
-                        </span>
-                        <span>
-                            <input class="qtt_input" type="number" placeholder="qtd" min="0" inputmode="numeric" step="1"> <input class="+-btn" type="button" value="+">
-                            <input type="button" value="-">
-                        </span>
-                    </div>
-                    <div class="item_description">
-                        <textarea name="description" disabled="true">Item description</textarea>
-                    </div>
-                </div>
-            </div>
-        </span>
-    </div>
+  <div class="tab_body" id="id_tab">
+    <div class="header">
+      <img src="./static/img/logo.png" id="trainer_photo">
 
-    <div class="tab_body" id="prizes_tab">
-        <div class="prize_box">
-            <img class="prize_img" src="./static/img/PTA1/Pokeball_icon_.png">
-            <textarea class="prize_description" disabled="true">Descrição do prêmio</textarea>
-        </div>
-        <div class="prize_box">
-            <img class="prize_img" src="./static/img/PTA1/Pokeball_icon_.png">
-            <textarea class="prize_description" disabled="true">Descrição do prêmio</textarea>
-        </div>
-        <div class="prize_box">
-            <img class="prize_img" src="./static/img/PTA1/Pokeball_icon_.png">
-            <textarea class="prize_description" disabled="true">Descrição do prêmio</textarea>
-        </div>
-    </div>
+      <div class="personal_info">
+        Nome: Pokemaster<br>Player: Joe (M)<br><br>Altura: 1,83m<br>Peso: 60.5Kg
+      </div>
 
-    <div class="tab_body" id="notes_tab">
-        <textarea id="notes_textbox" placeholder="Insira suas anotações aqui"></textarea>
-    </div>
+      <div class="header_stats">
+        <div id="lvl">
+          lvl: 50
+        </div>
 
-    <div class="tab_body" id="stats_tab">
-        <div class="stats_space">
-            <div class="HP_DA">
-                <div class="HP_display">
-                    <h2>HP</h2>
-                    <input type="number">
-                    <h2>/</h2>
-                    <input type="number" disabled="true" placeholder="100">
-                </div>
-                <div class="DA_display">
-                    <h2>DA</h2>
-                    <input class="dice_qtt" type="number" inputmode="numeric">
-                    <h2>d</h2>
-                    <input class="dice_sides" type="number" inputmode="numeric">
-                    <h2>+</h2>
-                    <input class="roll_mod" type="number" inputmode="numeric">
-                    <button class="roll_button" id="roll_DA"><img class="die_icon" src="./static/img/die_icon.png"></button>
-                </div>
-            </div>
-            <table class="stats_table">
-                <tr>
-                    <th colspan="5">STATS</th>
-                </tr>
-                <tr>
-                    <th>Stat</th>
-                    <th>Atributo</th>
-                    <th>Mod</th>
-                    <th>Fase</th>
-                    <th>Total</th>
-                </tr>
-                <tr>
-                    <td>Saúde</td>
-                    <td><input class="stat_field" type="number" accept="numeric" step="1" placeholder="10" disabled="true"></td>
-                    <td><input class="stat_field" type="number" accept="numeric" step="1" placeholder="0"></td>
-                    <td><input class="stat_field" type="number" accept="numeric" step="1" placeholder="0" min="-6" max="6"></td>
-                    <td>10</td>
-                </tr>
-                <tr>
-                    <td>Ataque</td>
-                    <td><input class="stat_field" type="number" accept="numeric" step="1" placeholder="10" disabled="true"></td>
-                    <td><input class="stat_field" type="number" accept="numeric" step="1" placeholder="0"></td>
-                    <td><input class="stat_field" type="number" accept="numeric" step="1" placeholder="0" min="-6" max="6"></td>
-                    <td>10</td>
-                </tr>
-                <tr>
-                    <td>Defesa</td>
-                    <td><input class="stat_field" type="number" accept="numeric" step="1" placeholder="10" disabled="true"></td>
-                    <td><input class="stat_field" type="number" accept="numeric" step="1" placeholder="0"></td>
-                    <td><input class="stat_field" type="number" accept="numeric" step="1" placeholder="0" min="-6" max="6"></td>
-                    <td>10</td>
-                </tr>
-                <tr>
-                    <td>Ataque Especial</td>
-                    <td><input class="stat_field" type="number" accept="numeric" step="1" placeholder="10" disabled="true"></td>
-                    <td><input class="stat_field" type="number" accept="numeric" step="1" placeholder="0"></td>
-                    <td><input class="stat_field" type="number" accept="numeric" step="1" placeholder="0" min="-6" max="6"></td>
-                    <td>10</td>
-                </tr>
-                <tr>
-                    <td>Defesa Especial</td>
-                    <td><input class="stat_field" type="number" accept="numeric" step="1" placeholder="10" disabled="true"></td>
-                    <td><input class="stat_field" type="number" accept="numeric" step="1" placeholder="0"></td>
-                    <td><input class="stat_field" type="number" accept="numeric" step="1" placeholder="0" min="-6" max="6"></td>
-                    <td>10</td>
-                </tr>
-                <tr>
-                    <td>Velocidade</td>
-                    <td><input class="stat_field" type="number" accept="numeric" step="1" placeholder="10" disabled="true"></td>
-                    <td><input class="stat_field" type="number" accept="numeric" step="1" placeholder="0"></td>
-                    <td><input class="stat_field" type="number" accept="numeric" step="1" placeholder="0" min="-6" max="6"></td>
-                    <td>10</td>
-                </tr>
-            </table>
+        <div class="class_table">
+          <table id="class_table">
+            <th colspan="2">Classes</th>
+            <tr>
+              <td>Guerreiro</td>
+              <td>Elementalista (água)</td>
+            </tr>
+            <tr>
+              <td>Caçador</td>
+              <td>Musa</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab_body" id="pokemon_tab">
+    <div class="party">
+      <div class="poke_box" id="poke_1">
+        <div class="box_icons">
+          <img class="ball_icon" src="./static/img/PTA1/Pokeball_open_icon.png">
+          <img class="poke_icon" src="./static/img/PTA1/Pokeball_icon.png">
+        </div>
+        <div class="box_stats">
+          <div class="poke_lvl">
+            lvl: 5
+            <img class="gender_icon" src="./static/img/PTA1/male_icon.png">
+          </div>
+          <div class="poke_name">Pokemon1</div>
+          <div class="HP_box">
+            <meter class="HP_bar" value="50" max="100"></meter>
+            <p>50/100</p>
+          </div>
+        </div>
+      </div>
+      <div class="poke_box" id="poke_1">
+        <div class="box_icons">
+          <img class="ball_icon" src="./static/img/PTA1/Pokeball_icon.png">
+          <img class="poke_icon" src="./static/img/PTA1/Pokeball_icon.png">
+        </div>
+        <div class="box_stats">
+          <div class="poke_lvl">
+            lvl: 5
+            <img class="gender_icon" src="./static/img/PTA1/female_icon.png">
+          </div>
+          <div class="poke_name">Pokemon2</div>
+          <div class="HP_box">
+            <meter class="HP_bar" value="50" max="100"></meter>
+            <p>50/100</p>
+          </div>
+        </div>
+      </div>
+      <div class="poke_box" id="poke_1">
+        <div class="box_icons">
+          <img class="ball_icon" src="./static/img/PTA1/Pokeball_icon.png">
+          <img class="poke_icon" src="./static/img/PTA1/Pokeball_icon.png">
+        </div>
+        <div class="box_stats">
+          <div class="poke_lvl">
+            lvl: 5
+            <img class="gender_icon" src="./static/img/PTA1/male_icon.png">
+          </div>
+          <div class="poke_name">Pokemon3</div>
+          <div class="HP_box">
+            <meter class="HP_bar" value="50" max="100"></meter>
+            <p>50/100</p>
+          </div>
+        </div>
+      </div>
+      <div class="poke_box" id="poke_1">
+        <div class="box_icons">
+          <img class="ball_icon" src="./static/img/PTA1/Pokeball_icon.png">
+          <img class="poke_icon" src="./static/img/PTA1/Pokeball_icon.png">
+        </div>
+        <div class="box_stats">
+          <div class="poke_lvl">
+            lvl: 5
+            <img class="gender_icon" src="./static/img/PTA1/female_icon.png">
+          </div>
+          <div class="poke_name">Pokemon4</div>
+          <div class="HP_box">
+            <meter class="HP_bar" value="50" max="100"></meter>
+            <p>50/100</p>
+          </div>
+        </div>
+      </div>
+      <div class="poke_box" id="poke_1">
+        <div class="box_icons">
+          <img class="ball_icon" src="./static/img/PTA1/Pokeball_icon.png">
+          <img class="poke_icon" src="./static/img/PTA1/Pokeball_icon.png">
+        </div>
+        <div class="box_stats">
+          <div class="poke_lvl">
+            lvl: 5
+            <img class="gender_icon" src="./static/img/PTA1/male_icon.png">
+          </div>
+          <div class="poke_name">Pokemon5</div>
+          <div class="HP_box">
+            <meter class="HP_bar" value="50" max="100"></meter>
+            <p>50/100</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="poke_sheet">
+      POKEMON SHEET
+    </div>
+    <div class="party" id="pc">
+      <div class="poke_box" id="poke_1">
+        <div class="box_icons">
+          <img class="ball_icon" src="./static/img/PTA1/Pokeball_open_icon.png">
+          <img class="poke_icon" src="./static/img/PTA1/Pokeball_icon.png">
+        </div>
+        <div class="box_stats">
+          <div class="poke_lvl">
+            lvl: 5
+            <img class="gender_icon" src="./static/img/PTA1/male_icon.png">
+          </div>
+          <div class="poke_name">Pokemon1</div>
+          <div class="HP_box">
+            <meter class="HP_bar" value="50" max="100"></meter>
+            <p>50/100</p>
+          </div>
+        </div>
+      </div>
+      <div class="poke_box" id="poke_1">
+        <div class="box_icons">
+          <img class="ball_icon" src="./static/img/PTA1/Pokeball_open_icon.png">
+          <img class="poke_icon" src="./static/img/PTA1/Pokeball_icon.png">
+        </div>
+        <div class="box_stats">
+          <div class="poke_lvl">
+            lvl: 5
+            <img class="gender_icon" src="./static/img/PTA1/male_icon.png">
+          </div>
+          <div class="poke_name">Pokemon1</div>
+          <div class="HP_box">
+            <meter class="HP_bar" value="50" max="100"></meter>
+            <p>50/100</p>
+          </div>
+        </div>
+      </div>
+      <div class="poke_box" id="poke_1">
+        <div class="box_icons">
+          <img class="ball_icon" src="./static/img/PTA1/Pokeball_open_icon.png">
+          <img class="poke_icon" src="./static/img/PTA1/Pokeball_icon.png">
+        </div>
+        <div class="box_stats">
+          <div class="poke_lvl">
+            lvl: 5
+            <img class="gender_icon" src="./static/img/PTA1/male_icon.png">
+          </div>
+          <div class="poke_name">Pokemon1</div>
+          <div class="HP_box">
+            <meter class="HP_bar" value="50" max="100"></meter>
+            <p>50/100</p>
+          </div>
+        </div>
+      </div>
+      <div class="poke_box" id="poke_1">
+        <div class="box_icons">
+          <img class="ball_icon" src="./static/img/PTA1/Pokeball_open_icon.png">
+          <img class="poke_icon" src="./static/img/PTA1/Pokeball_icon.png">
+        </div>
+        <div class="box_stats">
+          <div class="poke_lvl">
+            lvl: 5
+            <img class="gender_icon" src="./static/img/PTA1/male_icon.png">
+          </div>
+          <div class="poke_name">Pokemon1</div>
+          <div class="HP_box">
+            <meter class="HP_bar" value="50" max="100"></meter>
+            <p>50/100</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab_body" id="bag_tab">
+    <span style="display: grid; width: 100%;">
+      <div class="item_grid">
+        <div class="item_box">
+          <div class="item_box_header">
             <span>
-                <table class="stats_table">
-                    <tr>
-                        <th colspan="2">EVASÃO</th>
-                    </tr>
-                    <tr>
-                        <th>Física</th>
-                        <td>10</td>
-                    </tr>
-                    <tr>
-                        <th>Especial</th>
-                        <td>10</td>
-                    </tr>
-                    <tr>
-                        <th>Veloz</th>
-                        <td>10</td>
-                    </tr>
-                    
-                </table>
-                <table class="stats_table">
-                    <tr>
-                        <th colspan="2">DESLOCAMENTOS</th>
-                    </tr>
-                    <tr>
-                        <th>Terrestre</th>
-                        <td>10</td>
-                    </tr>
-                    <tr>
-                        <th>Escavação</th>
-                        <td>10</td>
-                    </tr>
-                    <tr>
-                        <th>Natação</th>
-                        <td>10</td>
-                    </tr>
-                    <tr>
-                        <th>Subaquático</th>
-                        <td>10</td>
-                    </tr>
-                    <tr>
-                        <th>Vôo</th>
-                        <td>10</td>
-                    </tr>
-                </table>
+              <input class="item_qtt" type="number" disabled="true" placeholder="1">
+              <input class="item_name" type="text" placeholder="item name" disabled="true">
             </span>
+            <span>
+              <input class="qtt_input" type="number" placeholder="qtd" min="0" inputmode="numeric" step="1"> <input
+                class="+-btn" type="button" value="+">
+              <input type="button" value="-">
+            </span>
+          </div>
+          <div class="item_description">
+            <textarea name="description" disabled="true">Item description</textarea>
+          </div>
         </div>
-        <div class="talents_space">
+        <div class="item_box">
+          <div class="item_box_header">
+            <span>
+              <input class="item_qtt" type="number" disabled="true" placeholder="1">
+              <input class="item_name" type="text" placeholder="item name" disabled="true">
+            </span>
+            <span>
+              <input class="qtt_input" type="number" placeholder="qtd" min="0" inputmode="numeric" step="1"> <input
+                class="+-btn" type="button" value="+">
+              <input type="button" value="-">
+            </span>
+          </div>
+          <div class="item_description">
+            <textarea name="description" disabled="true">Item description</textarea>
+          </div>
+        </div>
+        <div class="item_box">
+          <div class="item_box_header">
+            <span>
+              <input class="item_qtt" type="number" disabled="true" placeholder="1">
+              <input class="item_name" type="text" placeholder="item name" disabled="true">
+            </span>
+            <span>
+              <input class="qtt_input" type="number" placeholder="qtd" min="0" inputmode="numeric" step="1"> <input
+                class="+-btn" type="button" value="+">
+              <input type="button" value="-">
+            </span>
+          </div>
+          <div class="item_description">
+            <textarea name="description" disabled="true">Item description</textarea>
+          </div>
+        </div>
+        <div class="item_box">
+          <div class="item_box_header">
+            <span>
+              <input class="item_qtt" type="number" disabled="true" placeholder="1">
+              <input class="item_name" type="text" placeholder="item name" disabled="true">
+            </span>
+            <span>
+              <input class="qtt_input" type="number" placeholder="qtd" min="0" inputmode="numeric" step="1"> <input
+                class="+-btn" type="button" value="+">
+              <input type="button" value="-">
+            </span>
+          </div>
+          <div class="item_description">
+            <textarea name="description" disabled="true">Item description</textarea>
+          </div>
+        </div>
+        <div class="item_box">
+          <div class="item_box_header">
+            <span>
+              <input class="item_qtt" type="number" disabled="true" placeholder="1">
+              <input class="item_name" type="text" placeholder="item name" disabled="true">
+            </span>
+            <span>
+              <input class="qtt_input" type="number" placeholder="qtd" min="0" inputmode="numeric" step="1"> <input
+                class="+-btn" type="button" value="+">
+              <input type="button" value="-">
+            </span>
+          </div>
+          <div class="item_description">
+            <textarea name="description" disabled="true">Item description</textarea>
+          </div>
+        </div>
+      </div>
+    </span>
+  </div>
 
-        </div>
+  <div class="tab_body" id="prizes_tab">
+    <div class="prize_box">
+      <img class="prize_img" src="./static/img/PTA1/Pokeball_icon_.png">
+      <textarea class="prize_description" disabled="true">Descrição do prêmio</textarea>
     </div>
+    <div class="prize_box">
+      <img class="prize_img" src="./static/img/PTA1/Pokeball_icon_.png">
+      <textarea class="prize_description" disabled="true">Descrição do prêmio</textarea>
+    </div>
+    <div class="prize_box">
+      <img class="prize_img" src="./static/img/PTA1/Pokeball_icon_.png">
+      <textarea class="prize_description" disabled="true">Descrição do prêmio</textarea>
+    </div>
+  </div>
+
+  <div class="tab_body" id="notes_tab">
+    <textarea id="notes_textbox" placeholder="Insira suas anotações aqui"></textarea>
+  </div>
+
+  <div class="tab_body" id="stats_tab">
+    <div class="stats_space">
+      <table class="stats_table">
+        <tr>
+          <th colspan="5">STATS</th>
+        </tr>
+        <tr>
+          <th>Stat</th>
+          <th>Atributo</th>
+          <th>Mod</th>
+          <th>Fase</th>
+          <th>Total</th>
+        </tr>
+        <tr>
+          <td>Saúde</td>
+          <td><input class="stat_field" type="number" accept="numeric" step="1" placeholder="10" disabled="true"></td>
+          <td><input class="stat_field" type="number" accept="numeric" step="1" placeholder="0"></td>
+          <td><input class="stat_field" type="number" accept="numeric" step="1" placeholder="0" min="-6" max="6"></td>
+          <td>10</td>
+        </tr>
+        <tr>
+          <td>Ataque</td>
+          <td><input class="stat_field" type="number" accept="numeric" step="1" placeholder="10" disabled="true"></td>
+          <td><input class="stat_field" type="number" accept="numeric" step="1" placeholder="0"></td>
+          <td><input class="stat_field" type="number" accept="numeric" step="1" placeholder="0" min="-6" max="6"></td>
+          <td>10</td>
+        </tr>
+        <tr>
+          <td>Defesa</td>
+          <td><input class="stat_field" type="number" accept="numeric" step="1" placeholder="10" disabled="true"></td>
+          <td><input class="stat_field" type="number" accept="numeric" step="1" placeholder="0"></td>
+          <td><input class="stat_field" type="number" accept="numeric" step="1" placeholder="0" min="-6" max="6"></td>
+          <td>10</td>
+        </tr>
+        <tr>
+          <td>Ataque Especial</td>
+          <td><input class="stat_field" type="number" accept="numeric" step="1" placeholder="10" disabled="true"></td>
+          <td><input class="stat_field" type="number" accept="numeric" step="1" placeholder="0"></td>
+          <td><input class="stat_field" type="number" accept="numeric" step="1" placeholder="0" min="-6" max="6"></td>
+          <td>10</td>
+        </tr>
+        <tr>
+          <td>Defesa Especial</td>
+          <td><input class="stat_field" type="number" accept="numeric" step="1" placeholder="10" disabled="true"></td>
+          <td><input class="stat_field" type="number" accept="numeric" step="1" placeholder="0"></td>
+          <td><input class="stat_field" type="number" accept="numeric" step="1" placeholder="0" min="-6" max="6"></td>
+          <td>10</td>
+        </tr>
+        <tr>
+          <td>Velocidade</td>
+          <td><input class="stat_field" type="number" accept="numeric" step="1" placeholder="10" disabled="true"></td>
+          <td><input class="stat_field" type="number" accept="numeric" step="1" placeholder="0"></td>
+          <td><input class="stat_field" type="number" accept="numeric" step="1" placeholder="0" min="-6" max="6"></td>
+          <td>10</td>
+        </tr>
+      </table>
+      <div class="right_stats">
+        <div class="HP_display">
+          <h2>HP</h2>
+          <input type="number">
+          <h2>/</h2>
+          <input type="number" disabled="true" placeholder="100">
+        </div>
+        <div class="DA_display">
+          <h2>DA</h2>
+          <input class="dice_qtt" type="number" inputmode="numeric">
+          <h2>d</h2>
+          <input class="dice_sides" type="number" inputmode="numeric">
+          <h2>+</h2>
+          <input class="roll_mod" type="number" inputmode="numeric">
+          <button class="roll_button" id="roll_DA"><img class="die_icon" src="./static/img/die_icon.png"></button>
+        </div>
+        <span>
+          <table class="stats_table">
+            <tr>
+              <th colspan="2">EVASÃO</th>
+            </tr>
+            <tr>
+              <th>Física</th>
+              <td>10</td>
+            </tr>
+            <tr>
+              <th>Especial</th>
+              <td>10</td>
+            </tr>
+            <tr>
+              <th>Veloz</th>
+              <td>10</td>
+            </tr>
+
+          </table>
+          <table class="stats_table">
+            <tr>
+              <th colspan="2">DESLOCAMENTOS</th>
+            </tr>
+            <tr>
+              <th>Terrestre</th>
+              <td>10</td>
+            </tr>
+            <tr>
+              <th>Escavação</th>
+              <td>10</td>
+            </tr>
+            <tr>
+              <th>Natação</th>
+              <td>10</td>
+            </tr>
+            <tr>
+              <th>Subaquático</th>
+              <td>10</td>
+            </tr>
+            <tr>
+              <th>Vôo</th>
+              <td>10</td>
+            </tr>
+          </table>
+        </span>
+      </div>
+    </div>
+    <div class="talents_space">
+
+    </div>
+  </div>
 </section>
 {{end}}
 <!-- </body>

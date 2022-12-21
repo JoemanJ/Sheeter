@@ -56,17 +56,25 @@ func Capped(value, minCap, maxCap int) int {
 	return value
 }
 
-func GetSheet(id int) (*G_sheet, error) {
-	var sheet G_sheet
-
-	fileName := filepath.Join(SHEETSPATH, strconv.Itoa(id)+"_sheet.json")
-
-	err := GetJsonData(fileName, &sheet)
+func GetSheetType(id int) (string, int, error) {
+	fileNames, err := filepath.Glob(SHEETSPATH + strconv.Itoa(id) + "_*")
 	if err != nil {
-		return nil, err
+		return "", 0, err
 	}
 
-	return &sheet, nil
+	if len(fileNames) == 0 {
+		return "", 0, errors.New("No sheet with given ID: " + strconv.Itoa(id))
+	}
+
+	fileName := fileNames[0]
+
+	var Type string
+
+	fmt.Sscanf(fileName, "%*d_%d.json", &Type)
+
+	ret, _ := strconv.Atoi(Type)
+
+	return fileName, ret, nil
 }
 
 // Saves the unmarshalled content of json file "path" to the variable pointed by "m"
@@ -121,6 +129,10 @@ func GetRD(key string) (string, error) {
 	err = json.Unmarshal(file, &data)
 	if err != nil {
 		return "", err
+	}
+
+	if _, ok := data[key]; !ok {
+		return "", errors.New("No value with key \"" + key + "\" in RD.json\n")
 	}
 
 	return data[key], nil

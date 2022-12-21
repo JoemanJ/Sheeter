@@ -8,6 +8,9 @@ import (
 	"net/http"
 )
 
+const TRAINER_SHEETID = 0
+const POKEMON_SHEETID = 1
+
 var WEAPONDAMAGETABLE [8]*general.DiceSet = [8]*general.DiceSet{{X: 1, N: 10, Mod: 4}, {X: 1, N: 12, Mod: 6}, {X: 2, N: 8, Mod: 6}, {X: 2, N: 10, Mod: 8}, {X: 3, N: 8, Mod: 10}, {X: 3, N: 10, Mod: 12}, {X: 3, N: 12, Mod: 14}, {X: 4, N: 12, Mod: 16}}
 
 var TRAINERLVLTABLE map[string][51]int = map[string][51]int{
@@ -90,6 +93,29 @@ type PokemonSheet struct {
 
 	Notes string
 }
+
+func (s *PokemonSheet) Render(w http.ResponseWriter) error {
+	template := new(template.Template)
+
+	template, err := sheeters.RenderVolatile("sheet.page.html", "./ui/html")
+	if err != nil {
+		return err
+	}
+
+	template, err = template.ParseFiles("./pkg/pokemon/PTA1/html/trainerSheet.partial.html")
+
+	buf := new(bytes.Buffer)
+
+	err = template.Execute(buf, nil)
+	if err != nil {
+		return err
+	}
+
+	buf.WriteTo(w)
+
+	return nil
+}
+
 
 // TRAINER STRUCTURES
 type TrainerSheet struct {

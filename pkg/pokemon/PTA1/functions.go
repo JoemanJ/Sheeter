@@ -394,23 +394,23 @@ func newPokemonStatusTable(stats map[string]int) (*PokemonStatusTable, error) {
 		}
 
 		if _, ok := stats["ATK"]; !ok {
-			return nil, errors.New("Invalid stats (missing HP)\n")
+			return nil, errors.New("Invalid stats (missing ATK)\n")
 		}
 
 		if _, ok := stats["DEF"]; !ok {
-			return nil, errors.New("Invalid stats (missing HP)\n")
+			return nil, errors.New("Invalid stats (missing DEF)\n")
 		}
 
 		if _, ok := stats["SPATK"]; !ok {
-			return nil, errors.New("Invalid stats (missing HP)\n")
+			return nil, errors.New("Invalid stats (missing SPATK)\n")
 		}
 
 		if _, ok := stats["SPDEF"]; !ok {
-			return nil, errors.New("Invalid stats (missing HP)\n")
+			return nil, errors.New("Invalid stats (missing SPDEF)\n")
 		}
 
 		if _, ok := stats["SPD"]; !ok {
-			return nil, errors.New("Invalid stats (missing HP)\n")
+			return nil, errors.New("Invalid stats (missing SPD)\n")
 		}
 	}
 
@@ -565,9 +565,9 @@ func CreatePokemonSheet(nickname, species, gender, nature string, abilities []*P
 		Notes: "",
 	}
 
-	err = general.SetJsonData("./data/sheets/"+aux+"_sheet.json", newSheet)
+	err = general.SetJsonData("./data/sheets/"+aux+"_0.json", newSheet)
 	if err != nil {
-		s := fmt.Sprintf("Error writing file %s:\n%s", "./data/sheets/"+aux+" sheet.json", err.Error())
+		s := fmt.Sprintf("Error writing file %s:\n%s", "./data/sheets/"+aux+"_0.json", err.Error())
 		return nil, errors.New(s)
 	}
 
@@ -643,19 +643,14 @@ func CreateTrainerSheet(name, player, gender string, lvl, age, height, weight in
 		TalentSlots: 0,
 	}
 
-	gSheet := general.G_sheet{
-		Type: "PTA1_trainerSheet",
-		Data: newSheet,
-	}
-
 	err = general.SetRD("sheetCount", strconv.Itoa(id+1))
 	if err != nil {
 		return nil, err
 	}
 
-	err = general.SetJsonData(general.SHEETSPATH+aux+"_sheet.json", gSheet)
+	err = general.SetJsonData(general.SHEETSPATH+aux+"_0.json", newSheet)
 	if err != nil {
-		s := fmt.Sprintf("Error writing file %s:\n%s", general.SHEETSPATH+aux+"_sheet.json", err.Error())
+		s := fmt.Sprintf("Error writing file %s:\n%s", general.SHEETSPATH+aux+"_0.json", err.Error())
 		return nil, errors.New(s)
 	}
 
