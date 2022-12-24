@@ -7,13 +7,12 @@ import (
 )
 
 func (a *application) sheet(w http.ResponseWriter, r *http.Request) {
-	path, Type, err := general.GetSheetType(0)
+	path, Type, err := general.GetSheetType(1)
 	if err != nil {
 		fmt.Print(err.Error())
 	}
-  a.renderSheet(w, r, path, Type)
-	
-	w.Write([]byte("Unknown sheet type"))
+	a.renderSheet(w, r, path, Type)
+
 	return
 }
 

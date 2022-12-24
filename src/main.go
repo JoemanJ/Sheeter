@@ -10,8 +10,8 @@ The PokeAPI API by ...
 package main
 
 import (
-	sheeters "Joe/sheeter/pkg/general"
-	"Joe/sheeter/pkg/pokemon/PTA1"
+	// sheeters "Joe/sheeter/pkg/general"
+	// "Joe/sheeter/pkg/pokemon/PTA1"
 	// "Joe/sheeter/pkg/pokemon/PTA1"
 	"errors"
 	"fmt"
@@ -62,23 +62,19 @@ func main() {
 
 	mux := http.NewServeMux()
 
-	err = sheeters.SetRD("sheetCount", "0")
-	if err != nil {
-		app.errorLog.Panic(err)
-	}
-
 	fileServer := http.FileServer(http.Dir("./ui/static/"))
 
 	mux.Handle("/static/", http.StripPrefix("/static", fileServer))
 	mux.HandleFunc("/new/", app.login)
 	mux.HandleFunc("/sheet", app.sheet)
 
-	sheet, err := PTA1.CreateTrainerSheet("Pokemaster", "joe", "M", 0, 20, 180, 900, map[string]int{"HP": 10, "ATK": 10, "DEF": 10, "SPATK": 10, "SPDEF": 10, "SPD": 10})
+	// _, err = PTA1.RegisterSpecies("Zangoose", "", [3]int{}, []PTA1.Capacity{}, []*PTA1.PokemonAbility{}, []*PTA1.PokemonAbility{}, map[string]int{})
+	// sheet, err := PTA1.CreatePokemonSheet("Fofucha", "Zangoose", "M", "adamant", []*PTA1.PokemonAbility{}, 10)
 	if err != nil {
 		panic(err)
 	}
 
-	fmt.Println(sheet)
+	// fmt.Println(sheet)
 	fmt.Printf("starting server on port %s\n", PORT)
 	err = http.ListenAndServe(PORT, mux)
 	if err != nil {

@@ -102,7 +102,7 @@ func (s *PokemonSheet) Render(w http.ResponseWriter) error {
 		return err
 	}
 
-	template, err = template.ParseFiles("./pkg/pokemon/PTA1/html/trainerSheet.partial.html")
+	template, err = template.ParseFiles("./pkg/pokemon/PTA1/html/pokemonSheet.partial.html")
 
 	buf := new(bytes.Buffer)
 
@@ -115,7 +115,6 @@ func (s *PokemonSheet) Render(w http.ResponseWriter) error {
 
 	return nil
 }
-
 
 // TRAINER STRUCTURES
 type TrainerSheet struct {

@@ -61,20 +61,19 @@ func GetSheetType(id int) (string, int, error) {
 	if err != nil {
 		return "", 0, err
 	}
-
+	fmt.Println(fileNames)
 	if len(fileNames) == 0 {
 		return "", 0, errors.New("No sheet with given ID: " + strconv.Itoa(id))
 	}
 
 	fileName := fileNames[0]
 
-	var Type string
+	var Type, trash int
+	fmt.Println(fileName)
+	fmt.Sscanf(filepath.Base(fileName), "%d_%d.json", &trash, &Type)
+	fmt.Println(Type)
 
-	fmt.Sscanf(fileName, "%*d_%d.json", &Type)
-
-	ret, _ := strconv.Atoi(Type)
-
-	return fileName, ret, nil
+	return fileName, Type, nil
 }
 
 // Saves the unmarshalled content of json file "path" to the variable pointed by "m"

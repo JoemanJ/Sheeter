@@ -529,7 +529,9 @@ func CreatePokemonSheet(nickname, species, gender, nature string, abilities []*P
 	status.Distributable = [2]int{0, lvl - 1}
 
 	aux, err := general.GetRD("sheetCount")
-	if err != nil {
+	if aux == "" {
+		general.SetRD("sheetCount", "0")
+	} else if err != nil {
 		return nil, err
 	}
 
@@ -565,9 +567,9 @@ func CreatePokemonSheet(nickname, species, gender, nature string, abilities []*P
 		Notes: "",
 	}
 
-	err = general.SetJsonData("./data/sheets/"+aux+"_0.json", newSheet)
+	err = general.SetJsonData("./data/sheets/"+aux+"_1.json", newSheet)
 	if err != nil {
-		s := fmt.Sprintf("Error writing file %s:\n%s", "./data/sheets/"+aux+"_0.json", err.Error())
+		s := fmt.Sprintf("Error writing file %s:\n%s", "./data/sheets/"+aux+"_1.json", err.Error())
 		return nil, errors.New(s)
 	}
 
@@ -609,7 +611,9 @@ func CreateTrainerSheet(name, player, gender string, lvl, age, height, weight in
 	}
 
 	aux, err := general.GetRD("sheetCount")
-	if err != nil {
+	if aux == "" {
+		general.SetRD("sheetCount", "0")
+	} else if err != nil {
 		return nil, err
 	}
 

@@ -359,7 +359,63 @@
 
 
 
+#dex_tab{
+  flex-direction: column;
+  width: min-content;
+  align-items: center;
+}
 
+.dex_block{
+  width: min-content;
+  height: auto;
+}
+
+.dex_block *{
+  position:absolute;
+  left: 21.4%;
+  top: 51%;
+}
+
+.dex_block img{
+  transform: translate(-50%, -50%);
+}
+
+.dex_block img:first-child{
+  position: static;
+  transform: translate(0, 0);
+}
+
+.dex_sprite{
+  left: 35.5%;
+  top: 66%;
+}
+
+.dex_caught_icon{
+  left: 42.5%;
+  top: 58%;
+}
+
+.dex_search{
+  left: 28%;
+  top: 93%;
+  padding: 5px;
+}
+
+#dex_poke_name{
+  left: 28%;
+  top: 83%;
+}
+
+
+#dex_poke_description{
+  left: 55%;
+  top: 32%;
+  background-color: #222222;
+  color: lightgreen;
+  height: 550px;
+  width: 280px;
+  padding-left: 2px;
+}
 
 
 
@@ -398,11 +454,14 @@
 .stats_space{
     display: flex;
     margin: 20px;
+  justify-content: space-between;
+  padding: 0vw 5vw;
 }
 
-#right_stats{
+.left_panel{
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 
 .HP_DA{
@@ -413,7 +472,7 @@
 .HP_display{
     display: flex;
     width: auto;
-    height: 1.5em;
+    height: 100%;
     border-style: solid;
     padding: 2px 5px;
 }
@@ -426,6 +485,7 @@
 .HP_display input[type=number]{
     width: 50px;
     font-size: 20px;
+  text-align: center;
 }
 
 .DA_display{
@@ -439,7 +499,7 @@
 }
 
 .DA_display input[type=number]{
-    width: 20px;
+    width: 30px;
 }
 
 .dice_sides{
@@ -455,10 +515,16 @@
     width: 20px;
 }
 
+.move_stats{
+  display: flex;
+  flex-direction: row;
+}
+
 .stats_table{
     border-style: solid;
     border-collapse: collapse;
     width: fit-content;
+  margin: 5px;
 }
 
 .stats_table th,td{
@@ -479,39 +545,66 @@ input::-webkit-inner-spin-button {
     margin: 0;
 }
 
-
-.talents_space{
-    display: grid;
-    margin: 20px;
-    background-color: orange;
-    grid-template-columns: 50% 50%;
-    align-content: center;
+.talents_grid{
+  display: grid;
+  grid-template-columns: 50% 50%;
+  padding:5%;
 }
 
 .talent_box{
-    width: 80%;
-    margin: auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    padding: 5px 10px;
-    border: solid;
-    border-width: 2px;
-    border-color: black;
+  padding: 5px;
+  border-radius: 5px;
+  margin: 10px;
+  background-color: lightyellow;
+  display: flex;
+  flex-direction: column;
+  height: min-content;
+  /* width: 100%; */
 }
 
 .talent_box_header{
-    height: 20px;
-    display: flex;
-    justify-content: space-between;
+    height: min-content;
+    width: 100%;
+    display: grid;
+  grid:
+    'name name name name name icons'
+    'target target frequency frequency frequency icons'
+}
+
+.talent_name{
+  grid-area: name;
+}
+
+.talent_target{
+  grid-area: target;
+}
+
+.talent_frequency{
+  grid-area: frequency;
+}
+
+.talent_icons{
+  grid-area: icons;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  height: auto;
+}
+
+.talent_icons img{
+  /* scale: 0.5; */
+  width: auto;
+  height: auto;
 }
 
 .talent_description{
+  grid-area: description;
     width: auto;
     margin: 10px 10px 0px 0px;
 }
 
 .talent_description textarea{
     width: 100%;
-    height: 75px;
+    height: auto;
     resize: none;
 }

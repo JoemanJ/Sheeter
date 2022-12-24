@@ -1,13 +1,13 @@
 package main
 
 import (
+	general "Joe/sheeter/pkg/general"
 	"Joe/sheeter/pkg/pokemon/PTA1"
 	"fmt"
 	"html/template"
 	"net/http"
 	"path/filepath"
 	"runtime/debug"
-  general "Joe/sheeter/pkg/general"
 )
 
 func (a *application) serverError(w http.ResponseWriter, err error) {
@@ -58,27 +58,29 @@ func (a *application) newTemplateCache(dir string) (map[string]*template.Templat
 	return cache, nil
 }
 
-func (a *application) renderSheet(w http.ResponseWriter, r *http.Request, path string, Type int){
-  switch Type {
-  case 0:
-    var sheet *PTA1.TrainerSheet
-    
-    general.GetJsonData(path, sheet)
+func (a *application) renderSheet(w http.ResponseWriter, r *http.Request, path string, Type int) {
+	switch Type {
+	case 0:
+		var sheet *PTA1.TrainerSheet
 
-    err := sheet.Render(w)
-    if err != nil{
-      a.serverError(w, err)
-    }
+		general.GetJsonData(path, sheet)
 
-  case 1:
-    var sheet *PTA1.PokemonSheet
-    
-    general.GetJsonData(path, sheet)
+		err := sheet.Render(w)
+		if err != nil {
+			a.serverError(w, err)
+		}
 
-    err := sheet.Render(w)
-    if err != nil{
-      a.serverError(w, err)
-    }
-  }
+	case 1:
+		var sheet *PTA1.PokemonSheet
+
+		general.GetJsonData(path, sheet)
+		err := sheet.Render(w)
+		if err != nil {
+			a.serverError(w, err)
+		}
+
+	default:
+		w.Write([]byte("Unknown sheet type"))
+	}
 
 }
