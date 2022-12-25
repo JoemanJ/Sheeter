@@ -103,6 +103,9 @@ func (s *PokemonSheet) Render(w http.ResponseWriter) error {
 	}
 
 	template, err = template.ParseFiles("./pkg/pokemon/PTA1/html/pokemonSheet.partial.html")
+	if err != nil {
+		return err
+	}
 
 	buf := new(bytes.Buffer)
 

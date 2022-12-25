@@ -61,20 +61,23 @@ func (a *application) newTemplateCache(dir string) (map[string]*template.Templat
 func (a *application) renderSheet(w http.ResponseWriter, r *http.Request, path string, Type int) {
 	switch Type {
 	case 0:
-		var sheet *PTA1.TrainerSheet
+		sheet := &PTA1.TrainerSheet{}
 
 		general.GetJsonData(path, sheet)
-
 		err := sheet.Render(w)
 		if err != nil {
 			a.serverError(w, err)
 		}
 
 	case 1:
-		var sheet *PTA1.PokemonSheet
+		sheet := &PTA1.PokemonSheet{}
 
-		general.GetJsonData(path, sheet)
-		err := sheet.Render(w)
+		err := general.GetJsonData(path, sheet)
+		if err != nil {
+			a.serverError(w, err)
+		}
+
+		err = sheet.Render(w)
 		if err != nil {
 			a.serverError(w, err)
 		}

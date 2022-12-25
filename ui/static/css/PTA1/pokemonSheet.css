@@ -1,0 +1,430 @@
+*{
+    margin: 0;
+    font-family:"Ubuntu-nono", monospace;
+    color: black;
+}
+
+.sheet_space{
+    margin: 1%;
+    min-width: 90vw;
+}
+
+.tabs{
+    margin-left: 50px;
+    display: flex;
+    flex-direction: row;
+}
+
+.tab{
+    width: 100px;
+    height: 30px;
+    border-radius: 15px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    transform-origin: bottom center;
+    border-bottom: none;
+    transition: all 50ms;
+}
+.tab:hover{
+    
+    transform: scale(1.2);
+}
+
+.tab_body{
+    background-color: aquamarine;
+    border-radius: 40px;
+    border-color: black;
+    border-style: solid;
+    border-width: 2px;
+    min-width:75em;
+    display: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#id_tab{
+    width: 100%;
+    display: flex;
+}
+
+#id_tab > div > div > img{
+  width: 240px;
+}
+
+#id_tab > div{
+  width: 100%;
+  display: grid;
+  margin: 10px;
+  grid-template-columns: 50% 50%;}
+
+#id_tab > div > *{
+  width: 90%;
+  height: 100%;
+  margin: auto;
+}
+
+#id_tab > div > div > *{
+  padding: 3px 20px;
+  border-style: solid;
+  border-color: black;
+  border-width: 5px;
+  background-color: orangered;
+  margin: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items:center;
+  text-align:center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#id_tab > div > div input{
+  width: 60%;
+  border-radius: 10px;
+}
+
+#id_tab > div > div h2:last-child{
+  width: 60%;
+  background-color: white;
+  border-radius: 10px;
+}
+
+
+#id_tab > div > div meter{
+  width: 60%;
+  border-radius: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#notes_textbox{
+    margin: 20px;
+    width: 100%;
+    min-height: 300px;
+    padding: 5px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#stats_tab{
+    /* display: flex; */
+    flex-direction: column;
+}
+
+
+
+.stats_space{
+    display: flex;
+    margin: 20px;
+  justify-content: space-between;
+  padding: 0vw 5vw;
+}
+
+.left_panel{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.HP_DA{
+    display: flex;
+    justify-content: space-between;
+}
+
+.HP_display{
+    display: flex;
+    width: auto;
+    height: 100%;
+    border-style: solid;
+    padding: 2px 5px;
+}
+
+.HP_display h2{
+  margin: auto;
+    /* margin-right: 10px; */
+}
+
+.HP_display input[type=number]{
+    width: 50px;
+    font-size: 20px;
+  text-align: center;
+}
+
+.DA_display{
+    display: flex;
+    align-items: center;
+    border-style: solid;
+}
+
+.DA_display h2{
+    padding: 5px;
+}
+
+.DA_display input[type=number]{
+    width: 30px;
+}
+
+.dice_sides{
+    list-style-type: none;
+}
+
+.roll_button{
+    margin: 5px;
+    width: auto;
+}
+
+.die_icon{
+    width: 20px;
+}
+
+.move_stats{
+  display: flex;
+  flex-direction: row;
+}
+
+.stats_table{
+    border-style: solid;
+    border-collapse: collapse;
+    width: fit-content;
+  margin: 5px;
+}
+
+.stats_table th, .stats_table td{
+    padding: 10px;
+    border-style: solid;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    width: fit-content;
+}
+
+.stat_field{
+    width: 30px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    appearance: none;
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.talents_grid{
+  display: grid;
+  grid-template-columns: 50% 50%;
+  padding:5%;
+}
+
+.talent_box{
+  padding: 5px;
+  border-radius: 5px;
+  margin: 10px;
+  background-color: lightyellow;
+  display: flex;
+  flex-direction: column;
+  height: min-content;
+  /* width: 100%; */
+}
+
+.talent_box_header{
+    height: min-content;
+    width: 100%;
+    display: grid;
+  grid:
+    'name name name name name icons'
+    'target target frequency frequency frequency icons'
+}
+
+.talent_name{
+  grid-area: name;
+}
+
+.talent_target{
+  grid-area: target;
+}
+
+.talent_frequency{
+  grid-area: frequency;
+}
+
+.talent_icons{
+  grid-area: icons;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  height: auto;
+}
+
+.talent_icons img{
+  /* scale: 0.5; */
+  width: auto;
+  height: auto;
+}
+
+.talent_description{
+  grid-area: description;
+    width: auto;
+    margin: 10px 10px 0px 0px;
+}
+
+.talent_description textarea{
+    width: 100%;
+    height: auto;
+    resize: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#moves_tab{
+  flex-direction: column;
+}
+
+.moves_space{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+#moves_table{
+  width: 90%;
+}
+
+#moves_table tr td:first-child{
+  width: 30%;
+}
+
+#moves_table tr td:last-child{
+  padding: 0;
+}
+.move_box{
+  display: flex;
+  flex-direction: column;
+}
+
+.move_box div{
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+  border-style: solid;
+  border-width: 1px;
+  border-collapse: collapse;
+}
+
+.abilities_space{
+  border-width: 1px;
+  border-color: lightgray;
+  border-top-style: solid;
+  padding-top: 20px;
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
+.ability_box{
+  display: flex;
+  flex-direction: column;
+  display: grid;
+  padding: 0;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black;
+  width: 75%;
+  margin: auto;
+}
+
+.ability_box > *{
+  padding: 5px;
+  border-width: 1px;
+  border-style: solid;
+}
