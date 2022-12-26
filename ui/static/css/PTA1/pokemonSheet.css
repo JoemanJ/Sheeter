@@ -223,18 +223,15 @@
   text-align: center;
 }
 
-.DA_display{
+.elemental_bonus_display{
     display: flex;
     align-items: center;
     border-style: solid;
+  justify-content: space-between;
 }
 
-.DA_display h2{
+.elemental_bonus_display h2{
     padding: 5px;
-}
-
-.DA_display input[type=number]{
-    width: 30px;
 }
 
 .dice_sides{

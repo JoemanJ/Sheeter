@@ -1,25 +1,29 @@
 {{define "base"}}
-    <!doctype html>
-    <html lang='en'>
-    <head>
-        <meta charset='utf-8'>
-        <title>{{template "title" .}} - Sheeter</title>
-        <link rel='stylesheet' href='/static/css/main.css'>
-        <link rel='shortcut icon' href='/static/img/sheeter.ico'>
-    </head>
-    <body>
-        <header>
-            <h1><a href='/'>Sheeter</a></h1>
-        </header>
-        <nav>
-            <a href='/sheet'>Home</a>
-            <a href="/sheet">My account</a>
-        </nav>
-        <section class="slate" id="main_slate">
-            {{template "body" .}}
-        </section>
-        {{template "footer" .}}
-        <script src="/static/js/main.js" type="text/javascript"></script>
-    </body>
-    </html>
+<!doctype html>
+<html lang='en'>
+
+<head>
+  <meta charset='utf-8'>
+  <title>{{template "title" .}} - Sheeter</title>
+  <link rel='stylesheet' href='/static/css/main.css'>
+  <link rel='shortcut icon' href='/static/img/favicon.ico'>
+  <script src="/static/js/main.js"></script>
+</head>
+
+<body>
+  <header>
+    <h1><a href='/'>Sheeter</a></h1>
+  </header>
+  <nav>
+    <a href='/sheet'>Home</a>
+    <a href="/sheet">My account</a>
+  </nav>
+  <section class="slate" id="main_slate">
+    {{template "body" .}}
+  </section>
+  {{template "footer" .}}
+  <script src="/static/js/main.js" type="text/javascript"></script>
+</body>
+
+</html>
 {{end}}

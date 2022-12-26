@@ -1,20 +1,19 @@
 {{define "sheet_body"}}
 
 <section class="sheet_space">
-  <link rel="stylesheet" href="./static/css/PTA1/pokemonSheet.css">
-  <link rel="shortcut icon" href="./static/img/PTA1/Sheeter.ico">
-  <script src="./static/js/PTA1/pokemonSheet.js"></script>
+  <link rel="stylesheet" href="/static/css/PTA1/pokemonSheet.css">
+  <link rel="shortcut icon" href="/static/img/favicon.ico">
+  <script src="/static/js/PTA1/pokemonSheet.js"></script>
   <div class="tabs">
     <button class="tab" id="id" onclick="openTab(event, 'id')">ID</button>
     <button class="tab" id="stats" onclick="openTab(event, 'stats')">stats</button>
     <button class="tab" id="moves" onclick="openTab(event, 'moves')">moves</button>
     <button class="tab" id="notes" onclick="openTab(event, 'notes')">notes</button>
   </div>
-
   <div class="tab_body" id="id_tab">
     <div>
       <div>
-        <img src="./static/img/PTA1/Pokeball_icon.png" alt="Pokemon sprite">
+        <img src="/static/img/PTA1/Pokeball_icon.png" alt="Pokemon sprite">
         <div>
           <h2>Apelido</h2><input type="text">
         </div>
@@ -45,15 +44,15 @@
           <h2>LVL</h2>
         </div>
         <div>
+          <h2>EXP</h2><meter min="0" max="100" value="80">80/100</meter>
+        </div>
+        <div>
           <h2>Altura</h2>
           <h2>ALTURA</h2>
         </div>
         <div>
           <h2>Peso</h2>
           <h2>PESO</h2>
-        </div>
-        <div>
-          <h2>EXP</h2><meter min="0" max="100" value="80">80/100</meter>
         </div>
       </div>
     </div>
@@ -69,14 +68,9 @@
             <h2>/</h2>
             <input type="number" disabled="true" placeholder="100">
           </div>
-          <div class="DA_display">
-            <h2>DA</h2>
-            <input class="dice_qtt" type="number" inputmode="numeric">
-            <h2>d</h2>
-            <input class="dice_sides" type="number" inputmode="numeric">
-            <h2>+</h2>
-            <input class="roll_mod" type="number" inputmode="numeric">
-            <button class="roll_button" id="roll_DA"><img class="die_icon" src="./static/img/die_icon.png"></button>
+          <div class="elemental_bonus_display">
+            <h2>Bonus Elemental:</h2>
+            <h2>BE</h2>
           </div>
         </div>
         <div class="move_stats">
@@ -179,91 +173,6 @@
           <td>10</td>
         </tr>
       </table>
-    </div>
-    <div class="talents_space">
-
-      <div class="talents_grid">
-        <div class="talent_box">
-          <div class="talent_box_header">
-            <input class="talent_name" type="text" disabled="true" placeholder="Nome do Talento">
-            <input class="talent_target" type="text" placeholder="Alvo" disabled="true">
-            <input class="talent_frequency" type="text" placeholder="Frequência" disabled="true">
-            <div class="talent_icons">
-              <img src="./static/img/PTA1/Pokeball_icon.png">
-            </div>
-          </div>
-          <div class="talent_description">
-            <textarea name="description" disabled="true">talent description</textarea>
-          </div>
-        </div>
-        <div class="talent_box">
-          <div class="talent_box_header">
-            <input class="talent_name" type="text" disabled="true" placeholder="Nome do Talento">
-            <input class="talent_target" type="text" placeholder="Alvo" disabled="true">
-            <input class="talent_frequency" type="text" placeholder="Frequência" disabled="true">
-            <div class="talent_icons">
-              <img src="./static/img/PTA1/Pokeball_icon.png">
-            </div>
-          </div>
-          <div class="talent_description">
-            <textarea name="description" disabled="true">talent description</textarea>
-          </div>
-        </div>
-        <div class="talent_box">
-          <div class="talent_box_header">
-            <input class="talent_name" type="text" disabled="true" placeholder="Nome do Talento">
-            <input class="talent_target" type="text" placeholder="Alvo" disabled="true">
-            <input class="talent_frequency" type="text" placeholder="Frequência" disabled="true">
-            <div class="talent_icons">
-              <img src="./static/img/PTA1/Pokeball_icon.png">
-            </div>
-          </div>
-          <div class="talent_description">
-            <textarea name="description" disabled="true">talent description</textarea>
-          </div>
-        </div>
-        <div class="talent_box">
-          <div class="talent_box_header">
-            <input class="talent_name" type="text" disabled="true" placeholder="Nome do Talento">
-            <input class="talent_target" type="text" placeholder="Alvo" disabled="true">
-            <input class="talent_frequency" type="text" placeholder="Frequência" disabled="true">
-            <div class="talent_icons">
-              <img src="./static/img/PTA1/Pokeball_icon.png">
-            </div>
-          </div>
-          <div class="talent_description">
-            <textarea name="description" disabled="true">talent description</textarea>
-          </div>
-        </div>
-        <div class="talent_box">
-          <div class="talent_box_header">
-            <input class="talent_name" type="text" disabled="true" placeholder="Nome do Talento">
-            <input class="talent_target" type="text" placeholder="Alvo" disabled="true">
-            <input class="talent_frequency" type="text" placeholder="Frequência" disabled="true">
-            <div class="talent_icons">
-              <img src="./static/img/PTA1/Pokeball_icon.png">
-              <img src="./static/img/PTA1/Pokeball_icon.png">
-              <img src="./static/img/PTA1/Pokeball_icon.png">
-            </div>
-          </div>
-          <div class="talent_description">
-            <textarea name="description" disabled="true">talent description</textarea>
-          </div>
-        </div>
-        <div class="talent_box">
-          <div class="talent_box_header">
-            <input class="talent_name" type="text" disabled="true" placeholder="Nome do Talento">
-            <input class="talent_target" type="text" placeholder="Alvo" disabled="true">
-            <input class="talent_frequency" type="text" placeholder="Frequência" disabled="true">
-            <div class="talent_icons">
-              <img src="./static/img/PTA1/Pokeball_icon.png">
-            </div>
-          </div>
-          <div class="talent_description">
-            <textarea name="description" disabled="true">talent description</textarea>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 

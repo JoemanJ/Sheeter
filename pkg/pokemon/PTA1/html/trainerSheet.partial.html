@@ -7,16 +7,16 @@
     <title>Sheeter</title>
     <link rel="stylesheet" href="./trainerSheet.css">
     <link rel="shortcut icon" href="./Sheeter.ico">
-    <script src="./trainerSheet.js"></script>
+    <script src="trainerSheet.js"></script>
 </head>
 
 <body> -->
 
 {{define "sheet_body"}}
 <section class="sheet_space">
-  <link rel="stylesheet" href="./static/css/PTA1/trainerSheet.css">
-  <link rel="shortcut icon" href="./static/img/PTA1/Sheeter.ico">
-  <script src="./static/js/PTA1/trainerSheet.js"></script>
+  <link rel="stylesheet" href="/static/css/PTA1/trainerSheet.css">
+  <link rel="shortcut icon" href="/static/img/PTA1/Sheeter.ico">
+  <script src="/static/js/PTA1/trainerSheet.js"></script>
   <div class="tabs">
     <button class="tab" id="id" onclick="openTab(event, 'id')">ID</button>
     <button class="tab" id="pokes" onclick="openTab(event, 'pokemon')">pokes</button>
@@ -29,15 +29,16 @@
 
   <div class="tab_body" id="id_tab">
     <div class="header">
-      <img src="./static/img/logo.png" id="trainer_photo">
+      <img src="/static/img/logo.png" id="trainer_photo">
 
       <div class="personal_info">
-        Nome: Pokemaster<br>Player: Joe (M)<br><br>Altura: 1,83m<br>Peso: 60.5Kg
+        Nome: {{.Name}}<br>Player: {{.Player}} ({{.Gender}})<br><br>Altura: {{divide .Height 100}}m<br>Peso: {{divide
+        .Weight 100}}Kg
       </div>
 
       <div class="header_stats">
         <div id="lvl">
-          lvl: 50
+          lvl: {{.Lvl}}
         </div>
 
         <div class="class_table">
@@ -61,13 +62,13 @@
     <div class="party">
       <div class="poke_box" id="poke_1">
         <div class="box_icons">
-          <img class="ball_icon" src="./static/img/PTA1/Pokeball_open_icon.png">
-          <img class="poke_icon" src="./static/img/PTA1/Pokeball_icon.png">
+          <img class="ball_icon" src="/static/img/PTA1/Pokeball_open_icon.png">
+          <img class="poke_icon" src="/static/img/PTA1/Pokeball_icon.png">
         </div>
         <div class="box_stats">
           <div class="poke_lvl">
             lvl: 5
-            <img class="gender_icon" src="./static/img/PTA1/male_icon.png">
+            <img class="gender_icon" src="/static/img/PTA1/male_icon.png">
           </div>
           <div class="poke_name">Pokemon1</div>
           <div class="HP_box">
@@ -78,13 +79,13 @@
       </div>
       <div class="poke_box" id="poke_1">
         <div class="box_icons">
-          <img class="ball_icon" src="./static/img/PTA1/Pokeball_icon.png">
-          <img class="poke_icon" src="./static/img/PTA1/Pokeball_icon.png">
+          <img class="ball_icon" src="/static/img/PTA1/Pokeball_icon.png">
+          <img class="poke_icon" src="/static/img/PTA1/Pokeball_icon.png">
         </div>
         <div class="box_stats">
           <div class="poke_lvl">
             lvl: 5
-            <img class="gender_icon" src="./static/img/PTA1/female_icon.png">
+            <img class="gender_icon" src="/static/img/PTA1/female_icon.png">
           </div>
           <div class="poke_name">Pokemon2</div>
           <div class="HP_box">
@@ -95,13 +96,13 @@
       </div>
       <div class="poke_box" id="poke_1">
         <div class="box_icons">
-          <img class="ball_icon" src="./static/img/PTA1/Pokeball_icon.png">
-          <img class="poke_icon" src="./static/img/PTA1/Pokeball_icon.png">
+          <img class="ball_icon" src="/static/img/PTA1/Pokeball_icon.png">
+          <img class="poke_icon" src="/static/img/PTA1/Pokeball_icon.png">
         </div>
         <div class="box_stats">
           <div class="poke_lvl">
             lvl: 5
-            <img class="gender_icon" src="./static/img/PTA1/male_icon.png">
+            <img class="gender_icon" src="/static/img/PTA1/male_icon.png">
           </div>
           <div class="poke_name">Pokemon3</div>
           <div class="HP_box">
@@ -112,13 +113,13 @@
       </div>
       <div class="poke_box" id="poke_1">
         <div class="box_icons">
-          <img class="ball_icon" src="./static/img/PTA1/Pokeball_icon.png">
-          <img class="poke_icon" src="./static/img/PTA1/Pokeball_icon.png">
+          <img class="ball_icon" src="/static/img/PTA1/Pokeball_icon.png">
+          <img class="poke_icon" src="/static/img/PTA1/Pokeball_icon.png">
         </div>
         <div class="box_stats">
           <div class="poke_lvl">
             lvl: 5
-            <img class="gender_icon" src="./static/img/PTA1/female_icon.png">
+            <img class="gender_icon" src="/static/img/PTA1/female_icon.png">
           </div>
           <div class="poke_name">Pokemon4</div>
           <div class="HP_box">
@@ -129,13 +130,13 @@
       </div>
       <div class="poke_box" id="poke_1">
         <div class="box_icons">
-          <img class="ball_icon" src="./static/img/PTA1/Pokeball_icon.png">
-          <img class="poke_icon" src="./static/img/PTA1/Pokeball_icon.png">
+          <img class="ball_icon" src="/static/img/PTA1/Pokeball_icon.png">
+          <img class="poke_icon" src="/static/img/PTA1/Pokeball_icon.png">
         </div>
         <div class="box_stats">
           <div class="poke_lvl">
             lvl: 5
-            <img class="gender_icon" src="./static/img/PTA1/male_icon.png">
+            <img class="gender_icon" src="/static/img/PTA1/male_icon.png">
           </div>
           <div class="poke_name">Pokemon5</div>
           <div class="HP_box">
@@ -151,13 +152,13 @@
     <div class="party" id="pc">
       <div class="poke_box" id="poke_1">
         <div class="box_icons">
-          <img class="ball_icon" src="./static/img/PTA1/Pokeball_open_icon.png">
-          <img class="poke_icon" src="./static/img/PTA1/Pokeball_icon.png">
+          <img class="ball_icon" src="/static/img/PTA1/Pokeball_open_icon.png">
+          <img class="poke_icon" src="/static/img/PTA1/Pokeball_icon.png">
         </div>
         <div class="box_stats">
           <div class="poke_lvl">
             lvl: 5
-            <img class="gender_icon" src="./static/img/PTA1/male_icon.png">
+            <img class="gender_icon" src="/static/img/PTA1/male_icon.png">
           </div>
           <div class="poke_name">Pokemon1</div>
           <div class="HP_box">
@@ -168,13 +169,13 @@
       </div>
       <div class="poke_box" id="poke_1">
         <div class="box_icons">
-          <img class="ball_icon" src="./static/img/PTA1/Pokeball_open_icon.png">
-          <img class="poke_icon" src="./static/img/PTA1/Pokeball_icon.png">
+          <img class="ball_icon" src="/static/img/PTA1/Pokeball_open_icon.png">
+          <img class="poke_icon" src="/static/img/PTA1/Pokeball_icon.png">
         </div>
         <div class="box_stats">
           <div class="poke_lvl">
             lvl: 5
-            <img class="gender_icon" src="./static/img/PTA1/male_icon.png">
+            <img class="gender_icon" src="/static/img/PTA1/male_icon.png">
           </div>
           <div class="poke_name">Pokemon1</div>
           <div class="HP_box">
@@ -185,13 +186,13 @@
       </div>
       <div class="poke_box" id="poke_1">
         <div class="box_icons">
-          <img class="ball_icon" src="./static/img/PTA1/Pokeball_open_icon.png">
-          <img class="poke_icon" src="./static/img/PTA1/Pokeball_icon.png">
+          <img class="ball_icon" src="/static/img/PTA1/Pokeball_open_icon.png">
+          <img class="poke_icon" src="/static/img/PTA1/Pokeball_icon.png">
         </div>
         <div class="box_stats">
           <div class="poke_lvl">
             lvl: 5
-            <img class="gender_icon" src="./static/img/PTA1/male_icon.png">
+            <img class="gender_icon" src="/static/img/PTA1/male_icon.png">
           </div>
           <div class="poke_name">Pokemon1</div>
           <div class="HP_box">
@@ -202,13 +203,13 @@
       </div>
       <div class="poke_box" id="poke_1">
         <div class="box_icons">
-          <img class="ball_icon" src="./static/img/PTA1/Pokeball_open_icon.png">
-          <img class="poke_icon" src="./static/img/PTA1/Pokeball_icon.png">
+          <img class="ball_icon" src="/static/img/PTA1/Pokeball_open_icon.png">
+          <img class="poke_icon" src="/static/img/PTA1/Pokeball_icon.png">
         </div>
         <div class="box_stats">
           <div class="poke_lvl">
             lvl: 5
-            <img class="gender_icon" src="./static/img/PTA1/male_icon.png">
+            <img class="gender_icon" src="/static/img/PTA1/male_icon.png">
           </div>
           <div class="poke_name">Pokemon1</div>
           <div class="HP_box">
@@ -309,24 +310,24 @@
 
   <div class="tab_body" id="prizes_tab">
     <div class="prize_box">
-      <img class="prize_img" src="./static/img/PTA1/Pokeball_icon_.png">
+      <img class="prize_img" src="/static/img/PTA1/Pokeball_icon_.png">
       <textarea class="prize_description" disabled="true">Descrição do prêmio</textarea>
     </div>
     <div class="prize_box">
-      <img class="prize_img" src="./static/img/PTA1/Pokeball_icon_.png">
+      <img class="prize_img" src="/static/img/PTA1/Pokeball_icon_.png">
       <textarea class="prize_description" disabled="true">Descrição do prêmio</textarea>
     </div>
     <div class="prize_box">
-      <img class="prize_img" src="./static/img/PTA1/Pokeball_icon_.png">
+      <img class="prize_img" src="/static/img/PTA1/Pokeball_icon_.png">
       <textarea class="prize_description" disabled="true">Descrição do prêmio</textarea>
     </div>
   </div>
 
   <div class="tab_body" id="dex_tab">
     <div class="dex_block">
-      <img src="./static/img/PTA1/pokedex.png">
-      <img class="dex_sprite" src="./static/img/PTA1/Pokeball_icon.png">
-      <img class="dex_caught_icon" src="./static/img/PTA1/Pokeball_icon.png">
+      <img src="/static/img/PTA1/pokedex.png">
+      <img class="dex_sprite" src="/static/img/PTA1/Pokeball_icon.png">
+      <img class="dex_caught_icon" src="/static/img/PTA1/Pokeball_icon.png">
       <input class="dex_search" type="text" placeholder="Pesquisar...">
       <h1 class="dex_text" id="dex_poke_name">POKEMON NAME</h1>
       <h3 class="dex_text" id="dex_poke_description">Pokemon Description</h3>
@@ -355,7 +356,7 @@
             <input class="dice_sides" type="number" inputmode="numeric">
             <h2>+</h2>
             <input class="roll_mod" type="number" inputmode="numeric">
-            <button class="roll_button" id="roll_DA"><img class="die_icon" src="./static/img/die_icon.png"></button>
+            <button class="roll_button" id="roll_DA"><img class="die_icon" src="/static/img/die_icon.png"></button>
           </div>
         </div>
         <div class="move_stats">
@@ -468,7 +469,7 @@
             <input class="talent_target" type="text" placeholder="Alvo" disabled="true">
             <input class="talent_frequency" type="text" placeholder="Frequência" disabled="true">
             <div class="talent_icons">
-              <img src="./static/img/PTA1/Pokeball_icon.png">
+              <img src="/static/img/PTA1/Pokeball_icon.png">
             </div>
           </div>
           <div class="talent_description">
@@ -481,7 +482,7 @@
             <input class="talent_target" type="text" placeholder="Alvo" disabled="true">
             <input class="talent_frequency" type="text" placeholder="Frequência" disabled="true">
             <div class="talent_icons">
-              <img src="./static/img/PTA1/Pokeball_icon.png">
+              <img src="/static/img/PTA1/Pokeball_icon.png">
             </div>
           </div>
           <div class="talent_description">
@@ -494,7 +495,7 @@
             <input class="talent_target" type="text" placeholder="Alvo" disabled="true">
             <input class="talent_frequency" type="text" placeholder="Frequência" disabled="true">
             <div class="talent_icons">
-              <img src="./static/img/PTA1/Pokeball_icon.png">
+              <img src="/static/img/PTA1/Pokeball_icon.png">
             </div>
           </div>
           <div class="talent_description">
@@ -507,7 +508,7 @@
             <input class="talent_target" type="text" placeholder="Alvo" disabled="true">
             <input class="talent_frequency" type="text" placeholder="Frequência" disabled="true">
             <div class="talent_icons">
-              <img src="./static/img/PTA1/Pokeball_icon.png">
+              <img src="/static/img/PTA1/Pokeball_icon.png">
             </div>
           </div>
           <div class="talent_description">
@@ -520,9 +521,9 @@
             <input class="talent_target" type="text" placeholder="Alvo" disabled="true">
             <input class="talent_frequency" type="text" placeholder="Frequência" disabled="true">
             <div class="talent_icons">
-              <img src="./static/img/PTA1/Pokeball_icon.png">
-              <img src="./static/img/PTA1/Pokeball_icon.png">
-              <img src="./static/img/PTA1/Pokeball_icon.png">
+              <img src="/static/img/PTA1/Pokeball_icon.png">
+              <img src="/static/img/PTA1/Pokeball_icon.png">
+              <img src="/static/img/PTA1/Pokeball_icon.png">
             </div>
           </div>
           <div class="talent_description">
@@ -535,7 +536,7 @@
             <input class="talent_target" type="text" placeholder="Alvo" disabled="true">
             <input class="talent_frequency" type="text" placeholder="Frequência" disabled="true">
             <div class="talent_icons">
-              <img src="./static/img/PTA1/Pokeball_icon.png">
+              <img src="/static/img/PTA1/Pokeball_icon.png">
             </div>
           </div>
           <div class="talent_description">

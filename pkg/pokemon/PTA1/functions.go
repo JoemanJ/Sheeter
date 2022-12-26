@@ -128,6 +128,8 @@ func RegisterSpecies(name string, diet string, capacities [3]int, others []Capac
 		Number: pokemon.ID,
 		Name:   strings.Title(pokemon.Species.Name),
 
+		Sprite: pokemon.Sprites.FrontDefault,
+
 		Type:       types,
 		Diet:       diet,
 		Capacities: capacitieTable,

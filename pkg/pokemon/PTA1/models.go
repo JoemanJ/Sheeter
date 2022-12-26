@@ -24,6 +24,8 @@ type PokemonSpecies struct {
 	Number int
 	Name   string
 
+	Sprite string
+
 	Type       []string
 	Diet       string
 	Capacities *CapacityTable
@@ -160,18 +162,16 @@ type TrainerSheet struct {
 }
 
 func (s *TrainerSheet) Render(w http.ResponseWriter) error {
-	template := new(template.Template)
-
-	template, err := sheeters.RenderVolatile("sheet.page.html", "./ui/html")
+	tmpl, err := sheeters.RenderVolatile("sheet.page.html", "./ui/html")
 	if err != nil {
 		return err
 	}
 
-	template, err = template.ParseFiles("./pkg/pokemon/PTA1/html/trainerSheet.partial.html")
+	tmpl, err = tmpl.ParseFiles("./pkg/pokemon/PTA1/html/trainerSheet.partial.html")
 
 	buf := new(bytes.Buffer)
 
-	err = template.Execute(buf, nil)
+	err = tmpl.Execute(buf, s)
 	if err != nil {
 		return err
 	}

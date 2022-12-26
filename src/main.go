@@ -11,8 +11,6 @@ package main
 
 import (
 	// sheeters "Joe/sheeter/pkg/general"
-	// "Joe/sheeter/pkg/pokemon/PTA1"
-	// "Joe/sheeter/pkg/pokemon/PTA1"
 	"errors"
 	"fmt"
 	"html/template"
@@ -48,9 +46,8 @@ func main() {
 	errorLog := log.New(os.Stderr, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
 
 	app := &application{
-		infoLog:       infoLog,
-		errorLog:      errorLog,
-		templateCache: map[string]*template.Template{},
+		infoLog:  infoLog,
+		errorLog: errorLog, templateCache: map[string]*template.Template{},
 	}
 
 	cache, err := app.newTemplateCache("./ui/html")
@@ -62,14 +59,14 @@ func main() {
 
 	mux := http.NewServeMux()
 
-	fileServer := http.FileServer(http.Dir("./ui/static/"))
+	fileServer := http.FileServer(http.Dir("ui/static/"))
 
+	mux.HandleFunc("/", app.sheet)
 	mux.Handle("/static/", http.StripPrefix("/static", fileServer))
 	mux.HandleFunc("/new/", app.login)
-	mux.HandleFunc("/sheet", app.sheet)
+	mux.HandleFunc("/sheet/", app.sheet)
 
-	// _, err = PTA1.RegisterSpecies("Zangoose", "", [3]int{}, []PTA1.Capacity{}, []*PTA1.PokemonAbility{}, []*PTA1.PokemonAbility{}, map[string]int{})
-	// sheet, err := PTA1.CreatePokemonSheet("Fofucha", "Zangoose", "M", "adamant", []*PTA1.PokemonAbility{}, 10)
+	// sheet, err := PTA1.CreateSampleTrainerSheet()
 	if err != nil {
 		panic(err)
 	}
