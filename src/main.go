@@ -60,10 +60,12 @@ func main() {
 	mux := http.NewServeMux()
 
 	fileServer := http.FileServer(http.Dir("ui/static/"))
+	mux.Handle("/static/", http.StripPrefix("/static", fileServer))
 
 	mux.HandleFunc("/", app.sheet)
-	mux.Handle("/static/", http.StripPrefix("/static", fileServer))
-	mux.HandleFunc("/new/", app.login)
+	mux.HandleFunc("/new/", app.generalNew)
+	mux.HandleFunc("/new/pokemon", app.newPokemon)
+	mux.HandleFunc("/data/", app.getData)
 	mux.HandleFunc("/sheet/", app.sheet)
 
 	// sheet, err := PTA1.CreateSampleTrainerSheet()
