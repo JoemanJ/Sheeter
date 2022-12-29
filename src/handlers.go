@@ -2,11 +2,27 @@ package main
 
 import (
 	general "Joe/sheeter/pkg/general"
+	"Joe/sheeter/pkg/pokemon/PTA1"
 	"fmt"
 	"net/http"
 	"os"
 	"strings"
 )
+
+func (a *application) newAbility(w http.ResponseWriter, r *http.Request) {
+	fmt.Println(r.Method)
+	switch r.Method {
+	case "POST":
+		err := r.ParseForm()
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+
+		f := r.Form
+		fmt.Println(f.Get("a_activation"), f.Get("a_description"), f.Get("a_name"))
+	}
+}
 
 func (a *application) getData(w http.ResponseWriter, r *http.Request) {
 	var str string
@@ -32,6 +48,35 @@ func (a *application) getData(w http.ResponseWriter, r *http.Request) {
 }
 
 func (a *application) newPokemon(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "POST" {
+		err := r.ParseForm()
+		if err != nil {
+			a.serverError(w, err)
+			return
+		}
+
+		f := r.Form
+
+		switch f.Get("form_name") {
+		case "pokemon_form":
+			fmt.Println(r.Form)
+
+		case "species_form":
+			fmt.Println(r.Form)
+
+		case "ability_form":
+			a, err := PTA1.RegisterAbility(f.Get("a_name"), f.Get("a_activation"), f.Get("a_description"))
+			fmt.Println(a)
+			if err != nil {
+				fmt.Println(err)
+			}
+
+		case "capacity_form":
+			fmt.Println(r.Form)
+
+		}
+	}
+
 	a.templateCache["newPokemon.page.html"].Execute(w, nil)
 }
 
