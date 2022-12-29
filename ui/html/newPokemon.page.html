@@ -12,7 +12,8 @@
 
     <label for="species">species:</label>
     <select id="species" onchange="getAbilities()">
-      <option value="new" selected>[new species]</option>
+      <option selected disabled hidden value>-- select --</option>
+      <option value="new">[new species]</option>
     </select>
 
     <label for="gender">gender:</label>
@@ -89,7 +90,7 @@
     <h4>OUTRAS</h4>
     <div id="capacity_list" class="list_block">
       <ul>
-        <li><input type="checkbox"> Nova capacidade </li>
+        <li><input type="checkbox" id="new_c" onchange="switchCFormDisplay()"> Nova capacidade </li>
         <li><input type="checkbox"> teste </li>
         <li><input type="checkbox"> teste </li>
         <li><input type="checkbox"> teste </li>
@@ -102,7 +103,7 @@
     <h4>Habilidades</h4>
     <div id="ability_list" class="list_block">
       <ul>
-        <li><input type="checkbox"> Nova habilidade </li>
+        <li><input type="checkbox" id="new_a" onchange="switchAFormDisplay()"> Nova habilidade </li>
         <li><input type="checkbox"> teste </li>
         <li><input type="checkbox"> teste </li>
         <li><input type="checkbox"> teste </li>
@@ -115,7 +116,7 @@
     <h4>Altas habilidades</h4>
     <div id="high_ability_list" class="list_block">
       <ul>
-        <li><input type="checkbox"> Nova habilidade </li>
+        <li><input type="checkbox" id="new_ha" onchange="switchAFormDisplay()"> Nova habilidade </li>
         <li><input type="checkbox"> teste </li>
         <li><input type="checkbox"> teste </li>
         <li><input type="checkbox"> teste </li>

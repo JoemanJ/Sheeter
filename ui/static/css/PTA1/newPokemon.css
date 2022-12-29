@@ -16,6 +16,14 @@ form > *{
   display: none;
 }
 
+#capacity_form{
+  display: none;
+}
+
+#ability_form{
+  display: none;
+}
+
 .list_block{
   width: 100%;
   max-height: 95px;

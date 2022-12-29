@@ -45,3 +45,23 @@ function getAbilities() {
     ablt.appendChild(opt)
   }
 }
+
+function switchCFormDisplay() {
+  CForm = document.getElementById("capacity_form")
+
+  if (document.getElementById("new_c").checked) {
+    CForm.style.display = "flex";
+    return;
+  }
+  CForm.style.display = "none"
+}
+
+function switchAFormDisplay() {
+  Aform = document.getElementById("ability_form")
+
+  if (document.getElementById("new_a").checked || document.getElementById("new_ha").checked) {
+    Aform.style.display = "flex";
+    return;
+  }
+  Aform.style.display = "none"
+}
