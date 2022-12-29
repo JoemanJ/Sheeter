@@ -1,0 +1,149 @@
+{{template "base"}}
+
+{{define "title"}}new pokemon{{end}}
+
+{{define "body"}}
+<script src="/static/js/PTA1/newPokemon.js"></script>
+<link rel="stylesheet" href="/static/css/PTA1/newPokemon.css">
+<div id="forms_grid">
+  <form id="pokemon_form" action="/new/pokemon" target="_self" method="post" autocomplete="on">
+    <label for="nickname">Nickname:</label>
+    <input type="text" id="nickname">
+
+    <label for="species">species:</label>
+    <select id="species" onchange="getAbilities()">
+      <option value="new" selected>[new species]</option>
+    </select>
+
+    <label for="gender">gender:</label>
+    <select id="gender">
+      <option value="m">m</option>
+      <option value="f">f</option>
+      <option value="u">?</option>
+    </select>
+
+    <label for="nature">Nature:</label>
+    <select id="nature">
+      <option value="bold">bold</option>
+      <option value="modest">modest</option>
+      <option value="calm">calm</option>
+      <option value="timid">timid</option>
+      <option value="bashful">bashful</option>
+      <option value="lonely">lonely</option>
+      <option value="mild">mild</option>
+      <option value="gentle">gentle</option>
+      <option value="hasty">hasty</option>
+      <option value="docile">docile</option>
+      <option value="adamant">adamant</option>
+      <option value="impish">impish</option>
+      <option value="careful">careful</option>
+      <option value="jolly">jolly</option>
+      <option value="hardy">hardy</option>
+      <option value="naughty">naughty</option>
+      <option value="lax">lax</option>
+      <option value="rash">rash</option>
+      <option value="naive">naive</option>
+      <option value="quirky">quirky</option>
+      <option value="brave">brave</option>
+      <option value="relaxed">relaxed</option>
+      <option value="quiet">quiet</option>
+      <option value="sassy">sassy</option>
+      <option value="serious">serious</option>
+    </select>
+
+
+    <label for="ability">Ability:</label>
+    <select disabled="true" id="ability">
+    </select>
+
+    <label for="lvl">Lvl:</label>
+    <input type="number" id="lvl">
+
+    <input type="submit" value="Submit">
+  </form>
+  <form id="species_form">
+    <h2>Nova Especie</h2>
+    <label for="s_species_name">species name</label>
+    <input type="text" id="s_species_name">
+
+    <label for="s_diet">diet:</label>
+    <textarea id="s_diet"></textarea>
+
+    <table class="stats_table">
+      <tr>
+        <th colspan="2">CAPACIDADES</th>
+      </tr>
+      <tr>
+        <td>Força</td>
+        <td><input type="number" id="s_strength"></td>
+      </tr>
+      <tr>
+        <td>Salto</td>
+        <td><input type="number" id="s_jump"></td>
+      </tr>
+      <tr>
+        <td>Inteligeza</td>
+        <td><input type="number" id="s_inteligence"></td>
+      </tr>
+    </table>
+    <h4>OUTRAS</h4>
+    <div id="capacity_list" class="list_block">
+      <ul>
+        <li><input type="checkbox"> Nova capacidade </li>
+        <li><input type="checkbox"> teste </li>
+        <li><input type="checkbox"> teste </li>
+        <li><input type="checkbox"> teste </li>
+        <li><input type="checkbox"> teste </li>
+        <li><input type="checkbox"> teste </li>
+        <li><input type="checkbox"> teste </li>
+      </ul>
+    </div>
+
+    <h4>Habilidades</h4>
+    <div id="ability_list" class="list_block">
+      <ul>
+        <li><input type="checkbox"> Nova habilidade </li>
+        <li><input type="checkbox"> teste </li>
+        <li><input type="checkbox"> teste </li>
+        <li><input type="checkbox"> teste </li>
+        <li><input type="checkbox"> teste </li>
+        <li><input type="checkbox"> teste </li>
+        <li><input type="checkbox"> teste </li>
+      </ul>
+    </div>
+
+    <h4>Altas habilidades</h4>
+    <div id="high_ability_list" class="list_block">
+      <ul>
+        <li><input type="checkbox"> Nova habilidade </li>
+        <li><input type="checkbox"> teste </li>
+        <li><input type="checkbox"> teste </li>
+        <li><input type="checkbox"> teste </li>
+        <li><input type="checkbox"> teste </li>
+        <li><input type="checkbox"> teste </li>
+        <li><input type="checkbox"> teste </li>
+      </ul>
+    </div>
+  </form>
+  <form id="capacity_form">
+    <h2>Nova capacidade:</h2>
+    <label for="c_name">Nome:</label>
+    <input type="text" id="c_name">
+
+    <label for="c_description">Descricao:</label>
+    <textarea id="c_description"></textarea>
+
+    <input type="submit">
+  </form>
+  <form id="ability_form">
+    <h2>Nova habilidade:</h2>
+    <label for="a_name">Nome:</label>
+    <input type="text" id="a_name">
+
+    <label for="a_description">Descricao:</label>
+    <textarea id="a_description"></textarea>
+
+    <input type="submit">
+  </form>
+</div>
+{{end}}
