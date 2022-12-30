@@ -107,7 +107,7 @@ func GetMove(name string) (*PokemonMove, error) {
 	return &PM, nil
 }
 
-func RegisterSpecies(name string, diet string, capacities [3]int, others []Capacity, abilities []*PokemonAbility, highAbilities []*PokemonAbility, movement map[string]int) (*PokemonSpecies, error) {
+func RegisterSpecies(name string, diet string, capacities [3]int, others []*Capacity, abilities []*PokemonAbility, highAbilities []*PokemonAbility, movement map[string]int) (*PokemonSpecies, error) {
 	pokemon, err := pokeapi.Pokemon(strings.ToLower(name))
 	if err != nil {
 		s := fmt.Sprintf("Error getting data from PokeAPI:\n%s", err.Error())
@@ -492,7 +492,7 @@ func newTrainerStatusTable(stats map[string]int) (*TrainerStatusTable, error) {
 	return table, nil
 }
 
-func newCapacityTable(capacities [3]int, others []Capacity) *CapacityTable {
+func newCapacityTable(capacities [3]int, others []*Capacity) *CapacityTable {
 	table := &CapacityTable{
 		Strength:    capacities[0],
 		Inteligence: capacities[1],

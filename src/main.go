@@ -65,7 +65,6 @@ func main() {
 	mux.HandleFunc("/", app.sheet)
 	mux.HandleFunc("/new/", app.generalNew)
 	mux.HandleFunc("/new/pokemon", app.newPokemon)
-	mux.HandleFunc("/new/ability", app.newAbility)
 	mux.HandleFunc("/data/", app.getData)
 	mux.HandleFunc("/sheet/", app.sheet)
 

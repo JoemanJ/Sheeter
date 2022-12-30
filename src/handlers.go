@@ -9,21 +9,6 @@ import (
 	"strings"
 )
 
-func (a *application) newAbility(w http.ResponseWriter, r *http.Request) {
-	fmt.Println(r.Method)
-	switch r.Method {
-	case "POST":
-		err := r.ParseForm()
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
-
-		f := r.Form
-		fmt.Println(f.Get("a_activation"), f.Get("a_description"), f.Get("a_name"))
-	}
-}
-
 func (a *application) getData(w http.ResponseWriter, r *http.Request) {
 	var str string
 	_, err := fmt.Sscanf(r.URL.Path, "/data/%s", &str)
@@ -62,7 +47,46 @@ func (a *application) newPokemon(w http.ResponseWriter, r *http.Request) {
 			fmt.Println(r.Form)
 
 		case "species_form":
-			fmt.Println(r.Form)
+			var abilities []*PTA1.PokemonAbility
+			var high_abilities []*PTA1.PokemonAbility
+			var capacities []*PTA1.Capacity
+
+			for k := range f {
+				if strings.Contains(k, "c_") {
+					c, err := PTA1.GetCapacity(k)
+					if err != nil {
+						fmt.Println(err)
+					}
+
+					capacities = append(capacities, c)
+					continue
+				}
+
+				if strings.Contains(k, "ha_") {
+					ha, err := PTA1.GetAbility(k)
+					if err != nil {
+						fmt.Println(err)
+					}
+
+					high_abilities = append(high_abilities, ha)
+					continue
+				}
+
+				if strings.Contains(k, "a_") {
+					a, err := PTA1.GetAbility(k)
+					if err != nil {
+						fmt.Println(err)
+					}
+
+					abilities = append(abilities, a)
+					continue
+				}
+			}
+			fmt.Println("abilities ", abilities)
+			fmt.Println("high_abilities ", high_abilities)
+			fmt.Println("capacities ", capacities)
+
+			PTA1.RegisterSpecies
 
 		case "ability_form":
 			a, err := PTA1.RegisterAbility(f.Get("a_name"), f.Get("a_activation"), f.Get("a_description"))
@@ -72,8 +96,11 @@ func (a *application) newPokemon(w http.ResponseWriter, r *http.Request) {
 			}
 
 		case "capacity_form":
-			fmt.Println(r.Form)
-
+			a, err := PTA1.RegisterCapacity(f.Get("c_name"), f.Get("c_description"))
+			fmt.Println(a)
+			if err != nil {
+				fmt.Println(err)
+			}
 		}
 	}
 

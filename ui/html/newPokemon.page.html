@@ -12,7 +12,7 @@
     <input type="text" id="nickname" name="nickname">
 
     <label for="species">species:</label>
-    <select id="species" onchange="getAbilities()" name="species">
+    <select id="species" onchange="getSpeciesAbilities()" name="species">
       <option selected disabled hidden value>-- select --</option>
       <option value="new">[new species]</option>
     </select>
@@ -91,42 +91,25 @@
     </table>
     <h4>OUTRAS</h4>
     <div id="capacity_list" class="list_block">
-      <ul>
+      <ul id="c_list">
         <li><input type="checkbox" id="new_c" name="new_c" onchange="switchCFormDisplay()"> Nova capacidade </li>
-        <li><input type="checkbox"> teste </li>
-        <li><input type="checkbox"> teste </li>
-        <li><input type="checkbox"> teste </li>
-        <li><input type="checkbox"> teste </li>
-        <li><input type="checkbox"> teste </li>
-        <li><input type="checkbox"> teste </li>
       </ul>
     </div>
 
     <h4>Habilidades</h4>
     <div id="ability_list" class="list_block">
-      <ul>
+      <ul id="a_list">
         <li><input type="checkbox" id="new_a" name="new_a" onchange="switchAFormDisplay()"> Nova habilidade </li>
-        <li><input type="checkbox"> teste </li>
-        <li><input type="checkbox"> teste </li>
-        <li><input type="checkbox"> teste </li>
-        <li><input type="checkbox"> teste </li>
-        <li><input type="checkbox"> teste </li>
-        <li><input type="checkbox"> teste </li>
       </ul>
     </div>
 
     <h4>Altas habilidades</h4>
     <div id="high_ability_list" class="list_block">
-      <ul>
+      <ul id="ha_list">
         <li><input type="checkbox" id="new_ha" name="new_ha" onchange="switchAFormDisplay()"> Nova habilidade </li>
-        <li><input type="checkbox"> teste </li>
-        <li><input type="checkbox"> teste </li>
-        <li><input type="checkbox"> teste </li>
-        <li><input type="checkbox"> teste </li>
-        <li><input type="checkbox"> teste </li>
-        <li><input type="checkbox"> teste </li>
       </ul>
     </div>
+    <input type="submit" value="Submit">
   </form>
   <form id="capacity_form" action="/new/pokemon" target="_self" method="post">
     <input type="hidden" name="form_name" value="capacity_form">

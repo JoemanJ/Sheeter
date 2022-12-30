@@ -249,5 +249,5 @@ type CapacityTable struct {
 	Inteligence int
 	Jump        int
 
-	Others []Capacity
+	Others []*Capacity
 }

@@ -81,7 +81,7 @@ func GetJsonData(path string, m interface{}) error {
 	if errors.Is(err, os.ErrNotExist) {
 		json.Unmarshal([]byte("{}"), m)
 		SetJsonData(path, m)
-		return err
+		return nil
 	}
 
 	content, err := os.ReadFile(path)

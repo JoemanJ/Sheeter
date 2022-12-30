@@ -1,13 +1,19 @@
 window.onload = () => {
-  for (child of document.getElementById("pokemon_form").children) {
-    child.required = true
+  for (form of document.getElementsByTagName("form")) {
+    for (child of form.children) {
+      child.required = true
+    }
   }
   getSpecies()
+  getAbilities()
+  getCapacities()
+  switchAFormDisplay()
+  switchCFormDisplay()
 }
 
-var speciesObj
-
 function getSpecies() {
+  var speciesObj
+
   fetch("/data/PTA1/speciesData").then(response => response.json()).then(function(data) {
 
     speciesObj = data
@@ -21,7 +27,7 @@ function getSpecies() {
   });
 }
 
-function getAbilities() {
+function getSpeciesAbilities() {
   spc = document.getElementById("species").value
   ablt = document.getElementById("ability")
   spcForm = document.getElementById("species_form")
@@ -44,6 +50,62 @@ function getAbilities() {
     opt.value = key;
     ablt.appendChild(opt)
   }
+}
+
+function getCapacities() {
+  var capacitiesObj
+
+  fetch("/data/PTA1/capacityData").then(response => response.json()).then(function(data) {
+
+    capacitiesObj = data
+    c_list = document.getElementById("c_list")
+
+    for (key of Object.keys(capacitiesObj)) {
+      let ip = document.createElement("input")
+      ip.type = "checkbox";
+      ip.name = "c_" + key;
+
+      let li = document.createElement("li")
+      li.appendChild(ip)
+      li.append(" " + key)
+
+      c_list.appendChild(li)
+    }
+  });
+}
+
+function getAbilities() {
+  var abilitiesObj
+
+  fetch("/data/PTA1/abilityData").then(response => response.json()).then(function(data) {
+
+    abilitiesObj = data
+    a_list = document.getElementById("a_list")
+    ha_list = document.getElementById("ha_list")
+
+
+    for (key of Object.keys(abilitiesObj)) {
+      let ip = document.createElement("input")
+      ip.type = "checkbox";
+      ip.name = "a_" + key;
+
+      let li = document.createElement("li")
+      li.appendChild(ip)
+      li.append(" " + key)
+
+      let h_ip = document.createElement("input");
+      h_ip.type = "checkbox"
+      h_ip.name = "ha_" + key;
+
+      let h_li = document.createElement("li")
+      h_li.appendChild(h_ip)
+      h_li.append(" " + key)
+
+
+      a_list.appendChild(li)
+      ha_list.appendChild(h_li)
+    }
+  });
 }
 
 function switchCFormDisplay() {
