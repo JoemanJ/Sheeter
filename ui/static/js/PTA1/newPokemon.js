@@ -1,3 +1,5 @@
+var speciesObj
+
 window.onload = () => {
   for (form of document.getElementsByTagName("form")) {
     for (child of form.children) {
@@ -12,7 +14,6 @@ window.onload = () => {
 }
 
 function getSpecies() {
-  var speciesObj
 
   fetch("/data/PTA1/speciesData").then(response => response.json()).then(function(data) {
 
@@ -28,6 +29,8 @@ function getSpecies() {
 }
 
 function getSpeciesAbilities() {
+  console.log(speciesObj)
+
   spc = document.getElementById("species").value
   ablt = document.getElementById("ability")
   spcForm = document.getElementById("species_form")
@@ -44,10 +47,19 @@ function getSpeciesAbilities() {
     ablt.remove(i);
   }
 
-  for (key of Object.keys(speciesObj[spc].Abilities)) {
+  for (a of speciesObj[spc].Abilities) {
+    console.log(a)
     let opt = document.createElement("option")
-    opt.text = key;
-    opt.value = key;
+    opt.text = a.Name;
+    opt.value = a.Name;
+    ablt.appendChild(opt)
+  }
+
+  for (a of speciesObj[spc].HighAbilities) {
+    console.log(a)
+    let opt = document.createElement("option")
+    opt.text = a.Name;
+    opt.value = a.Name;
     ablt.appendChild(opt)
   }
 }

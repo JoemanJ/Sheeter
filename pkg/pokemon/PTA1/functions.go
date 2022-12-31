@@ -110,7 +110,7 @@ func GetMove(name string) (*PokemonMove, error) {
 func RegisterSpecies(name string, diet string, capacities [3]int, others []*Capacity, abilities []*PokemonAbility, highAbilities []*PokemonAbility, movement map[string]int) (*PokemonSpecies, error) {
 	pokemon, err := pokeapi.Pokemon(strings.ToLower(name))
 	if err != nil {
-		s := fmt.Sprintf("Error getting data from PokeAPI:\n%s", err.Error())
+		s := fmt.Sprintf("Error getting data from PokeAPI:\n%v", err)
 		return nil, errors.New(s)
 	}
 
