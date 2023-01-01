@@ -33,6 +33,28 @@ func (a *application) getData(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, string(file))
 }
 
+func (a *application) newTrainer(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "POST" {
+		err := r.ParseForm()
+		if err != nil {
+			a.serverError(w, err)
+			return
+		}
+
+		f := r.Form
+
+		switch f.Get("form_name") {
+		case "":
+			// PTA1.crea
+		}
+	}
+
+	err := a.templateCache["newTrainer.page.html"].Execute(w, nil)
+	if err != nil {
+		fmt.Println(err)
+	}
+}
+
 func (a *application) newPokemon(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
 		err := r.ParseForm()

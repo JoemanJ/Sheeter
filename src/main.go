@@ -11,6 +11,7 @@ package main
 
 import (
 	// sheeters "Joe/sheeter/pkg/general"
+	// "Joe/sheeter/pkg/pokemon/PTA1"
 	"errors"
 	"fmt"
 	"html/template"
@@ -65,6 +66,7 @@ func main() {
 	mux.HandleFunc("/", app.sheet)
 	mux.HandleFunc("/new/", app.generalNew)
 	mux.HandleFunc("/new/pokemon", app.newPokemon)
+	mux.HandleFunc("/new/trainer", app.newTrainer)
 	mux.HandleFunc("/data/", app.getData)
 	mux.HandleFunc("/sheet/", app.sheet)
 
