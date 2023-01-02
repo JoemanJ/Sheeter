@@ -1,0 +1,51 @@
+form{
+  display:flex;
+  flex-direction: column;
+}
+
+form > *{
+  margin: 5px;
+}
+
+.stats_table{
+    border-style: solid;
+    border-collapse: collapse;
+  margin: 5px;
+}
+
+.mod{
+  appearance: textfield;
+  /* -webkit-appearance: textfield;  */
+  -moz-appearance: textfield;
+}
+
+tr > *{
+  padding: 2px;
+  border-style: solid;
+  border-color: gray;
+}
+
+td{
+  text-align: center;
+  vertical-align: middle;
+}
+
+#trainer_form{
+  width: 50%;
+  display: flex;
+}
+
+#gender{
+  max-width: 40px;
+}
+
+input[type=number]{
+    max-width: 80px;
+    font-size: 20px;
+  text-align: center;
+}
+
+span{
+  display: inline-flex;
+  justify-content: space-between;
+}

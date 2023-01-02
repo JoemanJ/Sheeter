@@ -1,0 +1,117 @@
+{{template "base"}}
+
+{{define "title"}}new trainer{{end}}
+
+{{define "body"}}
+<script src="/static/js/PTA1/newTrainer.js"></script>
+<link rel="stylesheet" href="/static/css/PTA1/newTrainer.css">
+<form id="trainer_form" action="/new/trainer" target="_self" method="post" autocomplete="on">
+  <label for="name">Nome:</label>
+  <input type="text" id="name" name="name">
+
+  <span>
+    <label for="gender">Gênero:</label>
+    <select id="gender" name="gender">
+      <option value="m">m</option>
+      <option value="f">f</option>
+      <option value="u">[outros]</option>
+    </select>
+
+    <label for="age" min="0">Idade:</label>
+    <input type="number" id="age" name="age" value="10">
+
+    <label for="lvl">Lvl:</label>
+    <input type="number" id="lvl" name="lvl" value="0">
+  </span>
+
+  <span>
+    <label for="height" min="0" step="0.01">Altura (m):</label>
+    <input type="number" id="height" name="height" value="1.80">
+
+    <label for="weight" min="0" step="0.1">Peso (Kg):</label>
+    <input type="number" id="weight" name="weight" value="60.0">
+  </span>
+
+  <table class="stats_table">
+    <tr>
+      <th colspan="5">STATS</th>
+    </tr>
+    <tr>
+      <th>Stat</th>
+      <th>Atributo</th>
+      <th>Mod</th>
+    </tr>
+    <tr>
+      <td>Saúde</td>
+      <td>
+        <input class="stat_field stat" onchange="calcMod(this)" id="hp" name="hp" type="number" accept="numeric"
+          step="1" min="6" value="6">
+      </td>
+      <td>
+        <input class="stat_field mod" id="hp_mod" name="hp_mod" type="number" accept="numeric" step="1" min="6" readonly
+          value="-4">
+      </td>
+    </tr>
+    <tr>
+      <td>Ataque</td>
+      <td>
+        <input class="stat_field stat" onchange="calcMod(this)" id="atk" name="atk" type="number" accept="numeric"
+          step="1" min="6" value="6">
+      </td>
+      <td>
+        <input class="stat_field mod" id="atk_mod" name="atk_mod" type="number" accept="numeric" step="1" min="6"
+          readonly value="-4">
+      </td>
+    <tr>
+      <td>Defesa</td>
+      <td>
+        <input class="stat_field stat" onchange="calcMod(this)" id="def" name="def" type="number" accept="numeric"
+          step="1" min="6" value="6">
+      </td>
+      <td>
+        <input class="stat_field mod" id="def_mod" name="def_mod" type="number" accept="numeric" step="1" min="6"
+          readonly value="-4">
+      </td>
+    </tr>
+    <tr>
+      <td>Ataque Especial</td>
+      <td>
+        <input class="stat_field stat" onchange="calcMod(this)" id="spatk" name="spatk" type="number" accept="numeric"
+          step="1" min="6" value="6">
+      </td>
+      <td>
+        <input class="stat_field mod" id="spatk_mod" name="spatk_mod" type="number" accept="numeric" step="1" min="6"
+          readonly value="-4">
+      </td>
+    </tr>
+    <tr>
+      <td>Defesa Especial</td>
+      <td>
+        <input class="stat_field stat" onchange="calcMod(this)" id="spdef" name="spdef" type="number" accept="numeric"
+          step="1" min="6" value="6">
+      </td>
+      <td>
+        <input class="stat_field mod" id="spdef_mod" name="spdef_mod" type="number" accept="numeric" step="1" min="6"
+          readonly value="-4">
+      </td>
+    </tr>
+    <tr>
+      <td>Velocidade</td>
+      <td>
+        <input class="stat_field stat" onchange="calcMod(this)" id="spd" name="spd" type="number" accept="numeric"
+          step="1" min="6" value="6">
+      </td>
+      <td>
+        <input class="stat_field mod" id="spd_mod" name="spd_mod" type="number" accept="numeric" step="1" min="6"
+          readonly value="-4">
+      </td>
+    </tr>
+    <tr>
+      <td>Pontos restantes: <h2 id="remaining_points">24</h2>
+      </td>
+    </tr>
+  </table>
+
+  <input type="submit" value="Submit" id="submit">
+</form>
+{{end}}
