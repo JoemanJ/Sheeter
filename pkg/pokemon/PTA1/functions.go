@@ -551,6 +551,8 @@ func CreatePokemonSheet(nickname, species, gender, nature string, abilities []*P
 		Weight:  W,
 		Gender:  gender,
 
+    Sprite: speciesData.Sprite,
+
 		Nature: nature,
 
 		Lvl: lvl,

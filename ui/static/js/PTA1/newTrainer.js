@@ -2,6 +2,15 @@ var trainerLvlTable
 
 window.onload = () => {
   fetch("/data/PTA1/trainerLvlTable").then(response => response.json()).then(data => trainerLvlTable = data)
+  calcStats(document.getElementById("lvl"))
+}
+
+function calcStats(tag){
+  let lvl = parseInt(tag.value) 
+
+  for (stat of document.getElementsByClassName("stat")){
+    stat.max=14 + trainerLvlTable.total_status[lvl]
+  }
 }
 
 function calcMod(tag) {
@@ -14,9 +23,6 @@ function calcMod(tag) {
   let spatk = parseInt(document.getElementById("spatk").value, 10)
   let spdef = parseInt(document.getElementById("spdef").value, 10)
   let spd = parseInt(document.getElementById("spd").value, 10)
-
-  console.log(trainerLvlTable.total_status)
-  console.log(lvl)
 
   remPts.innerHTML = 60 + trainerLvlTable.total_status[lvl] - (hp + atk + def + spatk + spdef + spd)
 

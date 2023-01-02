@@ -41,6 +41,8 @@ func main() {
 		os.Mkdir("data/sheets", 0755)
 	}
 
+  // sheeters.SetJsonData("./data/PTA1/trainerLvlTable.json", PTA1.TRAINERLVLTABLE)
+
 	rand.Seed(time.Now().UnixNano())
 
 	infoLog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
@@ -63,7 +65,7 @@ func main() {
 	fileServer := http.FileServer(http.Dir("ui/static/"))
 	mux.Handle("/static/", http.StripPrefix("/static", fileServer))
 
-	mux.HandleFunc("/", app.sheet)
+	mux.HandleFunc("/", app.generalNew)
 	mux.HandleFunc("/new/", app.generalNew)
 	mux.HandleFunc("/new/pokemon", app.newPokemon)
 	mux.HandleFunc("/new/trainer", app.newTrainer)

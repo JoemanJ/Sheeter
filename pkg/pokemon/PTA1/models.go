@@ -80,6 +80,10 @@ type PokemonSheet struct {
 	Weight  int
 	Gender  string
 
+  Sprite string
+
+  Type []string
+
 	Nature string
 
 	Lvl int

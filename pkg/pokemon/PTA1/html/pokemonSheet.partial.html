@@ -13,31 +13,31 @@
   <div class="tab_body" id="id_tab">
     <div>
       <div>
-        <img src="/static/img/PTA1/Pokeball_icon.png" alt="Pokemon sprite">
+        <img src="{{.Sprite}}" alt="{{.Species}} sprite">
         <div>
-          <h2>Apelido</h2><input type="text">
+          <h2>Apelido</h2><input type="text" value="{{.Nick}}">
         </div>
         <div>
           <h2>Espécie</h2>
-          <h2>ESPÉCIE</h2>
+          <h2>{{.Species}}h2>
         </div>
         <div>
-          <h2>TIPO1</h2>
-          <h2>TIPO2</h2>
+          <h2>{{.Type[0]}}</h2>
+          <h2>{{if .Type[1]}}{{.Type[1]}}{{end}}</h2>
         </div>
       </div>
       <div>
         <div>
           <h2>Sexo</h2>
-          <h2>SEXO</h2>
+          <h2>{{.Gender}}</h2>
         </div>
         <div>
           <h2>Natureza</h2>
-          <h2>NATUREZA</h2>
+          <h2>{{.Nature}}</h2>
         </div>
         <div>
           <h2>Dieta</h2>
-          <h2>DIETA</h2>
+          <h2>{{}}</h2>
         </div>
         <div>
           <h2>LVL</h2>

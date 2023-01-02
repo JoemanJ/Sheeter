@@ -22,6 +22,15 @@ func (a *application) getData(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+  if strings.HasPrefix(str, "specific/"){
+    fmt.Sscanf(str, "specific/%s", &str)
+
+    switch str {
+    case "/PTA2/species":
+      
+    }
+  }
+
 	file, err := os.ReadFile("data/" + str + ".json")
 	if err != nil {
 		w.Write([]byte(err.Error()))
@@ -43,10 +52,28 @@ func (a *application) newTrainer(w http.ResponseWriter, r *http.Request) {
 
 		f := r.Form
 
-		switch f.Get("form_name") {
-		case "":
-			// PTA1.crea
-		}
+    fmt.Println(f)
+
+    dataString := fmt.Sprintf("%s;%s;%s;%s;%s;%s;%s;%s;%s;%s", f["hp"][0], f["atk"][0], f["def"][0], f["spatk"][0], f["spdef"][0], f["spd"][0], f["lvl"][0], f["age"][0], f["height"][0], f["weight"][0])
+    fmt.Println(dataString)
+
+    var hp, atk, def, spatk, spdef, spd, lvl, age, i_height, i_weight int
+    var height, weight float32
+
+    fmt.Sscanf(dataString, "%d;%d;%d;%d;%d;%d;%d;%d;%f;%f", &hp, &atk, &def, &spatk, &spdef, &spd, &lvl, &age, &height, &weight)
+
+    i_height = int(height * 100)
+    i_weight = int(weight * 10)
+
+    statMap := map[string]int{"HP":hp, "ATK":atk, "DEF":def, "SPATK":spatk, "SPDEF":spdef, "SPD":spd}
+
+
+    p, err := PTA1.CreateTrainerSheet(f.Get("name"), "DEBUG", f.Get("gender"), lvl, age, i_height, i_weight, statMap)
+    if err != nil{
+      fmt.Println(err)
+    }
+
+    fmt.Println(p)
 	}
 
 	err := a.templateCache["newTrainer.page.html"].Execute(w, nil)

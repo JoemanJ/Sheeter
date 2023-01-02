@@ -21,7 +21,7 @@
     <input type="number" id="age" name="age" value="10">
 
     <label for="lvl">Lvl:</label>
-    <input type="number" id="lvl" name="lvl" value="0">
+    <input type="number" id="lvl" name="lvl" onclick="calcStats(this)" value="0">
   </span>
 
   <span>
@@ -45,10 +45,10 @@
       <td>Saúde</td>
       <td>
         <input class="stat_field stat" onchange="calcMod(this)" id="hp" name="hp" type="number" accept="numeric"
-          step="1" min="6" value="6">
+          step="1" max="14" min="6" value="6">
       </td>
       <td>
-        <input class="stat_field mod" id="hp_mod" name="hp_mod" type="number" accept="numeric" step="1" min="6" readonly
+        <input class="stat_field mod" id="hp_mod" name="hp_mod" type="number" accept="numeric" step="1" max="14" min="6" readonly
           value="-4">
       </td>
     </tr>
@@ -56,20 +56,20 @@
       <td>Ataque</td>
       <td>
         <input class="stat_field stat" onchange="calcMod(this)" id="atk" name="atk" type="number" accept="numeric"
-          step="1" min="6" value="6">
+          step="1" max="14" min="6" value="6">
       </td>
       <td>
-        <input class="stat_field mod" id="atk_mod" name="atk_mod" type="number" accept="numeric" step="1" min="6"
+        <input class="stat_field mod" id="atk_mod" name="atk_mod" type="number" accept="numeric" step="1" max="14" min="6"
           readonly value="-4">
       </td>
     <tr>
       <td>Defesa</td>
       <td>
         <input class="stat_field stat" onchange="calcMod(this)" id="def" name="def" type="number" accept="numeric"
-          step="1" min="6" value="6">
+          step="1" max="14" min="6" value="6">
       </td>
       <td>
-        <input class="stat_field mod" id="def_mod" name="def_mod" type="number" accept="numeric" step="1" min="6"
+        <input class="stat_field mod" id="def_mod" name="def_mod" type="number" accept="numeric" step="1" max="14" min="6"
           readonly value="-4">
       </td>
     </tr>
@@ -77,10 +77,10 @@
       <td>Ataque Especial</td>
       <td>
         <input class="stat_field stat" onchange="calcMod(this)" id="spatk" name="spatk" type="number" accept="numeric"
-          step="1" min="6" value="6">
+          step="1" max="14" min="6" value="6">
       </td>
       <td>
-        <input class="stat_field mod" id="spatk_mod" name="spatk_mod" type="number" accept="numeric" step="1" min="6"
+        <input class="stat_field mod" id="spatk_mod" name="spatk_mod" type="number" accept="numeric" step="1" max="14" min="6"
           readonly value="-4">
       </td>
     </tr>
@@ -88,10 +88,10 @@
       <td>Defesa Especial</td>
       <td>
         <input class="stat_field stat" onchange="calcMod(this)" id="spdef" name="spdef" type="number" accept="numeric"
-          step="1" min="6" value="6">
+          step="1" max="14" min="6" value="6">
       </td>
       <td>
-        <input class="stat_field mod" id="spdef_mod" name="spdef_mod" type="number" accept="numeric" step="1" min="6"
+        <input class="stat_field mod" id="spdef_mod" name="spdef_mod" type="number" accept="numeric" step="1" max="14" min="6"
           readonly value="-4">
       </td>
     </tr>
@@ -99,10 +99,10 @@
       <td>Velocidade</td>
       <td>
         <input class="stat_field stat" onchange="calcMod(this)" id="spd" name="spd" type="number" accept="numeric"
-          step="1" min="6" value="6">
+          step="1" max="14" min="6" value="6">
       </td>
       <td>
-        <input class="stat_field mod" id="spd_mod" name="spd_mod" type="number" accept="numeric" step="1" min="6"
+        <input class="stat_field mod" id="spd_mod" name="spd_mod" type="number" accept="numeric" step="1" max="14" min="6"
           readonly value="-4">
       </td>
     </tr>
