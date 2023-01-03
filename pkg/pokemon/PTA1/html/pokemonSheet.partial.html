@@ -65,7 +65,7 @@
         <div class="HP_DA">
           <div class="HP_display">
             <h2>HP</h2>
-            <input type="number" value="{{index .Hp 0}}">
+            <input type="number" max="{{index .Hp 1}}" value="{{index .Hp 0}}">
             <h2>/</h2>
             <input type="number" disabled="true" readonly value="{{index .Hp 1}}">
           </div>
@@ -204,17 +204,25 @@
       </table>
       {{end}}
     </div>
-    <table class="stats_table">
-      <tr>
-        <th>OUTRAS CAPACIDADES</th>
-      </tr>
-      <tr>
-        <th>NOME DA CAPACIDADE</th>
-      </tr>
-      <tr>
-        <td>descricao da capacidade</td>
-      </tr>
-    </table>
+    <h2>OUTRAS CAPACIDADES</h2>
+    <div id="capacity_space">
+      <table class="capacity_block">
+        <tr>
+          <th>NOME DA CAPACIDADE</th>
+        </tr>
+        <tr>
+          <td>descricao da capacidade</td>
+        </tr>
+      </table>
+      <table class="capacity_block">
+        <tr>
+          <th>NOME DA CAPACIDADE</th>
+        </tr>
+        <tr>
+          <td>descricao da capacidade</td>
+        </tr>
+      </table>
+    </div>
   </div>
 
   <div class="tab_body" id="moves_tab">
@@ -225,6 +233,30 @@
             GOLPES PADRÃO
           </th>
         </tr>
+        {{range index .Moves 0}}
+        {{if .}}
+        <tr>
+          <td>{{.Name}}</td>
+          <td>
+            <div class="move_box">
+              <div>
+                <h2>{{range .Descriptors}}{{.}}{{end}}</h2>
+                <h2>{{.Type}}</h2>
+              </div>
+              <div>
+                <h2>{{.Damage.Mod}}</h2>
+                <h2>{{.AccDiff}}</h2>
+              </div>
+              <div>
+                <h2>{{.Frequency}}</h2>
+              </div>
+              <div>
+                <p>{{.Effect}}</p>
+              </div>
+            </div>
+          </td>
+        </tr>
+        {{else}}
         <tr>
           <td>NOME DO GOLPE</td>
           <td>
@@ -246,55 +278,76 @@
             </div>
           </td>
         </tr>
-        <tr>
-          <td>NOME DO GOLPE</td>
-          <td>DESCRIÇÃO DO GOLPE</td>
-        </tr>
-        <tr>
-          <td>NOME DO GOLPE</td>
-          <td>DESCRIÇÃO DO GOLPE</td>
-        </tr>
-        <tr>
-          <td>NOME DO GOLPE</td>
-          <td>DESCRIÇÃO DO GOLPE</td>
-        </tr>
+        {{end}}
+        {{end}}
         <tr>
           <th colspan=2>GOLPES ENSINADOS</th>
         </tr>
+        {{range index .Moves 0}}
+        {{if .}}
+        <tr>
+          <td>{{.Name}}</td>
+          <td>
+            <div class="move_box">
+              <div>
+                <h2>{{range .Descriptors}}{{.}}{{end}}</h2>
+                <h2>{{.Type}}</h2>
+              </div>
+              <div>
+                <h2>{{.Damage.Mod}}</h2>
+                <h2>{{.AccDiff}}</h2>
+              </div>
+              <div>
+                <h2>{{.Frequency}}</h2>
+              </div>
+              <div>
+                <p>{{.Effect}}</p>
+              </div>
+            </div>
+          </td>
+        </tr>
+        {{else}}
         <tr>
           <td>NOME DO GOLPE</td>
-          <td>DESCRIÇÃO DO GOLPE</td>
+          <td>
+            <div class="move_box">
+              <div>
+                <h2>descritores</h2>
+                <h2>TIPO</h2>
+              </div>
+              <div>
+                <h2>dano basal</h2>
+                <h2>ACC</h2>
+              </div>
+              <div>
+                <h2>frequência</h2>
+              </div>
+              <div>
+                <p>Efeito do golpe</p>
+              </div>
+            </div>
+          </td>
         </tr>
-        <tr>
-          <td>NOME DO GOLPE</td>
-          <td>DESCRIÇÃO DO GOLPE</td>
-        </tr>
-        <tr>
-          <td>NOME DO GOLPE</td>
-          <td>DESCRIÇÃO DO GOLPE</td>
-        </tr>
-        <tr>
-          <td>NOME DO GOLPE</td>
-          <td>DESCRIÇÃO DO GOLPE</td>
-        </tr>
+        {{end}}
+        {{end}}
 
       </table>
     </div>
     <div class="abilities_space">
+      {{range .Abilities}}
+      {{if .}}
       <div class="ability_box">
-        <h2>BLOCO DA HABILIDADE</h2>
-        <h2>Frequência da habukudade</h2>
-        <p>Efeito da Habilidade</p>
+        <h2>{{.Name}}</h2>
+        <h2>{{.Activation}}</h2>
+        <p>{{.Description}}</p>
       </div>
-      <div class="ability_box">
-        <h2>BLOCO DA HABILIDADE</h2>
-        <h2>teste</h2>
-      </div>
+      {{end}}
+      {{end}}
     </div>
   </div>
 
   <div class="tab_body" id="notes_tab">
-    <textarea id="notes_textbox" placeholder="Insira suas anotações aqui"></textarea>
+    <textarea id="notes_textbox" placeholder="Insira suas anotações aqui" value="{{.Notes}}"></textarea>
   </div>
 
 </div>

@@ -257,6 +257,8 @@
 }
 
 .stats_table{
+
+
     border-style: solid;
     border-collapse: collapse;
     width: fit-content;
@@ -283,70 +285,30 @@ input::-webkit-inner-spin-button {
     margin: 0;
 }
 
-.talents_grid{
+#capacity_space{
   display: grid;
   grid-template-columns: 50% 50%;
-  padding:5%;
 }
 
-.talent_box{
-  padding: 5px;
-  border-radius: 5px;
-  margin: 10px;
-  background-color: lightyellow;
-  display: flex;
-  flex-direction: column;
-  height: min-content;
-  /* width: 100%; */
+.capacity_block{
+  width: 90%;
+  margin: 10px auto;
+  border-style: solid;
+  border-collapse: collapse;
+  border-width: 5px;
+  border-color: black;
 }
 
-.talent_box_header{
-    height: min-content;
-    width: 100%;
-    display: grid;
-  grid:
-    'name name name name name icons'
-    'target target frequency frequency frequency icons'
+.capacity_block th {
+  border-style: solid;
+  border-collapse: collapse;
+  border-width: 2px;
+  border-color: black;
 }
 
-.talent_name{
-  grid-area: name;
+.capacity_block *{
+  text-align: center;
 }
-
-.talent_target{
-  grid-area: target;
-}
-
-.talent_frequency{
-  grid-area: frequency;
-}
-
-.talent_icons{
-  grid-area: icons;
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-  height: auto;
-}
-
-.talent_icons img{
-  /* scale: 0.5; */
-  width: auto;
-  height: auto;
-}
-
-.talent_description{
-  grid-area: description;
-    width: auto;
-    margin: 10px 10px 0px 0px;
-}
-
-.talent_description textarea{
-    width: 100%;
-    height: auto;
-    resize: none;
-}
-
 
 
 
