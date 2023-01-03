@@ -229,7 +229,7 @@ func (a *application) generalNew(w http.ResponseWriter, r *http.Request) {
 }
 
 func (a *application) sheet(w http.ResponseWriter, r *http.Request) {
-	path, Type, err := general.GetSheetType(1)
+	path, Type, err := general.GetSheetType(2)
 	if err != nil {
 		fmt.Print(err.Error())
 	}

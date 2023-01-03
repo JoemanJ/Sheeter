@@ -247,7 +247,7 @@ func RegisterTrainerTalent(name string, classSpecific bool, requirements, freque
 		IsClassSpecific: classSpecific,
 
 		Requirements: requirements,
-		Frqeuency:    frequency,
+		Frequency:    frequency,
 		Target:       target,
 		Description:  description,
 

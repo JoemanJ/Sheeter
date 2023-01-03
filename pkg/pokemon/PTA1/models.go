@@ -215,7 +215,7 @@ type TrainerTalent struct {
 
 	Requirements string
 
-	Frqeuency string
+	Frequency string
 	Target    string
 
 	Description string
