@@ -75,14 +75,14 @@
 }
 
 #id_tab > div > div > *{
-  padding: 3px 20px;
+  padding: 10px 20px;
   border-style: solid;
   border-color: black;
   border-width: 5px;
   background-color: orangered;
   margin: 10px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items:center;
   text-align:center;
   margin-left: auto;
@@ -91,13 +91,17 @@
 
 #id_tab > div > div input{
   width: 60%;
+  text-align: center;
   border-radius: 10px;
 }
 
 #id_tab > div > div h2:last-child{
+  margin: 0 5px;
   width: 60%;
+  max-width: 60%;
   background-color: white;
   border-radius: 10px;
+
 }
 
 

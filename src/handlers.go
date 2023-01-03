@@ -3,6 +3,7 @@ package main
 import (
 	general "Joe/sheeter/pkg/general"
 	"Joe/sheeter/pkg/pokemon/PTA1"
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"os"
@@ -22,24 +23,32 @@ func (a *application) getData(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-  if strings.HasPrefix(str, "specific/"){
-    fmt.Sscanf(str, "specific/%s", &str)
+  if strings.HasPrefix(str, "specific"){
+    q := r.URL.Query()
 
-    switch str {
-    case "/PTA2/species":
-      
+    switch q.Get("module"){
+    case "PTA2":
+      d, err := PTA1.Call(q.Get("type"), q.Get("id"))
+      if err != nil{
+        fmt.Println("ERRO: ", err)
+      }
+
+      data, _ := json.Marshal(d)
+      w.Header().Set("Content-Type", "application/json")
+      fmt.Fprint(w, string(data))
+      return
     }
+
+  } else{
+    data, err := os.ReadFile("data/" + str + ".json")
+    if err != nil {
+      w.Write([]byte(err.Error()))
+      return
+    }
+
+    w.Header().Set("Content-Type", "application/json")
+    fmt.Fprint(w, string(data))
   }
-
-	file, err := os.ReadFile("data/" + str + ".json")
-	if err != nil {
-		w.Write([]byte(err.Error()))
-		return
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-
-	fmt.Fprint(w, string(file))
 }
 
 func (a *application) newTrainer(w http.ResponseWriter, r *http.Request) {

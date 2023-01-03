@@ -3,6 +3,7 @@ package PTA1
 import (
 	"errors"
 	"fmt"
+	"reflect"
 	"sort"
 	"strconv"
 	"strings"
@@ -20,6 +21,30 @@ const TALENTDATA string = "./data/PTA1/talentData.json"
 const CLASSDATA string = "./data/PTA1/classData.json"
 const EXPERTISEDATA string = "./data/PTA1/expertiseData.json"
 const CAPACITYDATA string = "./data/PTA1/capacityData.json"
+
+var GETFUNCMAP map[string]any = map[string]any {
+  "ability":GetAbility,
+  "move": GetMove,
+  "species":GetSpecies,
+  "item":GetItem,
+  "trainerTalent":GetTrainerTalent,
+  "trainerClass":GetTrainerClass,
+  "expertise":GetExpertise,
+  "capacity":GetCapacity,
+}
+
+func Call(funcName, id string)(any, error){
+  f := reflect.ValueOf(GETFUNCMAP[funcName])
+  var res []reflect.Value
+  var in []reflect.Value
+  in = append(in, reflect.ValueOf(id))
+  res = f.Call(in)
+  if !res[1].IsZero(){
+    return nil, res[1].Interface().(error)
+  }
+
+  return res[0].Interface(), nil  
+}
 
 func RegisterAbility(name string, activation string, description string) (*PokemonAbility, error) {
 	newAbility := &PokemonAbility{
@@ -546,12 +571,10 @@ func CreatePokemonSheet(nickname, species, gender, nature string, abilities []*P
 		Id: id,
 
 		Nick:    nickname,
-		Species: species,
+		Species: speciesData,
 		Height:  H,
 		Weight:  W,
 		Gender:  gender,
-
-    Sprite: speciesData.Sprite,
 
 		Nature: nature,
 
@@ -570,6 +593,7 @@ func CreatePokemonSheet(nickname, species, gender, nature string, abilities []*P
 
 		Notes: "",
 	}
+  newSheet.Hp[1] = newSheet.Hp[0]
 
 	err = general.SetJsonData("./data/sheets/"+aux+"_1.json", newSheet)
 	if err != nil {
