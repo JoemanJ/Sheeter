@@ -44,6 +44,43 @@
         </div>
       </div>
     </div>
+    <form id="class_form">
+      <label for="class_name">Nome da classe </label>
+      <input type="text" id="class_name">
+
+      <label for="class_description">Descrição </label>
+      <textarea id="class_description"></textarea>
+
+      <label for="is_advanced_class">Classe avançada</label>
+      <input type="checkbox" id="is_advanced_class">
+
+      <label for="class_basic_talent1">Talentos básicos:</label>
+      <select id="class_basic_talent1">
+        <option value selected hidden></option>
+        <option value="new">[new talent]</option>
+      </select>
+      <select id="class_basic_talent2">
+        <option value selected hidden></option>
+        <option value="new">[new talent]</option>
+      </select>
+
+      <div id="talent_list" class="list_block">
+        <ul id="talent_list">
+          <li><input type="checkbox" id="new_talent" name="new_talent" onchange="switchTalentFormDisplay()"> Novo Talento </li>
+        </ul>
+      </div>
+
+      <label for="class_expertises"> Perícias de classe: </label>
+      <div id="expertise_list" class="list_block">
+        <ul id="expertise_list">
+          <li><input type="checkbox" id="new_expertise" name="new_expertise" onchange="switchExpertiseFormDisplay()"> Nova Perícia </li>
+        </ul>
+      </div>
+
+      <label for="class_requirements">Requisitos da classe: </label>
+      <textarea id="class_requirements"></textarea>
+
+    </form>
   </div>
 
   <div class="tab_body" id="pokemon_tab">
@@ -51,192 +88,52 @@
       {{with .PokemonList}}
       {{if gt (len .) 6}}
       {{range (slice . 0 6)}}
-      <div class="poke_box" id="poke_1">
-        <div class="box_icons">
-          <img class="ball_icon" src="/static/img/PTA1/Pokeball_open_icon.png">
-          <img class="poke_icon" src=".Species.Sprite">
-        </div>
+      <div class="poke_box" id="{{.Id}}" ondblclick="openSheet(parseInt(this.id))">
+        <img class="ball_icon" src="/static/img/PTA1/Pokeball_open_icon.png">
+        <img class="gender_icon" src="{{if eq .Gender "m"}}/static/img/PTA1/male_icon.png{{else if eq .Gender "f"}}/static/img/PTA1/female_icon.png{{else}}?{{end}}">
+        <img class="poke_icon" src="{{.Species.Sprite}}">
         <div class="box_stats">
-          <div class="poke_lvl">
-            lvl: 5
-            <img class="gender_icon" src="/static/img/PTA1/male_icon.png">
-          </div>
-          <div class="poke_name">Pokemon1</div>
-          <div class="HP_box">
-            <meter class="HP_bar" value="50" max="100"></meter>
-            <p>50/100</p>
-          </div>
+          <h3 class="poke_lvl"> lvl: {{.Lvl}}</h3>
+          <h3>{{.Nick}}</h3>
+          <meter class="HP_bar" value="{{index .Hp 0}}" max="{{index .Hp 1}}"></meter>
+          <p>{{index .Hp 0}}/{{index .Hp 1}}</p>
         </div>
       </div>
       {{end}}
       {{else}}
       {{range .}}
-      <div class="poke_box" id="poke_1">
-        <div class="box_icons">
-          <img class="ball_icon" src="/static/img/PTA1/Pokeball_open_icon.png">
-          <img class="poke_icon" src="{{.Species.Sprite}}">
-        </div>
+      <div class="poke_box" id="{{.Id}}" ondblclick="openSheet(parseInt(this.id))">
+        <img class="ball_icon" src="/static/img/PTA1/Pokeball_open_icon.png">
+        <img class="gender_icon" src="{{if eq .Gender "m"}}/static/img/PTA1/male_icon.png{{else if eq .Gender "f"}}/static/img/PTA1/female_icon.png{{else}}?{{end}}">
+        <img class="poke_icon" src="{{.Species.Sprite}}">
         <div class="box_stats">
-          <div class="poke_lvl">
-            lvl: {{.Lvl}}
-            <img class="gender_icon" src="{{if eq .Gender "m"}}/static/img/PTA1/male_icon.png{{else if eq .Gender "f"}}/static/img/PTA1/female_icon.png{{else}}?{{end}}">
-          </div>
-          <div class="poke_name">{{.Nick}}</div>
-          <div class="HP_box">
-            <meter class="HP_bar" value="{{index .Hp 0}}" max="{{index .Hp 1}}"></meter>
-            <p>{{index .Hp 0}}/{{index .Hp 1}}</p>
-          </div>
+          <h3 class="poke_lvl"> lvl: {{.Lvl}}</h3>
+          <h3>{{.Nick}}</h3>
+          <meter class="HP_bar" value="{{index .Hp 0}}" max="{{index .Hp 1}}"></meter>
+          <p>{{index .Hp 0}}/{{index .Hp 1}}</p>
         </div>
       </div>
       {{end}}
       {{end}}
-      <div class="poke_box" id="poke_1">
-        <div class="box_icons">
-          <img class="ball_icon" src="/static/img/PTA1/Pokeball_icon.png">
-          <img class="poke_icon" src="/static/img/PTA1/Pokeball_icon.png">
-        </div>
-        <div class="box_stats">
-          <div class="poke_lvl">
-            lvl: 5
-            <img class="gender_icon" src="/static/img/PTA1/female_icon.png">
-          </div>
-          <div class="poke_name">Pokemon2</div>
-          <div class="HP_box">
-            <meter class="HP_bar" value="50" max="100"></meter>
-            <p>50/100</p>
-          </div>
-        </div>
-      </div>
-      <div class="poke_box" id="poke_1">
-        <div class="box_icons">
-          <img class="ball_icon" src="/static/img/PTA1/Pokeball_icon.png">
-          <img class="poke_icon" src="/static/img/PTA1/Pokeball_icon.png">
-        </div>
-        <div class="box_stats">
-          <div class="poke_lvl">
-            lvl: 5
-            <img class="gender_icon" src="/static/img/PTA1/male_icon.png">
-          </div>
-          <div class="poke_name">Pokemon3</div>
-          <div class="HP_box">
-            <meter class="HP_bar" value="50" max="100"></meter>
-            <p>50/100</p>
-          </div>
-        </div>
-      </div>
-      <div class="poke_box" id="poke_1">
-        <div class="box_icons">
-          <img class="ball_icon" src="/static/img/PTA1/Pokeball_icon.png">
-          <img class="poke_icon" src="/static/img/PTA1/Pokeball_icon.png">
-        </div>
-        <div class="box_stats">
-          <div class="poke_lvl">
-            lvl: 5
-            <img class="gender_icon" src="/static/img/PTA1/female_icon.png">
-          </div>
-          <div class="poke_name">Pokemon4</div>
-          <div class="HP_box">
-            <meter class="HP_bar" value="50" max="100"></meter>
-            <p>50/100</p>
-          </div>
-        </div>
-      </div>
-      <div class="poke_box" id="poke_1">
-        <div class="box_icons">
-          <img class="ball_icon" src="/static/img/PTA1/Pokeball_icon.png">
-          <img class="poke_icon" src="/static/img/PTA1/Pokeball_icon.png">
-        </div>
-        <div class="box_stats">
-          <div class="poke_lvl">
-            lvl: 5
-            <img class="gender_icon" src="/static/img/PTA1/male_icon.png">
-          </div>
-          <div class="poke_name">Pokemon5</div>
-          <div class="HP_box">
-            <meter class="HP_bar" value="50" max="100"></meter>
-            <p>50/100</p>
-          </div>
-        </div>
-      </div>
     </div>
-    <div class="poke_sheet">
-      POKEMON SHEET
-    </div>
-    <div class="party" id="pc">
     {{if gt (len .) 6}}
+    <div class="party" id="pc">
     {{range (slice . 6)}}
-      <div class="poke_box" id="poke_1">
-        <div class="box_icons">
-          <img class="ball_icon" src="/static/img/PTA1/Pokeball_open_icon.png">
-          <img class="poke_icon" src="/static/img/PTA1/Pokeball_icon.png">
-        </div>
+      <div class="poke_box" id="{{.Id}}" ondblclick="openSheet(parseInt(this.id))">
+        <img class="ball_icon" src="/static/img/PTA1/Pokeball_open_icon.png">
+        <img class="gender_icon" src="{{if eq .Gender "m"}}/static/img/PTA1/male_icon.png{{else if eq .Gender "f"}}/static/img/PTA1/female_icon.png{{else}}?{{end}}">
+        <img class="poke_icon" src="{{.Species.Sprite}}">
         <div class="box_stats">
-          <div class="poke_lvl">
-            lvl: 5
-            <img class="gender_icon" src="/static/img/PTA1/male_icon.png">
-          </div>
-          <div class="poke_name">Pokemon1</div>
-          <div class="HP_box">
-            <meter class="HP_bar" value="50" max="100"></meter>
-            <p>50/100</p>
-          </div>
+          <h3 class="poke_lvl"> lvl: {{.Lvl}}</h3>
+          <h3>{{.Nick}}</h3>
+          <meter class="HP_bar" value="{{index .Hp 0}}" max="{{index .Hp 1}}"></meter>
+          <p>{{index .Hp 0}}/{{index .Hp 1}}</p>
         </div>
       </div>
       {{end}}
-      {{end}}
-      {{end}}
-      <div class="poke_box" id="poke_1">
-        <div class="box_icons">
-          <img class="ball_icon" src="/static/img/PTA1/Pokeball_open_icon.png">
-          <img class="poke_icon" src="/static/img/PTA1/Pokeball_icon.png">
-        </div>
-        <div class="box_stats">
-          <div class="poke_lvl">
-            lvl: 5
-            <img class="gender_icon" src="/static/img/PTA1/male_icon.png">
-          </div>
-          <div class="poke_name">Pokemon1</div>
-          <div class="HP_box">
-            <meter class="HP_bar" value="50" max="100"></meter>
-            <p>50/100</p>
-          </div>
-        </div>
-      </div>
-      <div class="poke_box" id="poke_1">
-        <div class="box_icons">
-          <img class="ball_icon" src="/static/img/PTA1/Pokeball_open_icon.png">
-          <img class="poke_icon" src="/static/img/PTA1/Pokeball_icon.png">
-        </div>
-        <div class="box_stats">
-          <div class="poke_lvl">
-            lvl: 5
-            <img class="gender_icon" src="/static/img/PTA1/male_icon.png">
-          </div>
-          <div class="poke_name">Pokemon1</div>
-          <div class="HP_box">
-            <meter class="HP_bar" value="50" max="100"></meter>
-            <p>50/100</p>
-          </div>
-        </div>
-      </div>
-      <div class="poke_box" id="poke_1">
-        <div class="box_icons">
-          <img class="ball_icon" src="/static/img/PTA1/Pokeball_open_icon.png">
-          <img class="poke_icon" src="/static/img/PTA1/Pokeball_icon.png">
-        </div>
-        <div class="box_stats">
-          <div class="poke_lvl">
-            lvl: 5
-            <img class="gender_icon" src="/static/img/PTA1/male_icon.png">
-          </div>
-          <div class="poke_name">Pokemon1</div>
-          <div class="HP_box">
-            <meter class="HP_bar" value="50" max="100"></meter>
-            <p>50/100</p>
-          </div>
-        </div>
-      </div>
     </div>
+      {{end}}
+      {{end}}
   </div>
 
   <div class="tab_body" id="bag_tab">

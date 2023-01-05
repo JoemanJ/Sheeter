@@ -9,3 +9,9 @@ function openTab(event, tab_name){
     event.currentTarget.className += " active"
     document.getElementById(tab_name + "_tab").style.display = "flex"
 }
+
+function openSheet(id){
+  let w = window.screen.width.toString()
+  let h = window.screen.height.toString()
+  window.open("/sheet", "", "width="+w+", height="+h)
+}
