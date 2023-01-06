@@ -674,6 +674,7 @@ func CreateTrainerSheet(name, player, gender string, lvl, age, height, weight in
 		Talents:     stdTalents,
 		TalentSlots: 0,
 	}
+  newSheet.Hp[1] = newSheet.Hp[0]
 
 	err = general.SetRD("sheetCount", strconv.Itoa(id+1))
 	if err != nil {

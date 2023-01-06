@@ -276,20 +276,21 @@
           </div>
         </div>
         {{end}}
-        <div class="item_box">
+        <div class="item_box new_item">
           <div class="item_box_header">
+            <select name="item_name" id="item_list">
+              <option value="new">[novo item]</option>
+            </select>
             <span>
-              <input class="item_qtt" type="number" disabled="true" placeholder="1">
-              <input class="item_name" type="text" placeholder="item name" disabled="true">
+              <input class="item_name" id="item_name" type="text" placeholder="Nome do item" style="display: none">
             </span>
             <span>
-              <input class="qtt_input" type="number" placeholder="qtd" min="0" inputmode="numeric" step="1"> <input
-                class="+-btn" type="button" value="+">
-              <input type="button" value="-">
+              <input class="qtt_input" id="item_qtt" type="number" value="1" min="0" inputmode="numeric" step="1">
+              <input class="+-btn" type="button" value="+" onclick="addItem(1)">
             </span>
           </div>
           <div class="item_description">
-            <textarea name="description" disabled="true">Item description</textarea>
+            <textarea name="item_description">Item description</textarea>
           </div>
         </div>
         <div class="item_box">
@@ -461,42 +462,42 @@
           <td>Saúde</td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Status "HP"}}" readonly></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "HP"}}" min="-6" max="6"></td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "HP"}}" min="-6" max="6"></td>
+          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "HP"}}" readonly></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Modifiers "HP"}}" readonly></td>
         </tr>
         <tr>
           <td>Ataque</td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Status "ATK"}}" readonly></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "ATK"}}" min="-6" max="6"></td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "ATK"}}" min="-6" max="6"></td>
+          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "ATK"}}" readonly></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Modifiers "ATK"}}" readonly></td>
         </tr>
         <tr>
           <td>Defesa</td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Status "DEF"}}" readonly></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "DEF"}}" min="-6" max="6"></td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "DEF"}}" min="-6" max="6"></td>
+          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "DEF"}}" readonly></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Modifiers "DEF"}}" readonly></td>
         </tr>
         <tr>
           <td>Ataque Especial</td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Status "SPATK"}}" readonly></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "SPATK"}}" min="-6" max="6"></td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "SPATK"}}" min="-6" max="6"></td>
+          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "SPATK"}}" readonly></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Modifiers "SPATK"}}" readonly></td>
         </tr>
         <tr>
           <td>Defesa Especial</td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Status "SPDEF"}}" readonly></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "SPDEF"}}" min="-6" max="6"></td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "SPDEF"}}" min="-6" max="6"></td>
+          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "SPDEF"}}" readonly></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Modifiers "SPDEF"}}" readonly></td>
         </tr>
         <tr>
           <td>Velocidade</td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Status "SPD"}}" readonly></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "SPD"}}" min="-6" max="6"></td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "SPD"}}" min="-6" max="6"></td>
+          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "SPD"}}" readonly></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Modifiers "SPD"}}" readonly></td>
         </tr>
       </table>

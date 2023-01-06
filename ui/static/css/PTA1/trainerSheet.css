@@ -297,6 +297,22 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+.item_box_header select{
+  height: min-content;
+}
+
 .item_grid{
     display: grid;
     margin: 20px;
@@ -314,6 +330,10 @@
     border: solid;
     border-width: 2px;
     border-color: black;
+}
+
+.new_item{
+  background-color: lightgreen;
 }
 
 .item_box_header{
