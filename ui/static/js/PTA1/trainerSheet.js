@@ -1,3 +1,7 @@
+var classData
+var talentData
+var expertiseData
+
 function openTab(event, tab_name){
     var tabs = document.getElementsByClassName("tab_body")
     
@@ -14,4 +18,111 @@ function openSheet(id){
   let w = window.screen.width.toString()
   let h = window.screen.height.toString()
   window.open("/sheet", "", "width="+w+", height="+h)
+}
+
+function switchClassFormDisplay(){
+  let form = document.getElementById("class_form")
+  let class1 = document.getElementById("class_1").value
+  let class2 = document.getElementById("class_2").value
+  let class3 = document.getElementById("class_3").value
+  let class4 = document.getElementById("class_4").value
+
+  if (class1=="new_class" || class2=="new_class" || class3=="new_class" || class4=="new_class"){
+    form.style.display="flex"
+
+    fetch("/data/PTA1/talentData").then(response => response.json()).then(data =>{
+      talentData = data
+
+      let talentList = document.getElementById("talents")
+
+      for (key of Object.keys(talentData)){
+        li = document.createElement("li")
+
+        cb = document.createElement("input")
+        cb.type="checkbox"
+        cb.value="t_"+key
+        cb.name="t_"+key
+
+        li.appendChild(cb)
+        li.append(" " + key)
+        talentList.appendChild(li)
+
+        op = document.createElement("option")
+        op2 = document.createElement("option")
+        op.value=key
+        op2.value=key
+        op.innerHTML=key
+        op2.innerHTML=key
+
+        document.getElementById("class_basic_talent1").appendChild(op)
+        document.getElementById("class_basic_talent2").appendChild(op2)
+      }
+    })
+
+    fetch("/data/PTA1/expertiseData").then(response => response.json()).then(data =>{
+      expertiseData = data
+
+      let expertiseList = document.getElementById("expertises")
+
+      for (key of Object.keys(expertiseData)){
+        li = document.createElement("li")
+
+        cb = document.createElement("input")
+        cb.type="checkbox"
+        cb.value="e_"+key
+        cb.name="e_"+key
+
+        li.appendChild(cb)
+        li.append(" " + key)
+        expertiseList.appendChild(li)
+      }
+    })
+
+    fetch("/data/PTA1/classData").then(response => response.json()).then(data =>{
+      classData = data
+
+      let classList = document.getElementById("parentClass")
+
+      for (key of Object.keys(classData)){
+        op = document.createElement("option")
+
+        op.value = key
+        op.innerHTML=key
+
+        classList.appendChild(op)
+      }
+    })
+
+    return
+  }
+
+  form.style.display="none"
+}
+
+function switchTalentFormDisplay(){
+  let form = document.getElementById("talent_form");
+  let bt1 = document.getElementById("class_basic_talent1").value
+  let bt2 = document.getElementById("class_basic_talent2").value
+  let nt = document.getElementById("new_talent").checked
+
+  if (bt1=="new_talent" || bt2=="new_talent" || nt){
+    form.style.display = "flex"
+
+
+    return
+  }
+
+  form.style.display = "none"
+}
+
+function switchExpertiseFormDisplay(){
+  let form = document.getElementById("expertise_form");
+  let ne = document.getElementById("new_expertise").checked
+
+  if (ne){
+    form.style.display = "flex"
+    return
+  }
+
+  form.style.display = "none"
 }

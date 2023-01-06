@@ -14,73 +14,192 @@
   </div>
 
   <div class="tab_body" id="id_tab">
-    <div class="header">
-      <img src="/static/img/logo.png" id="trainer_photo">
+    <div>
+      <div class="header">
+        <img src="/static/img/logo.png" id="trainer_photo">
 
-      <div class="personal_info">
-        Nome: {{.Name}}<br>Player: {{.Player}}<br>Gênero:({{.Gender}})<br>Altura: {{divide .Height 100}}m<br>Peso: {{divide
-        .Weight 100}}Kg
-      </div>
-
-      <div class="header_stats">
-        <div id="lvl">
-          lvl: {{.Lvl}}
+        <div class="personal_info">
+          Nome: {{.Name}}<br>Player: {{.Player}}<br>Gênero:({{.Gender}})<br>Altura: {{divide .Height 100}}m<br>Peso: {{divide
+          .Weight 100}}Kg
         </div>
 
-        <div class="class_table">
-          {{with .Classes}}
-          <table id="class_table">
-            <th colspan="2">Classes</th>
-            <tr>
-              <td>{{if index . 0}}{{index . 0}}{{end}}</td>
-              <td>{{if index . 1}}{{index . 1}}{{end}}</td>
-            </tr>
-            <tr>
-              <td>{{if index . 2}}{{index . 2}}{{end}}</td>
-              <td>{{if index . 3}}{{index . 3}}{{end}}</td>
-            </tr>
-          </table>
-          {{end}}
+        <div class="header_stats">
+          <div id="lvl">
+            lvl: {{.Lvl}}
+          </div>
+
+          <div class="class_table">
+            {{with .Classes}}
+            <table id="class_table">
+              <th colspan="2">Classes</th>
+              <tr>
+                <td>
+                  <select id="class_1" onchange="switchClassFormDisplay()">
+                    {{if index . 0}}
+                    <option value="{{index . 0}}">{{index . 0}}</option>
+                    {{else}}
+                    <option selected hidden value></option>
+                    {{end}}
+                    <option value="new_class">[new class]</option>
+                  </select>
+                </td>
+                <td>
+                  <select id="class_2" onchange="switchClassFormDisplay()">
+                    {{if index . 1}}
+                    <option value="{{index . 1}}">{{index . 1}}</option>
+                    {{else}}
+                    <option selected hidden value></option>
+                    {{end}}
+                    <option value="new_class">[new class]</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <select id="class_3" onchange="switchClassFormDisplay()">
+                    {{if index . 2}}
+                    <option value="{{index . 2}}">{{index . 2}}</option>
+                    {{else}}
+                    <option selected hidden value></option>
+                    {{end}}
+                    <option value="new_class">[new class]</option>
+                  </select>
+                </td>
+                <td>
+                  <select id="class_4" onchange="switchClassFormDisplay()">
+                    {{if index . 3}}
+                    <option value="{{index . 3}}">{{index . 3}}</option>
+                    {{else}}
+                    <option selected hidden value></option>
+                    {{end}}
+                    <option value="new_class">[new class]</option>
+                  </select>
+                </td>
+              </tr>
+            </table>
+            {{end}}
+          </div>
         </div>
       </div>
     </div>
-    <form id="class_form">
-      <label for="class_name">Nome da classe </label>
-      <input type="text" id="class_name">
+    <div id="trainer_forms">
+      <form id="class_form" method="POST">
+        <input type="hidden" name="form_name" value="class_form">
+        <label for="class_name">Nome da classe </label>
+        <input type="text" id="class_name" name="class_name">
 
-      <label for="class_description">Descrição </label>
-      <textarea id="class_description"></textarea>
+        <label for="class_description">Descrição </label>
+        <textarea id="class_description" name="class_description"></textarea>
 
-      <label for="is_advanced_class">Classe avançada</label>
-      <input type="checkbox" id="is_advanced_class">
+        <label for="class_parent">Classe derivada</label>
+        <select id="class_parent" name="class_parent">
+          <option selected value="">Classe básica</option>
+        </select>
 
-      <label for="class_basic_talent1">Talentos básicos:</label>
-      <select id="class_basic_talent1">
-        <option value selected hidden></option>
-        <option value="new">[new talent]</option>
-      </select>
-      <select id="class_basic_talent2">
-        <option value selected hidden></option>
-        <option value="new">[new talent]</option>
-      </select>
+        <label for="class_basic_talent1">Talentos básicos:</label>
+        <select id="class_basic_talent1" name="class_basic_talent1" onchange="switchTalentFormDisplay()">
+          <option value selected hidden></option>
+          <option value="new_talent">[new talent]</option>
+        </select>
+        <select id="class_basic_talent2" name="class_basic_talent2" onchange="switchTalentFormDisplay()">
+          <option value selected hidden></option>
+          <option value="new_talent">[new talent]</option>
+        </select>
 
-      <div id="talent_list" class="list_block">
-        <ul id="talent_list">
-          <li><input type="checkbox" id="new_talent" name="new_talent" onchange="switchTalentFormDisplay()"> Novo Talento </li>
-        </ul>
-      </div>
+        <label for="talent_list"> Talentos Possíveis </label>
+        <div id="talent_list" class="list_block">
+          <ul id="talents">
+            <li><input type="checkbox" id="new_talent" name="new_talent" onchange="switchTalentFormDisplay()"> Novo Talento </li>
+          </ul>
+        </div>
 
-      <label for="class_expertises"> Perícias de classe: </label>
-      <div id="expertise_list" class="list_block">
-        <ul id="expertise_list">
-          <li><input type="checkbox" id="new_expertise" name="new_expertise" onchange="switchExpertiseFormDisplay()"> Nova Perícia </li>
-        </ul>
-      </div>
+        <label for="class_expertises"> Perícias de classe: </label>
+        <div id="expertise_list" class="list_block">
+          <ul id="expertises">
+            <li><input type="checkbox" id="new_expertise" name="new_expertise" onchange="switchExpertiseFormDisplay()"> Nova Perícia </li>
+          </ul>
+        </div>
 
-      <label for="class_requirements">Requisitos da classe: </label>
-      <textarea id="class_requirements"></textarea>
+        <label for="class_requirements">Requisitos da classe: </label>
+        <textarea id="class_requirements" name="class_requirements"></textarea>
 
-    </form>
+        <input type="submit" value="Submit">
+
+      </form>
+
+      <form id="talent_form" method="POST">
+        <input type="hidden" name="form_name" value="talent_form">
+        <label for="talent_name"> Nome do talento </label>
+        <input type="text" id="talent_name" name="talent_name">
+
+        <label for="talent_target"> Alvo(s) </label>
+        <input type="text" id="talent_target" name="talent_target">
+        
+        <label for="talent_freqyency"> Frequência </label>
+        <input type="text" id="talent_frequency" name="talent_frequency">
+
+        <label for="talent_description"> Descrição </label>
+        <input type="text" id="talent_description" name="talent_description">
+
+        <label for="talent_requirements"> Requisitos </label>
+        <input type="text" id="talent_requirements" name="talent_requirements">
+
+        <div id="talent_bools">
+          <span>
+          <label for="talent_continuous"><img src="" alt="is_talent_continuous?"></label>
+          <input id="talent_continuous" name="talent_continuous" type="checkbox">
+          </span>
+
+          <span>
+          <label for="talent_standart"><img src="" alt="is_talent_standart?"></label>
+          <input id="talent_standart" name="talent_standart" type="checkbox">
+          </span>
+
+          <span>
+          <label for="talent_free"><img src="" alt="is_talent_free?"></label>
+          <input id="talent_free" name="talent_free" type="checkbox">
+          </span>
+
+          <span>
+          <label for="talent_interrupt"><img src="" alt="is_talent_interrupt?"></label>
+          <input id="talent_interrupt" name="talent_interrupt" type="checkbox">
+          </span>
+
+          <span>
+          <label for="talent_extended"><img src="" alt="is_talent_extended?"></label>
+          <input id="talent_extended" name="talent_extended" type="checkbox">
+          </span>
+
+          <span>
+          <label for="talent_legal"><img src="" alt="is_talent_legal?"></label>
+          <input id="talent_legal" name="talent_legal" type="checkbox">
+          </span>
+        </div>
+
+        <input type="submit" value="Submit">
+
+      </form>
+
+      <form id="expertise_form" method="POST">
+        <input type="hidden" name="form_name" value="expertise_form">
+        <label for="expertise_name"> Perícia </label>
+        <input id="expertise_name" name="expertise_name" type="text">
+
+        <label for="expertise_stat"> Status associado </label>
+        <select id="expertise_stat" name="expertise_stat">
+          <option value="ATK">ATK</option>
+          <option value="DEF">DEF</option>
+          <option value="SPATK">SPATK</option>
+          <option value="SPDEF">SPDEF</option>
+          <option value="SPD">SPD</option>
+        </select>
+
+        <label for="expertise_description"> Descrição </label>
+        <textarea id="expertise_description" name="expertise_description"></textarea>
+
+        <input type="submit" value="Submit">
+      </form>
+    </div>
   </div>
 
   <div class="tab_body" id="pokemon_tab">

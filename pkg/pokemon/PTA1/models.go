@@ -6,6 +6,7 @@ import (
 	"bytes"
 	"html/template"
 	"net/http"
+	"net/url"
 )
 
 const TRAINER_SHEETID = 0
@@ -164,6 +165,10 @@ type TrainerSheet struct {
 	Prizes string
 
 	Notes string
+}
+
+func (a *TrainerSheet) Update(f url.Values) error{
+  return nil
 }
 
 func (s *TrainerSheet) Render(w http.ResponseWriter) error {

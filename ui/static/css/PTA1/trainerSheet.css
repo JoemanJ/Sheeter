@@ -56,6 +56,7 @@
 #id_tab{
     width: 100%;
     display: flex;
+  flex-direction: column;
 }
 
 #id_tab .header{
@@ -86,7 +87,7 @@
 }
 
 .header_stats{
-    flex-grow: 1;
+  width: 40%;
     background-color: pink;
     display: flex;
     flex-direction: column;
@@ -102,25 +103,61 @@
     display: flex;
     align-self:center;
     flex-grow: 1;
-    max-width: 100%;
+  width: min-content;
 }
 
 #class_table{
     align-self: flex-end;
-    width: max-content;
-    min-width: 600px;
-    max-width: 300px;
+    width: min-content;
+    min-width: 300px;
+    max-width: 600px;
     font-size: 30px;
     border-collapse: collapse;
 }
 
 #class_table *{
+  width: min-content;
     border-style: solid;
     border-width: 1px;
     text-align: center;
 }
 
+#class_table select{
+  margin: 0;
+  min-width: 80%;
+}
 
+
+#trainer_forms{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+#trainer_forms > form{
+  padding-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+}
+
+#trainer_forms > form{
+  display: none;
+}
+
+.list_block{
+  width: 100%;
+  max-height: 95px;
+  border-style: solid;
+  border-color: black;
+  border-width: 2px;
+  overflow-y: auto;
+}
+
+#talent_bools{
+  display: flex;
+  flex-direction: column;
+}
 
 
 

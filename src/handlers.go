@@ -233,6 +233,20 @@ func (a *application) sheet(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Print(err.Error())
 	}
+
+  if r.Method == "POST"{
+    err = r.ParseForm()
+    if err != nil{
+      fmt.Println(err)
+    }
+
+    fmt.Println("AAAA")
+    if err == nil{
+      f := r.Form 
+      a.handleSheetUpdates(path, Type, f)
+    }
+  }
+
 	a.renderSheet(w, r, path, Type)
 
 	return
