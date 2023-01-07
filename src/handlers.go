@@ -120,6 +120,21 @@ func (a *application) newPokemon(w http.ResponseWriter, r *http.Request) {
 				fmt.Println(err)
 			}
 			fmt.Println(poke)
+      
+      if f.Get("referrer_sheet") != ""{
+        fmt.Println("A")
+        refs := &PTA1.TrainerSheet{}
+
+        err = general.GetJsonData("data/sheets/" + f.Get("referrer_sheet") + "_0.json", refs)
+        if err != nil{
+          fmt.Println(err)
+          return
+        }
+
+        refs.PokemonList = append(refs.PokemonList, poke)
+        general.SetJsonData("data/sheets/" + f.Get("referrer_sheet") + "_0.json", refs)
+      }
+      fmt.Println("B")
 
 		case "species_form":
 			var abilities []*PTA1.PokemonAbility
@@ -229,7 +244,13 @@ func (a *application) generalNew(w http.ResponseWriter, r *http.Request) {
 }
 
 func (a *application) sheet(w http.ResponseWriter, r *http.Request) {
-	path, Type, err := general.GetSheetType(2)
+  id, err:= strconv.Atoi(r.URL.Query().Get("id"))
+  if err != nil{
+    a.generalNew(w, r)
+    return
+  }
+
+	path, Type, err := general.GetSheetType(id)
 	if err != nil {
 		fmt.Print(err.Error())
 	}

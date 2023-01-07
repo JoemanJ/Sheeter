@@ -1,6 +1,45 @@
 var classData
 var talentData
 var expertiseData
+var itemData
+var sheet_
+
+window.onload = () => {
+  sheet_ = parseInt(document.getElementById("sheet").value)
+
+  fetch("/data/PTA1/itemData").then(response => response.json()).then(data => {
+    itemData = data
+
+    let list = document.getElementById("item_list")
+
+    for ( const key of Object.keys(data)){
+      op = document.createElement("option")
+      op.value = key
+      op.innerHTML = key
+
+      list.appendChild(op)
+    }
+  })
+
+  fetch("/data/PTA1/classData").then(response => response.json()).then(data => {
+    classData = data
+
+    let classes = document.getElementsByClassName("class_select")
+    console.log(classes)
+
+    for (let i=0; i<4; i++){
+      el = classes.item(i)
+
+      for (key of Object.keys(classData)){
+      op = document.createElement("option")
+      op.value = key
+      op.innerHTML = key
+
+      el.appendChild(op)
+      }
+    }
+  })
+}
 
 function openTab(event, tab_name){
     var tabs = document.getElementsByClassName("tab_body")
@@ -17,7 +56,7 @@ function openTab(event, tab_name){
 function openSheet(id){
   let w = window.screen.width.toString()
   let h = window.screen.height.toString()
-  window.open("/sheet", "", "width="+w+", height="+h)
+  window.open("/sheet/?id="+id, "", "width="+w+", height="+h+", menubar=no, toolbar=no, status=no")
 }
 
 function switchClassFormDisplay(){
@@ -125,4 +164,65 @@ function switchExpertiseFormDisplay(){
   }
 
   form.style.display = "none"
+}
+
+function changeNewItem(tag){
+  let name = document.getElementById("item_name")
+  let descr = document.getElementById("item_description")
+
+  if (tag.value == "new"){
+    name.style.display="block"
+    descr.disabled = false
+    return
+  }
+
+  name.style.display="none"
+  name.value = ""
+  descr.disabled = true
+
+  descr.innerHTML = itemData[tag.value].Description  
+}
+
+function addItem(sheet, itemName, qtt, i, tag){
+  let USP = new URLSearchParams()
+
+  let data = {form_name: "item_form", id: sheet, i_name: itemName, factor: i, i_qtt: qtt, i_description: ""}
+  data.i_description = document.getElementById("item_description").value
+
+  let name
+  let i_qtt
+
+  if (!itemName){
+    name = document.getElementById("item_name").value
+    if (!name){
+      name = document.getElementById("item_list").value
+    }
+    i_qtt = document.getElementById("item_qtt").value
+  }else{
+    name = itemName
+    i_qtt = qtt.toString()
+  }
+
+  if (sheet){
+    data.id=sheet
+  }else{
+    data.id=sheet_
+  }
+  data.i_name = name
+  data.factor = i
+  data.i_qtt = i_qtt
+
+  for(let [name, value] of Object.entries(data)){
+    USP.append(name, value)
+  }
+
+  fetch("/sheet/?id="+data.id, {method: "POST", body: USP})
+
+  if (tag.parentNode.id != "X"){
+    console.log(tag.parentNode.parentNode.children[0].children[0].value)
+    tag.parentNode.parentNode.children[0].children[0].value = parseInt(tag.parentNode.parentNode.children[0].children[0].value) + data.i_qtt * i
+    if (parseInt(tag.parentNode.parentNode.children[0].children[0].value) <= 0 ){
+      // tag.parentNode.parentNode.children[0].children[0].value = "0"
+    }
+  }
 }

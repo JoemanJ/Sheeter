@@ -10,6 +10,7 @@ import (
 	"net/url"
 	"path/filepath"
 	"runtime/debug"
+	"strconv"
 	"strings"
 )
 
@@ -174,6 +175,47 @@ func (a *application) handleSheetUpdates(path string, Type int, form url.Values)
 
       fmt.Println(ex)
       return nil
+
+    case "item_form":
+      fmt.Println(form)
+
+      item, err := PTA1.GetItem(form.Get("i_name"))
+      if err != nil{
+        fmt.Println(err)
+      }
+
+      if item.Quantity == 0{
+        item, err = PTA1.RegisterItem(form.Get("i_name"), form.Get("i_description"))
+        if err != nil{
+          fmt.Println(err)
+        }
+      }
+
+      qtt, err:= strconv.Atoi(form.Get("i_qtt"))
+      if err != nil{
+        fmt.Println(err)
+      }
+
+      factor, err:= strconv.Atoi(form.Get("factor"))
+      if err != nil{
+        fmt.Println(err)
+      }
+
+      for index, i_item := range sheet.Inventory{
+        if i_item.Name == item.Name{
+          sheet.Inventory[index].Quantity += factor * qtt
+          if sheet.Inventory[index].Quantity <= 0{
+            sheet.Inventory[index] = sheet.Inventory[len(sheet.Inventory) - 1]
+            sheet.Inventory = sheet.Inventory[:len(sheet.Inventory) - 1]
+          }
+          general.SetJsonData(path, sheet)
+          return nil
+        }
+      }
+
+      sheet.Inventory = append(sheet.Inventory, item)
+      sheet.Inventory[len(sheet.Inventory)-1].Quantity = qtt
+      general.SetJsonData(path, sheet)
 
     default:
       err = sheet.Update(form)

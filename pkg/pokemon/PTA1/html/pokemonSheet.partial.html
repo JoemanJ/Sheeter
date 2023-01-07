@@ -11,6 +11,7 @@
     <button class="tab" id="notes" onclick="openTab(event, 'notes')">notes</button>
   </div>
   <div class="tab_body" id="id_tab">
+    <input type="text" id="sheet" hidden value="{{.Id}}">
     <div>
       <div>
         <img src="{{.Species.Sprite}}" alt="{{.Species}} sprite">

@@ -234,6 +234,7 @@
     top: -100px;
     left: 100px;
     max-height: 102px;
+    max-width:200px;
     padding: 5px;
 }
 
@@ -343,7 +344,7 @@
 }
 
 .item_qtt{
-    width: 20px;
+    width: 40px;
 }
 
 .qtt_input{

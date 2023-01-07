@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="/static/css/PTA1/newPokemon.css">
 <div id="forms_grid">
   <form id="pokemon_form" action="/new/pokemon" target="_self" method="post" autocomplete="on">
+    <input type="text" hidden value="" id="referrer_sheet" name="referrer_sheet">
     <input type="hidden" name="form_name" value="pokemon_form">
     <label for="nickname">Nickname:</label>
     <input type="text" id="nickname" name="nickname">

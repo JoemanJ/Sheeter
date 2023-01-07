@@ -11,6 +11,15 @@ window.onload = () => {
   getCapacities()
   switchAFormDisplay()
   switchCFormDisplay()
+
+  document.getElementById("referrer_sheet").value = window.opener.document.getElementById("sheet").value
+}
+
+window.onbeforeunload = () =>{
+  if (document.getElementById("referrer_sheet").value){
+    window.opener.location.reload()
+    close()
+  }
 }
 
 function getSpecies() {

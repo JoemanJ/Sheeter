@@ -14,6 +14,7 @@
   </div>
 
   <div class="tab_body" id="id_tab">
+    <input type="text" hidden id="sheet" value="{{.Id}}">
     <div>
       <div class="header">
         <img src="/static/img/logo.png" id="trainer_photo">
@@ -34,7 +35,7 @@
               <th colspan="2">Classes</th>
               <tr>
                 <td>
-                  <select id="class_1" onchange="switchClassFormDisplay()">
+                  <select class="class_select" id="class_1" onchange="switchClassFormDisplay()">
                     {{if index . 0}}
                     <option value="{{index . 0}}">{{index . 0}}</option>
                     {{else}}
@@ -44,7 +45,7 @@
                   </select>
                 </td>
                 <td>
-                  <select id="class_2" onchange="switchClassFormDisplay()">
+                  <select class="class_select" id="class_2" onchange="switchClassFormDisplay()">
                     {{if index . 1}}
                     <option value="{{index . 1}}">{{index . 1}}</option>
                     {{else}}
@@ -56,7 +57,7 @@
               </tr>
               <tr>
                 <td>
-                  <select id="class_3" onchange="switchClassFormDisplay()">
+                  <select class="class_select" id="class_3" onchange="switchClassFormDisplay()">
                     {{if index . 2}}
                     <option value="{{index . 2}}">{{index . 2}}</option>
                     {{else}}
@@ -66,7 +67,7 @@
                   </select>
                 </td>
                 <td>
-                  <select id="class_4" onchange="switchClassFormDisplay()">
+                  <select class="class_select" id="class_4" onchange="switchClassFormDisplay()">
                     {{if index . 3}}
                     <option value="{{index . 3}}">{{index . 3}}</option>
                     {{else}}
@@ -203,6 +204,7 @@
   </div>
 
   <div class="tab_body" id="pokemon_tab">
+    <img src="/static/img/PTA1/Pokeball_icon.png" alt="add pokemon" onclick='window.open("/new/pokemon", "", "width=800, height=600, menubar=no, toolbar=no, status=no")'>
     <div class="party">
       {{with .PokemonList}}
       {{if gt (len .) 6}}
@@ -258,87 +260,40 @@
   <div class="tab_body" id="bag_tab">
     <span style="display: grid; width: 100%;">
       <div class="item_grid">
-        {{range .Inventory}}
+        {{range $index, $item := .Inventory}}
         <div class="item_box">
-          <div class="item_box_header">
+          <div class="item_box_header" id="item_{{$index}}">
             <span>
-              <input class="item_qtt" type="number" readonly value="{{.Quantity}}">
-              <input class="item_name" type="text" value="{{.Name}}" readonly>
+              <input class="item_qtt" type="number" readonly value="{{$item.Quantity}}">
+              <input class="item_name" type="text" value="{{$item.Name}}" readonly>
             </span>
             <span>
-              <input class="qtt_input" type="number" placeholder="{{.Quantity}}" min="0" inputmode="numeric" step="1">
-              <input class="+-btn" type="button" value="+">
-              <input class="+-btn" type="button" value="-">
+              <input class="qtt_input" type="number" value="1" min="0" id="item_{{$index}}_qtt" inputmode="numeric" step="1">
+              <input class="+-btn" type="button" value="+" onclick="addItem(null, {{$item.Name}}, parseInt(document.getElementById('item_{{$index}}_qtt').value), 1, this)">
+              <input class="+-btn" type="button" value="-" onclick="addItem(null, {{$item.Name}}, parseInt(document.getElementById('item_{{$index}}_qtt').value), -1, this)">
             </span>
           </div>
           <div class="item_description">
-            <textarea name="description" readonly>{{.Description}}</textarea>
+            <textarea name="description" readonly>{{$item.Description}}</textarea>
           </div>
         </div>
         {{end}}
         <div class="item_box new_item">
           <div class="item_box_header">
-            <select name="item_name" id="item_list">
+            <select name="item_name" id="item_list" onchange="changeNewItem(this)">
+              <option value hidden selected></option>
               <option value="new">[novo item]</option>
             </select>
             <span>
               <input class="item_name" id="item_name" type="text" placeholder="Nome do item" style="display: none">
             </span>
-            <span>
+            <span id="X">
               <input class="qtt_input" id="item_qtt" type="number" value="1" min="0" inputmode="numeric" step="1">
-              <input class="+-btn" type="button" value="+" onclick="addItem(1)">
+              <input class="+-btn" type="button" value="+" onclick="addItem({{.Id}}, null, null, 1, this)">
             </span>
           </div>
           <div class="item_description">
-            <textarea name="item_description">Item description</textarea>
-          </div>
-        </div>
-        <div class="item_box">
-          <div class="item_box_header">
-            <span>
-              <input class="item_qtt" type="number" disabled="true" placeholder="1">
-              <input class="item_name" type="text" placeholder="item name" disabled="true">
-            </span>
-            <span>
-              <input class="qtt_input" type="number" placeholder="qtd" min="0" inputmode="numeric" step="1"> <input
-                class="+-btn" type="button" value="+">
-              <input type="button" value="-">
-            </span>
-          </div>
-          <div class="item_description">
-            <textarea name="description" disabled="true">Item description</textarea>
-          </div>
-        </div>
-        <div class="item_box">
-          <div class="item_box_header">
-            <span>
-              <input class="item_qtt" type="number" disabled="true" placeholder="1">
-              <input class="item_name" type="text" placeholder="item name" disabled="true">
-            </span>
-            <span>
-              <input class="qtt_input" type="number" placeholder="qtd" min="0" inputmode="numeric" step="1"> <input
-                class="+-btn" type="button" value="+">
-              <input type="button" value="-">
-            </span>
-          </div>
-          <div class="item_description">
-            <textarea name="description" disabled="true">Item description</textarea>
-          </div>
-        </div>
-        <div class="item_box">
-          <div class="item_box_header">
-            <span>
-              <input class="item_qtt" type="number" disabled="true" placeholder="1">
-              <input class="item_name" type="text" placeholder="item name" disabled="true">
-            </span>
-            <span>
-              <input class="qtt_input" type="number" placeholder="qtd" min="0" inputmode="numeric" step="1"> <input
-                class="+-btn" type="button" value="+">
-              <input type="button" value="-">
-            </span>
-          </div>
-          <div class="item_description">
-            <textarea name="description" disabled="true">Item description</textarea>
+            <textarea name="item_description" id="item_description" placeholder="Descrição do item" disabled></textarea>
           </div>
         </div>
       </div>
