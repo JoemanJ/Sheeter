@@ -217,6 +217,20 @@ func (a *application) handleSheetUpdates(path string, Type int, form url.Values)
       sheet.Inventory[len(sheet.Inventory)-1].Quantity = qtt
       general.SetJsonData(path, sheet)
 
+    case "switch_poke":
+      pk1, err := strconv.Atoi(form.Get("poke1"))
+      if err != nil{
+        fmt.Println(err)
+      }
+
+      pk2, err := strconv.Atoi(form.Get("poke2"))
+      if err != nil{
+        fmt.Println(err)
+      }
+
+      sheet.PokemonList[pk1], sheet.PokemonList[pk2] = sheet.PokemonList[pk2], sheet.PokemonList[pk1]
+      general.SetJsonData(path, sheet)
+
     default:
       err = sheet.Update(form)
       if err != nil{

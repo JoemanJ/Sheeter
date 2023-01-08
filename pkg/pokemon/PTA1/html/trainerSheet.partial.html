@@ -204,34 +204,34 @@
   </div>
 
   <div class="tab_body" id="pokemon_tab">
-    <img src="/static/img/PTA1/Pokeball_icon.png" alt="add pokemon" onclick='window.open("/new/pokemon", "", "width=800, height=600, menubar=no, toolbar=no, status=no")'>
+    <img src="/static/img/PTA1/Pokeball_plus_icon.png" alt="add pokemon" id="add_pokemon_icon" onclick='window.open("/new/pokemon", "", "width=800, height=600, menubar=no, toolbar=no, status=no")'>
     <div class="party">
       {{with .PokemonList}}
       {{if gt (len .) 6}}
-      {{range (slice . 0 6)}}
-      <div class="poke_box" id="{{.Id}}" ondblclick="openSheet(parseInt(this.id))">
-        <img class="ball_icon" src="/static/img/PTA1/Pokeball_open_icon.png">
+      {{range $index, $poke := (slice . 0 6)}}
+      <div class="poke_box" id="{{$index}}" onclick="selectPoke(this)" ondblclick="openSheet(parseInt(this.id))" onmouseover='switchBallIcons(this)'>
+        <img class="ball_icon" src="/static/img/PTA1/Pokeball_icon.png">
         <img class="gender_icon" src="{{if eq .Gender "m"}}/static/img/PTA1/male_icon.png{{else if eq .Gender "f"}}/static/img/PTA1/female_icon.png{{else}}?{{end}}">
-        <img class="poke_icon" src="{{.Species.Sprite}}">
+        <img class="poke_icon" src="{{$poke.Species.Sprite}}">
         <div class="box_stats">
-          <h3 class="poke_lvl"> lvl: {{.Lvl}}</h3>
-          <h3>{{.Nick}}</h3>
-          <meter class="HP_bar" value="{{index .Hp 0}}" max="{{index .Hp 1}}"></meter>
-          <p>{{index .Hp 0}}/{{index .Hp 1}}</p>
+          <h3 class="poke_lvl"> lvl: {{$poke.Lvl}}</h3>
+          <h3>{{$poke.Nick}}</h3>
+          <meter class="HP_bar" value="{{index $poke.Hp 0}}" max="{{index $poke.Hp 1}}"></meter>
+          <p>{{index $poke.Hp 0}}/{{index $poke.Hp 1}}</p>
         </div>
       </div>
       {{end}}
       {{else}}
-      {{range .}}
-      <div class="poke_box" id="{{.Id}}" ondblclick="openSheet(parseInt(this.id))">
-        <img class="ball_icon" src="/static/img/PTA1/Pokeball_open_icon.png">
-        <img class="gender_icon" src="{{if eq .Gender "m"}}/static/img/PTA1/male_icon.png{{else if eq .Gender "f"}}/static/img/PTA1/female_icon.png{{else}}?{{end}}">
-        <img class="poke_icon" src="{{.Species.Sprite}}">
+      {{range $index, $poke := .}}
+      <div class="poke_box" id="{{$index}}" onclick="selectPoke(this)" ondblclick="openSheet(parseInt(this.id))" onmouseover="switchBallIcons(this)">
+        <img class="ball_icon" src="/static/img/PTA1/Pokeball_icon.png">
+        <img class="gender_icon" src="{{if eq $poke.Gender "m"}}/static/img/PTA1/male_icon.png{{else if eq $poke.Gender "f"}}/static/img/PTA1/female_icon.png{{else}}?{{end}}">
+        <img class="poke_icon" src="{{$poke.Species.Sprite}}">
         <div class="box_stats">
-          <h3 class="poke_lvl"> lvl: {{.Lvl}}</h3>
-          <h3>{{.Nick}}</h3>
-          <meter class="HP_bar" value="{{index .Hp 0}}" max="{{index .Hp 1}}"></meter>
-          <p>{{index .Hp 0}}/{{index .Hp 1}}</p>
+          <h3 class="poke_lvl"> lvl: {{$poke.Lvl}}</h3>
+          <h3>{{$poke.Nick}}</h3>
+          <meter class="HP_bar" value="{{index $poke.Hp 0}}" max="{{index $poke.Hp 1}}"></meter>
+          <p>{{index $poke.Hp 0}}/{{index $poke.Hp 1}}</p>
         </div>
       </div>
       {{end}}
@@ -239,16 +239,16 @@
     </div>
     {{if gt (len .) 6}}
     <div class="party" id="pc">
-    {{range (slice . 6)}}
-      <div class="poke_box" id="{{.Id}}" ondblclick="openSheet(parseInt(this.id))">
-        <img class="ball_icon" src="/static/img/PTA1/Pokeball_open_icon.png">
-        <img class="gender_icon" src="{{if eq .Gender "m"}}/static/img/PTA1/male_icon.png{{else if eq .Gender "f"}}/static/img/PTA1/female_icon.png{{else}}?{{end}}">
-        <img class="poke_icon" src="{{.Species.Sprite}}">
+    {{range $index, $poke := (slice . 6)}}
+      <div class="poke_box" id="{{$index}}" onclick="selectPoke(this)" ondblclick="openSheet(parseInt(this.id))" onmouseover="switchBallIcons(this)">
+        <img class="ball_icon" src="/static/img/PTA1/Pokeball_icon.png">
+        <img class="gender_icon" src="{{if eq $poke.Gender "m"}}/static/img/PTA1/male_icon.png{{else if eq $poke.Gender "f"}}/static/img/PTA1/female_icon.png{{else}}?{{end}}">
+        <img class="poke_icon" src="{{$poke.Species.Sprite}}">
         <div class="box_stats">
-          <h3 class="poke_lvl"> lvl: {{.Lvl}}</h3>
-          <h3>{{.Nick}}</h3>
-          <meter class="HP_bar" value="{{index .Hp 0}}" max="{{index .Hp 1}}"></meter>
-          <p>{{index .Hp 0}}/{{index .Hp 1}}</p>
+          <h3 class="poke_lvl"> lvl: {{$poke.Lvl}}</h3>
+          <h3>{{$poke.Nick}}</h3>
+          <meter class="HP_bar" value="{{index $poke.Hp 0}}" max="{{index $poke.Hp 1}}"></meter>
+          <p>{{index $poke.Hp 0}}/{{index $poke.Hp 1}}</p>
         </div>
       </div>
       {{end}}

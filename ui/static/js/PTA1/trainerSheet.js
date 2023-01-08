@@ -3,6 +3,7 @@ var talentData
 var expertiseData
 var itemData
 var sheet_
+var selectedPoke = ""
 
 window.onload = () => {
   sheet_ = parseInt(document.getElementById("sheet").value)
@@ -51,6 +52,14 @@ function openTab(event, tab_name){
 
     event.currentTarget.className += " active"
     document.getElementById(tab_name + "_tab").style.display = "flex"
+}
+
+function switchBallIcons(tag) {
+  let icon = tag.firstElementChild
+
+  icon.src="/static/img/PTA1/Pokeball_open_icon.png"
+  
+  tag.onmouseout = () => icon.src="/static/img/PTA1/Pokeball_icon.png"
 }
 
 function openSheet(id){
@@ -164,6 +173,37 @@ function switchExpertiseFormDisplay(){
   }
 
   form.style.display = "none"
+}
+
+function selectPoke(tag){
+  if (!selectedPoke){
+    selectedPoke = tag
+    tag.classList.add("selected_poke")
+    tag.classList.toggle("poke_box")
+  }
+  else{
+    let USP = new URLSearchParams()
+
+    let data = {id: sheet_, form_name: "switch_poke", poke1: selectedPoke.id, poke2: tag.id}
+    selectedPoke.classList.remove("selected_poke")
+    selectedPoke.classList.toggle("poke_box")
+
+    for(let [name, value] of Object.entries(data)){
+      USP.append(name, value)
+    }
+
+    fetch("/sheet/?id="+data.id, {method: "POST", body: USP})
+
+    let aux = selectedPoke.innerHTML
+    selectedPoke.innerHTML = tag.innerHTML
+    tag.innerHTML = aux
+
+    aux = selectedPoke.id
+    selectedPoke.id = tag.id
+    tag.id = aux
+
+    selectedPoke = ""
+  }
 }
 
 function changeNewItem(tag){

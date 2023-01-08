@@ -182,6 +182,10 @@
     align-items: center;
 }
 
+#add_pokemon_icon:hover{
+  scale: 1.2;  
+}
+
 .party{
     margin: 10px;
     display: grid;
@@ -206,6 +210,18 @@
     border: solid;
     border-color: lightgreen;
     border-width: 5px;
+}
+
+.selected_poke{
+    background-image:url("/static/img/PTA1/poke_box.png");
+    width: 300px;
+    height: 102px;
+    margin: 20px;
+    border: solid;
+    border-color: lightgreen;
+    border-width: 5px;
+  border-color: yellow;
+  scale: 1.1;
 }
 
 .box_icons{
