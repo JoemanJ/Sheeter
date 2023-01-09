@@ -463,7 +463,7 @@ func newPokemonStatusTable(stats map[string]int) (*PokemonStatusTable, error) {
 	return table, nil
 }
 
-func newTrainerStatusTable(stats map[string]int) (*TrainerStatusTable, error) {
+func newTrainerStatusTable(stats map[string]int, lvl int) (*TrainerStatusTable, error) {
 	{
 		if _, ok := stats["HP"]; !ok {
 			return nil, errors.New("Invalid stats (missing HP)\n")
@@ -511,7 +511,7 @@ func newTrainerStatusTable(stats map[string]int) (*TrainerStatusTable, error) {
 		Stages:    zero,
 		Total:     stats,
 
-		Distributable: [2]int{statTotal, 66},
+		Distributable: [2]int{statTotal, 66 + TRAINERLVLTABLE["total_status"][lvl]},
 	}
 
 	return table, nil
@@ -607,7 +607,7 @@ func CreatePokemonSheet(nickname, species, gender, nature string, abilities []*P
 }
 
 func CreateTrainerSheet(name, player, gender string, lvl, age, height, weight int, stats map[string]int) (*TrainerSheet, error) {
-	stts, err := newTrainerStatusTable(stats)
+	stts, err := newTrainerStatusTable(stats, lvl)
 	if err != nil {
 		return nil, err
 	}
@@ -650,6 +650,8 @@ func CreateTrainerSheet(name, player, gender string, lvl, age, height, weight in
 		return nil, err
 	}
 
+  talentSlots := TRAINERLVLTABLE["total_talents"][lvl]
+
 	newSheet := &TrainerSheet{
 		Id: id,
 
@@ -672,7 +674,7 @@ func CreateTrainerSheet(name, player, gender string, lvl, age, height, weight in
 		WeaponDamage:         WEAPONDAMAGETABLE[lvl/7],
 
 		Talents:     stdTalents,
-		TalentSlots: 0,
+		TalentSlots: talentSlots,
 	}
   newSheet.Hp[1] = newSheet.Hp[0]
 

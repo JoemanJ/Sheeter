@@ -191,6 +191,12 @@ func (s *TrainerSheet) Render(w http.ResponseWriter) error {
 	return nil
 }
 
+func (s *TrainerSheet) LvlUp(x int){
+  s.Lvl += x
+  s.Status.Distributable[1] = TRAINERLVLTABLE["total_status"][s.Lvl + x]
+  s.TalentSlots = TRAINERLVLTABLE["total_talents"][s.Lvl + x]
+}
+
 type TrainerClass struct {
 	Name        string
 	Description string
