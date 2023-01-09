@@ -7,6 +7,7 @@ import (
 	"html/template"
 	"net/http"
 	"net/url"
+	"strconv"
 )
 
 const TRAINER_SHEETID = 0
@@ -195,6 +196,8 @@ func (s *TrainerSheet) LvlUp(x int){
   s.Lvl += x
   s.Status.Distributable[1] = TRAINERLVLTABLE["total_status"][s.Lvl + x]
   s.TalentSlots = TRAINERLVLTABLE["total_talents"][s.Lvl + x]
+
+  general.SetJsonData("data/sheet/sheets/"+strconv.Itoa(s.Id)+"_0.json", s)
 }
 
 type TrainerClass struct {

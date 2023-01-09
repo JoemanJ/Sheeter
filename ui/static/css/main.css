@@ -115,3 +115,7 @@ footer {
     color: #FEFCFD;
     text-align: center;
 }
+
+.clickable{
+  cursor: pointer;
+}

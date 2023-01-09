@@ -418,38 +418,38 @@
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Status "HP"}}" readonly></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "HP"}}" min="-6" max="6"></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "HP"}}" readonly></td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Modifiers "HP"}}" readonly></td>
+          <td><input class="stat_field" type="number" accept="numeric" readonly></td>
         </tr>
         <tr>
-          <td>Ataque</td>
+          <td class="clickable" onclick="Roll(1, 20, parseInt(this.parentElement.lastElementChild.firstElementChild.value))">Ataque</td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Status "ATK"}}" readonly></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "ATK"}}" min="-6" max="6"></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "ATK"}}" readonly></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Modifiers "ATK"}}" readonly></td>
         </tr>
         <tr>
-          <td>Defesa</td>
+          <td class="clickable" onclick="Roll(1, 20, parseInt(this.parentElement.lastElementChild.firstElementChild.value))">Defesa</td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Status "DEF"}}" readonly></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "DEF"}}" min="-6" max="6"></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "DEF"}}" readonly></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Modifiers "DEF"}}" readonly></td>
         </tr>
         <tr>
-          <td>Ataque Especial</td>
+          <td class="clickable" onclick="Roll(1, 20, parseInt(this.parentElement.lastElementChild.firstElementChild.value))">Ataque Especial</td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Status "SPATK"}}" readonly></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "SPATK"}}" min="-6" max="6"></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "SPATK"}}" readonly></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Modifiers "SPATK"}}" readonly></td>
         </tr>
         <tr>
-          <td>Defesa Especial</td>
+          <td class="clickable" onclick="Roll(1, 20, parseInt(this.parentElement.lastElementChild.firstElementChild.value))">Defesa Especial</td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Status "SPDEF"}}" readonly></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "SPDEF"}}" min="-6" max="6"></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "SPDEF"}}" readonly></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Modifiers "SPDEF"}}" readonly></td>
         </tr>
         <tr>
-          <td>Velocidade</td>
+          <td class="clickable" onclick="Roll(1, 20, parseInt(this.parentElement.lastElementChild.firstElementChild.value))">Velocidade</td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Status "SPD"}}" readonly></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "SPD"}}" min="-6" max="6"></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "SPD"}}" readonly></td>
