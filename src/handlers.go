@@ -131,6 +131,16 @@ func (a *application) newPokemon(w http.ResponseWriter, r *http.Request) {
           return
         }
 
+        if !refs.CaughtPokemon[poke.Species.Number-1]{
+          refs.TotalCaughtPokemon++
+        }
+        refs.CaughtPokemon[poke.Species.Number-1] = true
+
+        if !refs.SeenPokemon[poke.Species.Number-1]{
+          refs.TotalSeenPokemon++
+        }
+        refs.SeenPokemon[poke.Species.Number-1] = true
+
         refs.PokemonList = append(refs.PokemonList, poke)
         general.SetJsonData("data/sheets/" + f.Get("referrer_sheet") + "_0.json", refs)
       }
@@ -261,7 +271,6 @@ func (a *application) sheet(w http.ResponseWriter, r *http.Request) {
       fmt.Println(err)
     }
 
-    fmt.Println("AAAA")
     if err == nil{
       f := r.Form 
       a.handleSheetUpdates(path, Type, f)

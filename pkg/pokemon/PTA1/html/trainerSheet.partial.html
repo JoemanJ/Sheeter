@@ -15,6 +15,8 @@
 
   <div class="tab_body" id="id_tab">
     <input type="text" hidden id="sheet" value="{{.Id}}">
+    <input type="text" hidden id="seen_pokemon" value="{{range .SeenPokemon}}{{if .}}1{{else}}0{{end}}{{end}}">
+    <input type="text" hidden id="caught_pokemon" value="{{range .CaughtPokemon}}{{if .}}1{{else}}0{{end}}{{end}}">
     <div>
       <div class="header">
         <img src="/static/img/logo.png" id="trainer_photo">
@@ -317,12 +319,13 @@
 
   <div class="tab_body" id="dex_tab">
     <div class="dex_block">
-      <img src="/static/img/PTA1/pokedex.png">
-      <img class="dex_sprite" src="/static/img/PTA1/Pokeball_icon.png">
-      <img class="dex_caught_icon" src="/static/img/PTA1/Pokeball_icon.png">
-      <input class="dex_search" type="text" placeholder="Pesquisar...">
+      <!-- <img src="/static/img/PTA1/pokedex.png"> -->
+      <img class="dex_sprite" id=dex_sprite src="/static/img/PTA1/Pokeball_icon.png">
+      <img class="dex_caught_icon" id="dex_caught_icon" src="/static/img/PTA1/Pokeball_icon.png">
+      <input class="dex_search" id="dex_search" type="text" placeholder="Pesquisar...">
       <h1 class="dex_text" id="dex_poke_name">POKEMON NAME</h1>
       <h3 class="dex_text" id="dex_poke_description">Pokemon Description</h3>
+      <button type="button" onclick="fetchDexData()">Pesquisar</button>
 
     </div>
   </div>
@@ -340,15 +343,6 @@
             <input type="number" value="{{index .Hp 0}}" max="{{index .Hp 1}}">
             <h2>/</h2>
             <input type="number" readonly value="{{index .Hp 1}}">
-          </div>
-          <div class="DA_display">
-            <h2>DA</h2>
-            <input class="dice_qtt" type="number" inputmode="numeric">
-            <h2>d</h2>
-            <input class="dice_sides" type="number" inputmode="numeric">
-            <h2>+</h2>
-            <input class="roll_mod" type="number" inputmode="numeric">
-            <button class="roll_button" id="roll_DA"><img class="die_icon" src="/static/img/die_icon.png"></button>
           </div>
         </div>
         <div class="move_stats">
@@ -423,35 +417,35 @@
         <tr>
           <td class="clickable" onclick="Roll(1, 20, parseInt(this.parentElement.lastElementChild.firstElementChild.value))">Ataque</td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Status "ATK"}}" readonly></td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "ATK"}}" min="-6" max="6"></td>
+          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "ATK"}}" min="-6" max="6" id="ATK_mod"></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "ATK"}}" readonly></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Modifiers "ATK"}}" readonly></td>
         </tr>
         <tr>
           <td class="clickable" onclick="Roll(1, 20, parseInt(this.parentElement.lastElementChild.firstElementChild.value))">Defesa</td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Status "DEF"}}" readonly></td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "DEF"}}" min="-6" max="6"></td>
+          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "DEF"}}" min="-6" max="6" id="DEF_mod"></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "DEF"}}" readonly></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Modifiers "DEF"}}" readonly></td>
         </tr>
         <tr>
           <td class="clickable" onclick="Roll(1, 20, parseInt(this.parentElement.lastElementChild.firstElementChild.value))">Ataque Especial</td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Status "SPATK"}}" readonly></td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "SPATK"}}" min="-6" max="6"></td>
+          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "SPATK"}}" min="-6" max="6" id="SPATK_mod"></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "SPATK"}}" readonly></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Modifiers "SPATK"}}" readonly></td>
         </tr>
         <tr>
           <td class="clickable" onclick="Roll(1, 20, parseInt(this.parentElement.lastElementChild.firstElementChild.value))">Defesa Especial</td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Status "SPDEF"}}" readonly></td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "SPDEF"}}" min="-6" max="6"></td>
+          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "SPDEF"}}" min="-6" max="6" id="SPDEF_mod"></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "SPDEF"}}" readonly></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Modifiers "SPDEF"}}" readonly></td>
         </tr>
         <tr>
           <td class="clickable" onclick="Roll(1, 20, parseInt(this.parentElement.lastElementChild.firstElementChild.value))">Velocidade</td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Status "SPD"}}" readonly></td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "SPD"}}" min="-6" max="6"></td>
+          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "SPD"}}" min="-6" max="6" id="SPD_mod"></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "SPD"}}" readonly></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Modifiers "SPD"}}" readonly></td>
         </tr>

@@ -231,8 +231,80 @@ func (a *application) handleSheetUpdates(path string, Type int, form url.Values)
       sheet.PokemonList[pk1], sheet.PokemonList[pk2] = sheet.PokemonList[pk2], sheet.PokemonList[pk1]
       general.SetJsonData(path, sheet)
 
+    case "update":
+      atkMod, err := strconv.Atoi(form.Get("atkMod"))
+      if err != nil || atkMod < -6 || atkMod > 6{
+        fmt.Println(err)
+        atkMod = 0
+      }
+
+      defMod, err := strconv.Atoi(form.Get("defMod"))
+      if err != nil || defMod < -6 || defMod > 6{
+        fmt.Println(err)
+        defMod = 0
+      }
+
+      spatkMod, err := strconv.Atoi(form.Get("spatkMod"))
+      if err != nil || spatkMod < -6 || spatkMod > 6{
+        fmt.Println(err)
+        spatkMod = 0
+      }
+
+      spdefMod, err := strconv.Atoi(form.Get("spdefMod"))
+      if err != nil || spdefMod < -6 || spdefMod > 6{
+        fmt.Println(err)
+        spdefMod = 0
+      }
+
+      spdMod, err := strconv.Atoi(form.Get("spdMod"))
+      if err != nil || spdMod < -6 || spdMod > 6{
+        fmt.Println(err)
+        spdMod = 0
+      }
+
+      class1, err := PTA1.GetTrainerClass(form.Get("class1"))
+      if err != nil{
+        fmt.Println(err)
+      }
+      if class1.Name == ""{
+        class1 = nil
+      }
+
+      class2, err := PTA1.GetTrainerClass(form.Get("class2"))
+      if err != nil{
+        fmt.Println(err)
+      }
+      if class2.Name == ""{
+        class2 = nil
+      }
+
+      class3, err := PTA1.GetTrainerClass(form.Get("class3"))
+      if err != nil{
+        fmt.Println(err)
+      }
+      if class3.Name == ""{
+        class3 = nil
+      }
+
+      class4, err := PTA1.GetTrainerClass(form.Get("class4"))
+      if err != nil{
+        fmt.Println(err)
+      }
+      if class4.Name == ""{
+        class4 = nil
+      }
+
+      sheet.Status.Modifiers["ATK"] = atkMod
+      sheet.Status.Modifiers["DEF"] = defMod
+      sheet.Status.Modifiers["SPATK"] = spatkMod
+      sheet.Status.Modifiers["SPDEF"] = spdefMod
+      sheet.Status.Modifiers["SPD"] = spdMod
+      sheet.Notes = form.Get("notes")
+
+      general.SetJsonData(path, sheet)
+
     default:
-      err = sheet.Update(form)
+      // err = sheet.Update(form)
       if err != nil{
         return err
       }

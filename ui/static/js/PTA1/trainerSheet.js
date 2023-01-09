@@ -42,6 +42,33 @@ window.onload = () => {
   })
 }
 
+window.BeforeUnloadEvent() = () => {
+  let data={id:0, form_name: "update", class1:"", class2:"", class3:"", class4:"", atkMod:0, defMod:0, spatkMod:0, spdefMod:0, spdMod:0, notes:""}
+
+  data.id = sheet_
+
+  data.class1 = document.getElementById("class_1").value
+  data.class2 = document.getElementById("class_2").value
+  data.class3 = document.getElementById("class_3").value
+  data.class4 = document.getElementById("class_4").value
+  
+  data.atkMod = document.getElementById("ATK_mod").value
+  data.defMod = document.getElementById("DEF_mod").value
+  data.spatkMod = document.getElementById("SPATK_mod").value
+  data.spdefMod = document.getElementById("SPDEF_mod").value
+  data.spdMod = document.getElementById("SPD_mod").value
+
+  data.notes = document.getElementById("notes_textbox").value
+
+  let USP = new URLSearchParams()
+
+  for(let [name, value] of Object.entries(data)){
+    USP.append(name, value)
+  }
+
+  fetch("/sheet/?id="+data.id, {method: "POST", body: USP})
+}
+
 function openTab(event, tab_name){
     var tabs = document.getElementsByClassName("tab_body")
     
@@ -265,4 +292,40 @@ function addItem(sheet, itemName, qtt, i, tag){
       // tag.parentNode.parentNode.children[0].children[0].value = "0"
     }
   }
+}
+
+function fetchDexData(){
+  let dexSeen = document.getElementById("seen_pokemon").value
+  let dexCaught = document.getElementById("caught_pokemon").value
+
+  let search = document.getElementById("dex_search").value
+  let sprite = document.getElementById("dex_sprite")
+  let caughtIcon = document.getElementById("dex_caught_icon")
+  let desc = document.getElementById("dex_poke_description")
+
+  fetch("/data/specific?module=PTA2&type=species&id="+search).then(response => response.json()).then(data => {
+    console.log(data)
+    if (data.Number == 0){
+      desc.innerHTML = "Espécie desconhecida"
+      sprite.src = "/static/img/PTA1/Pokeball_icon.png"
+      return
+    }
+
+    if (Array.from(dexSeen)[data.Number-1] == 0){
+      sprite.style.filter = "brightness:(0%)"
+      desc.innerHTML = "???"
+    }else{
+      sprite.style.filter = ""
+      desc.innerHTML = data.Name
+    }
+
+    sprite.src = data.Sprite
+
+    if (Array.from(dexCaught)[data.Number-1] == 0){
+      caughtIcon.style.opacity = "0"
+    }else{
+      caughtIcon.style.opacity = "100%"
+    }
+      
+  })
 }

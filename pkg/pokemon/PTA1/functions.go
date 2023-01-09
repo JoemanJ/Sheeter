@@ -503,6 +503,8 @@ func newTrainerStatusTable(stats map[string]int, lvl int) (*TrainerStatusTable, 
 		}
 	}
 
+  modifiers["HP"] = 0
+
 	statTotal := stats["HP"] + stats["ATK"] + stats["DEF"] + stats["SPATK"] + stats["SPDEF"] + stats["SPD"]
 
 	table := &TrainerStatusTable{

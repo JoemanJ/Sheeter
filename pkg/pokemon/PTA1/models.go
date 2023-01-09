@@ -168,7 +168,7 @@ type TrainerSheet struct {
 	Notes string
 }
 
-func (a *TrainerSheet) Update(f url.Values) error{
+func (a *TrainerSheet) GeneralUpdate(f url.Values) error{
   return nil
 }
 
@@ -195,6 +195,7 @@ func (s *TrainerSheet) Render(w http.ResponseWriter) error {
 func (s *TrainerSheet) LvlUp(x int){
   s.Lvl += x
   s.Status.Distributable[1] = TRAINERLVLTABLE["total_status"][s.Lvl + x]
+  s.Hp[1] += 4
   s.TalentSlots = TRAINERLVLTABLE["total_talents"][s.Lvl + x]
 
   general.SetJsonData("data/sheet/sheets/"+strconv.Itoa(s.Id)+"_0.json", s)

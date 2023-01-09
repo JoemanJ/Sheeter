@@ -434,54 +434,51 @@
 }
 
 .dex_block{
-  width: min-content;
-  height: auto;
+  background-image: url("/static/img/PTA1/pokedex.png");
+  width: 794px;
+  height: 637px;
 }
 
 .dex_block *{
-  position:absolute;
-  left: 21.4%;
-  top: 51%;
-}
-
-.dex_block img{
-  transform: translate(-50%, -50%);
-}
-
-.dex_block img:first-child{
-  position: static;
-  transform: translate(0, 0);
+  position:relative;
 }
 
 .dex_sprite{
-  left: 35.5%;
-  top: 66%;
+  position: relative;
+  height: 12%;
+  width: auto;
+  left: 20%;
+  top: 35%;
 }
 
 .dex_caught_icon{
-  left: 42.5%;
-  top: 58%;
+  opacity: 0;
+  left: 20.5%;
+  top: 26%;
+  scale: 0.5;
 }
 
 .dex_search{
-  left: 28%;
-  top: 93%;
-  padding: 5px;
+  left: -15%;
+  top: 57%;
+  border-radius: 15px;
+  padding: 0 10px;
 }
 
 #dex_poke_name{
-  left: 28%;
-  top: 83%;
+  left: -25%;
+  top: 42.5%;
+  text-align: center;
 }
 
 
 #dex_poke_description{
-  left: 55%;
-  top: 32%;
+  left: 58%;
+  top: -10%;
   background-color: #222222;
   color: lightgreen;
-  height: 550px;
-  width: 280px;
+  height: 86%;
+  width: 35%;
   padding-left: 2px;
 }
 
