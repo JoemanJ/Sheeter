@@ -4,9 +4,24 @@ var expertiseData
 var itemData
 var sheet_
 var selectedPoke = ""
+var remPoints
 
 window.onload = () => {
   sheet_ = parseInt(document.getElementById("sheet").value)
+  remPoints = (parseInt(document.getElementById("stats_total").innerHTML) - parseInt(document.getElementById("stats_allocated").innerHTML))
+
+
+  if (remPoints > 0){
+    document.getElementById("finish_stat_allocation_button").disabled = false
+    let buttons = document.getElementsByClassName("stat_allocate_button")
+
+    for(let i=0; i<buttons.length; i++){
+      let btn = buttons.item(i)
+
+      btn.style.display = "inline"
+      btn.disabled = false
+    }
+  }
 
   fetch("/data/PTA1/itemData").then(response => response.json()).then(data => {
     itemData = data
@@ -42,8 +57,8 @@ window.onload = () => {
   })
 }
 
-window.BeforeUnloadEvent() = () => {
-  let data={id:0, form_name: "update", class1:"", class2:"", class3:"", class4:"", atkMod:0, defMod:0, spatkMod:0, spdefMod:0, spdMod:0, notes:""}
+window.onbeforeunload = () => {
+  let data={id:0, form_name: "update", class1:"", class2:"", class3:"", class4:"", atkStage:0, defStage:0, spatkStage:0, spdefStage:0, spdStage:0, notes:""}
 
   data.id = sheet_
 
@@ -52,11 +67,11 @@ window.BeforeUnloadEvent() = () => {
   data.class3 = document.getElementById("class_3").value
   data.class4 = document.getElementById("class_4").value
   
-  data.atkMod = document.getElementById("ATK_mod").value
-  data.defMod = document.getElementById("DEF_mod").value
-  data.spatkMod = document.getElementById("SPATK_mod").value
-  data.spdefMod = document.getElementById("SPDEF_mod").value
-  data.spdMod = document.getElementById("SPD_mod").value
+  data.atkStage = document.getElementById("ATK_stage").value
+  data.defStage = document.getElementById("DEF_stage").value
+  data.spatkStage = document.getElementById("SPATK_stage").value
+  data.spdefStage = document.getElementById("SPDEF_stage").value
+  data.spdStage = document.getElementById("SPD_stage").value
 
   data.notes = document.getElementById("notes_textbox").value
 
@@ -67,6 +82,37 @@ window.BeforeUnloadEvent() = () => {
   }
 
   fetch("/sheet/?id="+data.id, {method: "POST", body: USP})
+}
+
+var statsAllocated = {"form_name":"allocate_stats", "HP":0, "ATK":0, "DEF":0, "SPATK":0, "SPDEF":0, "SPD":0}
+function allocateStat(stat, qtt, tag){
+  let stat_text = tag.parentElement.children.item(1)
+  
+  if ((remPoints > 0 && qtt == 1) || (qtt == -1 && statsAllocated[stat] > 0)){
+    statsAllocated[stat] += qtt
+    stat_text.value = parseInt(stat_text.value) + qtt
+    remPoints -= qtt
+
+    let aux = document.getElementById("stats_allocated")
+    aux.innerHTML = parseInt(aux.innerHTML) + qtt
+  }
+
+  if (statsAllocated[stat] > 0){
+    stat_text.style.color = "green"
+  } else{
+    stat_text.style.color = "black"
+  }
+}
+
+function finishStatAllocation(){
+  let USP = new URLSearchParams()
+
+  for(const [key, value] of Object.entries(statsAllocated)){
+    USP.append(key, value)
+  }
+
+  document.getElementById("finish_stat_allocation_button").disabled = true
+  fetch("/sheet/?id="+sheet_, {method: "POST", body:USP}).then( setTimeout(() => window.location.reload(), 1000) )
 }
 
 function openTab(event, tab_name){
@@ -298,16 +344,19 @@ function fetchDexData(){
   let dexSeen = document.getElementById("seen_pokemon").value
   let dexCaught = document.getElementById("caught_pokemon").value
 
-  let search = document.getElementById("dex_search").value
+  let name = document.getElementById("dex_poke_name")
   let sprite = document.getElementById("dex_sprite")
   let caughtIcon = document.getElementById("dex_caught_icon")
   let desc = document.getElementById("dex_poke_description")
+  let search = document.getElementById("dex_search").value
 
   fetch("/data/specific?module=PTA2&type=species&id="+search).then(response => response.json()).then(data => {
     console.log(data)
     if (data.Number == 0){
+      sprite.style.filter = "brightness:(0%)"
       desc.innerHTML = "Espécie desconhecida"
       sprite.src = "/static/img/PTA1/Pokeball_icon.png"
+      caughtIcon.style.opacity = "0"
       return
     }
 

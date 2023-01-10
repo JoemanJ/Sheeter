@@ -156,7 +156,7 @@ func (a *application) newPokemon(w http.ResponseWriter, r *http.Request) {
 
 			for k, v := range f {
 				if strings.Contains(k, "c_") {
-					c, err := PTA1.GetCapacity(k)
+					c, err := PTA1.GetCapacity(strings.Replace(k, "c_", "", 1))
 					if err != nil {
 						fmt.Println(err)
 					}

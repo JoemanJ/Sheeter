@@ -195,10 +195,62 @@ func (s *TrainerSheet) Render(w http.ResponseWriter) error {
 func (s *TrainerSheet) LvlUp(x int){
   s.Lvl += x
   s.Status.Distributable[1] = TRAINERLVLTABLE["total_status"][s.Lvl + x]
-  s.Hp[1] += 4
   s.TalentSlots = TRAINERLVLTABLE["total_talents"][s.Lvl + x]
 
-  general.SetJsonData("data/sheet/sheets/"+strconv.Itoa(s.Id)+"_0.json", s)
+  general.SetJsonData("data/sheets/"+strconv.Itoa(s.Id)+"_0.json", s)
+}
+
+func (s *TrainerSheet) CalcEvasions(){
+  s.Evasion[0] = general.Capped(s.Status.Total["DEF"] / 5, 0, 6)
+  s.Evasion[1] = general.Capped(s.Status.Total["SPDEF"] / 5, 0, 6)
+  s.Evasion[2] = general.Capped(s.Status.Total["SPD"] / 5, 0, 6)
+}
+
+//Calculates the trainer's stat modifiers, total stats (accounting stages) and movements
+func (s *TrainerSheet) CalcStats(){
+  for stat, val := range s.Status.Status{
+    if val < 10{
+      s.Status.Modifiers[stat] = val - 10
+    }else{
+      s.Status.Modifiers[stat] = (val-10)/2
+    }
+    
+    if s.Status.Stages[stat] < 0{
+      s.Status.Total[stat] = val + ((val/10) * (s.Status.Stages[stat]))
+    }else{
+      s.Status.Total[stat] = val + ((val/4) * (s.Status.Stages[stat]))
+    }
+  }
+
+  s.Movement["land"] = general.Capped(3 + general.Capped(s.Status.Modifiers["ATK"]/2, s.Status.Modifiers["SPD"]/2, 1000), 5, 1000)
+  s.Movement["swim"] = general.Capped(2 + s.Status.Modifiers["DEF"], 4, 1000)
+  if s.Status.Modifiers["ATK"] >= 3 || s.Status.Modifiers["DEF"] >=3 {
+    s.Movement["underwater"] = 4
+  }else{
+    s.Movement["underwater"] = 3
+  }
+}
+
+func (s *TrainerSheet) CalcHp(){
+  s.Hp[1] = (s.Lvl + s.Status.Status["HP"]) * 4
+  s.Hp[0] = s.Hp[1]
+}
+
+func (s *TrainerSheet) AllocateStats(vector map[string]int){
+  var allocSum int
+
+  for key, val := range vector{
+    s.Status.Status[key] += val
+    allocSum += val
+  }
+
+  s.Status.Distributable[0] += allocSum
+
+  s.CalcEvasions()
+  s.CalcStats()
+  s.CalcHp()
+
+  general.SetJsonData("data/sheets/"+strconv.Itoa(s.Id)+"_0.json", s)
 }
 
 type TrainerClass struct {

@@ -14,7 +14,7 @@
     <input type="text" id="sheet" hidden value="{{.Id}}">
     <div>
       <div>
-        <img src="{{.Species.Sprite}}" alt="{{.Species}} sprite">
+        <img src="{{.Species.Sprite}}" alt="{{.Species.Name}} sprite">
         <div>
           <h2>Apelido</h2><input type="text" value="{{.Nick}}">
         </div>
@@ -23,7 +23,7 @@
           <h2>{{.Species.Name}}</h2>
         </div>
         <div>
-          {{range .Type}}
+          {{range .Species.Type}}
             <h2>{{.}}</h2>
           {{end}}
         </div>
@@ -68,7 +68,7 @@
             <h2>HP</h2>
             <input type="number" max="{{index .Hp 1}}" value="{{index .Hp 0}}">
             <h2>/</h2>
-            <input type="number" disabled="true" readonly value="{{index .Hp 1}}">
+            <input type="number" readonly value="{{index .Hp 1}}">
           </div>
           <div class="elemental_bonus_display">
             <h2>Bonus Elemental:</h2>
@@ -144,7 +144,7 @@
       {{with .Status}}
       <table class="stats_table">
         <tr>
-          <th colspan="6">STATS</th>
+          <th colspan="5">STATS</th>
         </tr>
         <tr>
           <th>Stat</th>
@@ -152,77 +152,64 @@
           <th>Pontos Distribuídos</th>
           <th>Fase</th>
           <th>Total</th>
-          <th>Mod</th>
         </tr>
         <tr>
           <td>Saúde</td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Base "HP"}}" readonly></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .LvlUp "HP"}}"></td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "HP"}}" min="-6" max="6"></td>
-          <td><input class="stat_field" type="number" accept="numeric" value="0" readonly></td>
-          <td>10</td>
+          <td><input class="stat_field" type="number" accept="numeric" readonly min="-6" max="6"></td>
+          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "HP"}}" readonly></td>
         </tr>
         <tr>
           <td>Ataque</td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Base "ATK"}}" readonly></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .LvlUp "ATK"}}" readonly></td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "ATK"}}" min="-6" max="6"></td>
-          <td><input class="stat_field" type="number" accept="numeric" value="0" readonly></td>
-          <td>10</td>
+          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "ATK"}}" min="-6" max="6" id="atk_mod"></td>
+          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "ATK"}}" readonly></td>
         </tr>
         <tr>
           <td>Defesa</td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Base "DEF"}}" readonly></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .LvlUp "DEF"}}" readonly></td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "DEF"}}" min="-6" max="6"></td>
-          <td><input class="stat_field" type="number" accept="numeric" value="0" readonly></td>
-          <td>10</td>
+          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "DEF"}}" min="-6" max="6" id="def_mod"></td>
+          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "DEF"}}" readonly></td>
         </tr>
         <tr>
           <td>Ataque Especial</td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Base "SPATK"}}" readonly></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .LvlUp "SPATK"}}" readonly></td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "SPATK"}}" min="-6" max="6"></td>
-          <td><input class="stat_field" type="number" accept="numeric" value="0" readonly></td>
-          <td>10</td>
+          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "SPATK"}}" min="-6" max="6" id="spatk_mod"></td>
+          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "SPATK"}}" readonly></td>
         </tr>
         <tr>
           <td>Defesa Especial</td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Base "SPDEF"}}" readonly></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .LvlUp "SPDEF"}}" readonly></td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "SPDEF"}}" min="-6" max="6"></td>
-          <td><input class="stat_field" type="number" accept="numeric" value="0" readonly></td>
-          <td>10</td>
+          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "SPDEF"}}" min="-6" max="6" id="spdef_mod"></td>
+          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "SPDEF"}}" readonly></td>
         </tr>
         <tr>
           <td>Velocidade</td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Base "SPD"}}" readonly></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .LvlUp "SPD"}}" readonly></td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "SPD"}}" min="-6" max="6"></td>
-          <td><input class="stat_field" type="number" accept="numeric" value="0" readonly></td>
-          <td>10</td>
+          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "SPD"}}" min="-6" max="6" id="spd_mod"></td>
+          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "SPD"}}" readonly></td>
         </tr>
       </table>
       {{end}}
     </div>
     <h2 style="text-align: center;">OUTRAS CAPACIDADES</h2>
     <div id="capacity_space">
+      {{range .Species.Capacities.Others}}
       <table class="capacity_block">
         <tr>
-          <th>NOME DA CAPACIDADE</th>
+          <th>{{.Name}}</th>
         </tr>
         <tr>
-          <td>descricao da capacidade</td>
+          <td>{{.Description}}</td>
         </tr>
       </table>
-      <table class="capacity_block">
-        <tr>
-          <th>NOME DA CAPACIDADE</th>
-        </tr>
-        <tr>
-          <td>descricao da capacidade</td>
-        </tr>
-      </table>
+      {{end}}
     </div>
   </div>
 
@@ -257,28 +244,6 @@
             </div>
           </td>
         </tr>
-        {{else}}
-        <tr>
-          <td>NOME DO GOLPE</td>
-          <td>
-            <div class="move_box">
-              <div>
-                <h2>descritores</h2>
-                <h2>TIPO</h2>
-              </div>
-              <div>
-                <h2>dano basal</h2>
-                <h2>ACC</h2>
-              </div>
-              <div>
-                <h2>frequência</h2>
-              </div>
-              <div>
-                <p>Efeito do golpe</p>
-              </div>
-            </div>
-          </td>
-        </tr>
         {{end}}
         {{end}}
         <tr>
@@ -303,28 +268,6 @@
               </div>
               <div>
                 <p>{{.Effect}}</p>
-              </div>
-            </div>
-          </td>
-        </tr>
-        {{else}}
-        <tr>
-          <td>NOME DO GOLPE</td>
-          <td>
-            <div class="move_box">
-              <div>
-                <h2>descritores</h2>
-                <h2>TIPO</h2>
-              </div>
-              <div>
-                <h2>dano basal</h2>
-                <h2>ACC</h2>
-              </div>
-              <div>
-                <h2>frequência</h2>
-              </div>
-              <div>
-                <p>Efeito do golpe</p>
               </div>
             </div>
           </td>

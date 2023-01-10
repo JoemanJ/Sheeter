@@ -232,34 +232,34 @@ func (a *application) handleSheetUpdates(path string, Type int, form url.Values)
       general.SetJsonData(path, sheet)
 
     case "update":
-      atkMod, err := strconv.Atoi(form.Get("atkMod"))
-      if err != nil || atkMod < -6 || atkMod > 6{
+      atkStage, err := strconv.Atoi(form.Get("atkStage"))
+      if err != nil || atkStage < -6 || atkStage > 6{
         fmt.Println(err)
-        atkMod = 0
+        atkStage = 0
       }
 
-      defMod, err := strconv.Atoi(form.Get("defMod"))
-      if err != nil || defMod < -6 || defMod > 6{
+      defStage, err := strconv.Atoi(form.Get("defStage"))
+      if err != nil || defStage < -6 || defStage > 6{
         fmt.Println(err)
-        defMod = 0
+        defStage = 0
       }
 
-      spatkMod, err := strconv.Atoi(form.Get("spatkMod"))
-      if err != nil || spatkMod < -6 || spatkMod > 6{
+      spatkStage, err := strconv.Atoi(form.Get("spatkStage"))
+      if err != nil || spatkStage < -6 || spatkStage > 6{
         fmt.Println(err)
-        spatkMod = 0
+        spatkStage = 0
       }
 
-      spdefMod, err := strconv.Atoi(form.Get("spdefMod"))
-      if err != nil || spdefMod < -6 || spdefMod > 6{
+      spdefStage, err := strconv.Atoi(form.Get("spdefStage"))
+      if err != nil || spdefStage < -6 || spdefStage > 6{
         fmt.Println(err)
-        spdefMod = 0
+        spdefStage = 0
       }
 
-      spdMod, err := strconv.Atoi(form.Get("spdMod"))
-      if err != nil || spdMod < -6 || spdMod > 6{
+      spdStage, err := strconv.Atoi(form.Get("spdStage"))
+      if err != nil || spdStage < -6 || spdStage > 6{
         fmt.Println(err)
-        spdMod = 0
+        spdStage = 0
       }
 
       class1, err := PTA1.GetTrainerClass(form.Get("class1"))
@@ -294,14 +294,51 @@ func (a *application) handleSheetUpdates(path string, Type int, form url.Values)
         class4 = nil
       }
 
-      sheet.Status.Modifiers["ATK"] = atkMod
-      sheet.Status.Modifiers["DEF"] = defMod
-      sheet.Status.Modifiers["SPATK"] = spatkMod
-      sheet.Status.Modifiers["SPDEF"] = spdefMod
-      sheet.Status.Modifiers["SPD"] = spdMod
+      sheet.Status.Stages["ATK"] = atkStage
+      sheet.Status.Stages["DEF"] = defStage
+      sheet.Status.Stages["SPATK"] = spatkStage
+      sheet.Status.Stages["SPDEF"] = spdefStage
+      sheet.Status.Stages["SPD"] = spdStage
       sheet.Notes = form.Get("notes")
 
+      sheet.CalcStats()
+
       general.SetJsonData(path, sheet)
+
+    case "allocate_stats":
+      hp, err := strconv.Atoi(form.Get("HP"))
+      if err != nil{
+        fmt.Println(err)
+      }
+
+      atk, err := strconv.Atoi(form.Get("ATK"))
+      if err != nil{
+        fmt.Println(err)
+      }
+
+      def, err := strconv.Atoi(form.Get("DEF"))
+      if err != nil{
+        fmt.Println(err)
+      }
+
+      spatk, err := strconv.Atoi(form.Get("SPATK"))
+      if err != nil{
+        fmt.Println(err)
+      }
+
+      spdef, err := strconv.Atoi(form.Get("SPDEF"))
+      if err != nil{
+        fmt.Println(err)
+      }
+
+      spd, err := strconv.Atoi(form.Get("SPD"))
+      if err != nil{
+        fmt.Println(err)
+      }
+
+      vector := map[string]int{"HP": hp, "ATK":atk, "DEF":def, "SPATK":spatk, "SPDEF":spdef, "SPD":spd}
+
+      sheet.AllocateStats(vector)
 
     default:
       // err = sheet.Update(form)

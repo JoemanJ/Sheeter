@@ -211,7 +211,7 @@
       {{with .PokemonList}}
       {{if gt (len .) 6}}
       {{range $index, $poke := (slice . 0 6)}}
-      <div class="poke_box" id="{{$index}}" onclick="selectPoke(this)" ondblclick="openSheet(parseInt(this.id))" onmouseover='switchBallIcons(this)'>
+      <div class="poke_box" id="{{$index}}" onclick="selectPoke(this)" ondblclick="openSheet(parseInt({{$poke.Id}}))" onmouseover='switchBallIcons(this)'>
         <img class="ball_icon" src="/static/img/PTA1/Pokeball_icon.png">
         <img class="gender_icon" src="{{if eq .Gender "m"}}/static/img/PTA1/male_icon.png{{else if eq .Gender "f"}}/static/img/PTA1/female_icon.png{{else}}?{{end}}">
         <img class="poke_icon" src="{{$poke.Species.Sprite}}">
@@ -225,7 +225,7 @@
       {{end}}
       {{else}}
       {{range $index, $poke := .}}
-      <div class="poke_box" id="{{$index}}" onclick="selectPoke(this)" ondblclick="openSheet(parseInt(this.id))" onmouseover="switchBallIcons(this)">
+      <div class="poke_box" id="{{$index}}" onclick="selectPoke(this)" ondblclick="openSheet(parseInt({{$poke.Id}}))" onmouseover="switchBallIcons(this)">
         <img class="ball_icon" src="/static/img/PTA1/Pokeball_icon.png">
         <img class="gender_icon" src="{{if eq $poke.Gender "m"}}/static/img/PTA1/male_icon.png{{else if eq $poke.Gender "f"}}/static/img/PTA1/female_icon.png{{else}}?{{end}}">
         <img class="poke_icon" src="{{$poke.Species.Sprite}}">
@@ -242,7 +242,7 @@
     {{if gt (len .) 6}}
     <div class="party" id="pc">
     {{range $index, $poke := (slice . 6)}}
-      <div class="poke_box" id="{{$index}}" onclick="selectPoke(this)" ondblclick="openSheet(parseInt(this.id))" onmouseover="switchBallIcons(this)">
+    <div class="poke_box" id="{{$index}}" onclick="selectPoke(this)" ondblclick="openSheet(parseInt({{$poke.Id}}))" onmouseover="switchBallIcons(this)">
         <img class="ball_icon" src="/static/img/PTA1/Pokeball_icon.png">
         <img class="gender_icon" src="{{if eq $poke.Gender "m"}}/static/img/PTA1/male_icon.png{{else if eq $poke.Gender "f"}}/static/img/PTA1/female_icon.png{{else}}?{{end}}">
         <img class="poke_icon" src="{{$poke.Species.Sprite}}">
@@ -409,45 +409,79 @@
         </tr>
         <tr>
           <td>Saúde</td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Status "HP"}}" readonly></td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "HP"}}" min="-6" max="6"></td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "HP"}}" readonly></td>
+          <td>
+            <button disabled class="stat_allocate_button" onclick="allocateStat('HP', -1, this)">-</button>
+            <input class="stat_field" type="number" accept="numeric" value="{{index .Status "HP"}}" readonly>
+            <button disabled class="stat_allocate_button" onclick="allocateStat('HP', 1, this)">+</button>
+          </td>
+          <td><input class="stat_field stat_stage" type="number" accept="numeric" min="-6" max="6" ></td>
+          <td><input class="stat_field" type="number" accept="numeric" readonly></td>
           <td><input class="stat_field" type="number" accept="numeric" readonly></td>
         </tr>
         <tr>
           <td class="clickable" onclick="Roll(1, 20, parseInt(this.parentElement.lastElementChild.firstElementChild.value))">Ataque</td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Status "ATK"}}" readonly></td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "ATK"}}" min="-6" max="6" id="ATK_mod"></td>
+          <td>
+            <button disabled class="stat_allocate_button" onclick="allocateStat('ATK', -1, this)">-</button>
+            <input class="stat_field" type="number" accept="numeric" value="{{index .Status "ATK"}}" readonly>
+            <button disabled class="stat_allocate_button" onclick="allocateStat('ATK', 1, this)">+</button>
+          </td>
+          <td><input class="stat_field stat_stage" type="number" accept="numeric" value="{{index .Stages "ATK"}}" min="-6" max="6" id="ATK_stage"></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "ATK"}}" readonly></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Modifiers "ATK"}}" readonly></td>
         </tr>
         <tr>
           <td class="clickable" onclick="Roll(1, 20, parseInt(this.parentElement.lastElementChild.firstElementChild.value))">Defesa</td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Status "DEF"}}" readonly></td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "DEF"}}" min="-6" max="6" id="DEF_mod"></td>
+          <td>
+            <button disabled class="stat_allocate_button" onclick="allocateStat('DEF', -1, this)">-</button>
+            <input class="stat_field" type="number" accept="numeric" value="{{index .Status "DEF"}}" readonly>
+            <button disabled class="stat_allocate_button" onclick="allocateStat('DEF', 1, this)">+</button>
+          </td>
+          <td><input class="stat_field stat_stage" type="number" accept="numeric" value="{{index .Stages "DEF"}}" min="-6" max="6" id="DEF_stage"></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "DEF"}}" readonly></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Modifiers "DEF"}}" readonly></td>
         </tr>
         <tr>
           <td class="clickable" onclick="Roll(1, 20, parseInt(this.parentElement.lastElementChild.firstElementChild.value))">Ataque Especial</td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Status "SPATK"}}" readonly></td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "SPATK"}}" min="-6" max="6" id="SPATK_mod"></td>
+          <td>
+            <button disabled class="stat_allocate_button" onclick="allocateStat('SPATK', -1, this)">-</button>
+            <input class="stat_field" type="number" accept="numeric" value="{{index .Status "SPATK"}}" readonly>
+            <button disabled class="stat_allocate_button" onclick="allocateStat('SPATK', 1, this)">+</button>
+          </td>
+          <td><input class="stat_field stat_stage" type="number" accept="numeric" value="{{index .Stages "SPATK"}}" min="-6" max="6" id="SPATK_stage"></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "SPATK"}}" readonly></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Modifiers "SPATK"}}" readonly></td>
         </tr>
         <tr>
           <td class="clickable" onclick="Roll(1, 20, parseInt(this.parentElement.lastElementChild.firstElementChild.value))">Defesa Especial</td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Status "SPDEF"}}" readonly></td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "SPDEF"}}" min="-6" max="6" id="SPDEF_mod"></td>
+          <td>
+            <button disabled class="stat_allocate_button" onclick="allocateStat('SPDEF', -1, this)">-</button>
+            <input class="stat_field" type="number" accept="numeric" value="{{index .Status "SPDEF"}}" readonly>
+            <button disabled class="stat_allocate_button" onclick="allocateStat('SPDEF', 1, this)">+</button>
+          </td>
+          <td><input class="stat_field stat_stage" type="number" accept="numeric" value="{{index .Stages "SPDEF"}}" min="-6" max="6" id="SPDEF_stage"></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "SPDEF"}}" readonly></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Modifiers "SPDEF"}}" readonly></td>
         </tr>
         <tr>
           <td class="clickable" onclick="Roll(1, 20, parseInt(this.parentElement.lastElementChild.firstElementChild.value))">Velocidade</td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Status "SPD"}}" readonly></td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "SPD"}}" min="-6" max="6" id="SPD_mod"></td>
+          <td>
+            <button disabled class="stat_allocate_button" onclick="allocateStat('SPD', -1, this)">-</button>
+            <input class="stat_field" type="number" accept="numeric" value="{{index .Status "SPD"}}" readonly>
+            <button disabled class="stat_allocate_button" onclick="allocateStat('SPD', 1, this)">+</button>
+          </td>
+          <td><input class="stat_field stat_stage" type="number" accept="numeric" value="{{index .Stages "SPD"}}" min="-6" max="6" id="SPD_stage"></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "SPD"}}" readonly></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Modifiers "SPD"}}" readonly></td>
+        </tr>
+        <tr>
+          <td>Pontos alocados</td>
+          <td>
+            <span id="stats_allocated">{{index .Distributable 0}}</span>/
+            <span id="stats_total">{{index .Distributable 1}}</span>
+          </td>
+          <td colspan="3">
+            <button disabled id="finish_stat_allocation_button" onclick="finishStatAllocation()">Alocar pontos</button>
+          </td>
         </tr>
       </table>
       {{end}}
