@@ -221,8 +221,10 @@
             GOLPES PADRÃO
           </th>
         </tr>
+        {{$stdMovesQtt := 0}}
         {{range index .Moves 0}}
         {{if .}}
+        {{$stdMovesQtt = (add $stdMovesQtt 1)}}
         <tr>
           <td>{{.Name}}</td>
           <td>
@@ -246,6 +248,30 @@
         </tr>
         {{end}}
         {{end}}
+        {{if ne $stdMovesQtt 4}}
+        <tr>
+          <td>Novo golpe</td>
+          <td>
+            <div class="move_box" id="new_move_box">
+              <div>
+                <h2>Descrição do novo golpe</h2>
+                <h2>Tipo do novo golpe</h2>
+              </div>
+              <div>
+                <h2>mod de dano</h2>
+                <h2>acurácia</h2>
+              </div>
+              <div>
+                <h2>frequência</h2>
+              </div>
+              <div>
+                <p>Efeito</p>
+              </div>
+            </div>
+          </td>
+        </tr>
+        {{end}}
+
         <tr>
           <th colspan=2>GOLPES ENSINADOS</th>
         </tr>

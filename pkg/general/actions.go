@@ -172,7 +172,7 @@ func SetRD(key, value string) error {
 
 func RenderVolatile(pageFile, dir string) (*template.Template, error) {
 	name := filepath.Base(pageFile)
-	fm := template.FuncMap{"divide": func(a, b int) float32 { return float32(a) / float32(b) }}
+  fm := template.FuncMap{"divide": func(a, b int) float32 { return float32(a) / float32(b) }, "add": func(a, b int) int {return a + b}}
 
 	template := template.New(name).Funcs(fm)
 
