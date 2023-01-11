@@ -1,8 +1,0 @@
-Decidir sobre a página da pokedex
-    Mostrar uma mensagem da pokedex dizendo que a especie ainda nao foi catalogada
-    Forkar o repositório do Athila
-
-? Um slot na ficha de pokemon para o item segurado
-    Por hora deixar nas notas mesmo...
-
-Trocar slice de pokemons na ficha de treinador por lista encadeada
