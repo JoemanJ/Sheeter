@@ -156,44 +156,88 @@
         <tr>
           <td>Saúde</td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Base "HP"}}" readonly></td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .LvlUp "HP"}}"></td>
+          <td>
+            <button disabled class="stat_allocate_button" onclick="allocateStat('HP', -1, this)">-</button>
+            <input class="stat_field" type="number" accept="numeric" value="{{index .LvlUp "HP"}}">
+            <button disabled class="stat_allocate_button" onclick="allocateStat('HP', 1, this)">+</button>
+          </td>
           <td><input class="stat_field" type="number" accept="numeric" readonly min="-6" max="6"></td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "HP"}}" readonly></td>
+          <td><input class="stat_field" type="number" accept="numeric" value="" readonly></td>
         </tr>
         <tr>
           <td>Ataque</td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Base "ATK"}}" readonly></td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .LvlUp "ATK"}}" readonly></td>
+          <td>
+            <button disabled class="stat_allocate_button" onclick="allocateStat('HP', -1, this)">-</button>
+            <input class="stat_field" type="number" accept="numeric" value="{{index .LvlUp "ATK"}}" readonly>
+            <button disabled class="stat_allocate_button" onclick="allocateStat('HP', 1, this)">+</button>
+          </td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "ATK"}}" min="-6" max="6" id="atk_mod"></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "ATK"}}" readonly></td>
         </tr>
         <tr>
           <td>Defesa</td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Base "DEF"}}" readonly></td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .LvlUp "DEF"}}" readonly></td>
+          <td>
+            <button disabled class="stat_allocate_button" onclick="allocateStat('HP', -1, this)">-</button>
+            <input class="stat_field" type="number" accept="numeric" value="{{index .LvlUp "DEF"}}" readonly>
+            <button disabled class="stat_allocate_button" onclick="allocateStat('HP', 1, this)">+</button>
+          </td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "DEF"}}" min="-6" max="6" id="def_mod"></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "DEF"}}" readonly></td>
         </tr>
         <tr>
           <td>Ataque Especial</td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Base "SPATK"}}" readonly></td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .LvlUp "SPATK"}}" readonly></td>
+          <td>
+            <button disabled class="stat_allocate_button" onclick="allocateStat('HP', -1, this)">-</button>
+            <input class="stat_field" type="number" accept="numeric" value="{{index .LvlUp "SPATK"}}" readonly>
+            <button disabled class="stat_allocate_button" onclick="allocateStat('HP', 1, this)">+</button>
+          </td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "SPATK"}}" min="-6" max="6" id="spatk_mod"></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "SPATK"}}" readonly></td>
         </tr>
         <tr>
           <td>Defesa Especial</td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Base "SPDEF"}}" readonly></td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .LvlUp "SPDEF"}}" readonly></td>
+          <td>
+            <button disabled class="stat_allocate_button" onclick="allocateStat('HP', -1, this)">-</button>
+            <input class="stat_field" type="number" accept="numeric" value="{{index .LvlUp "SPDEF"}}" readonly>
+            <button disabled class="stat_allocate_button" onclick="allocateStat('HP', 1, this)">+</button>
+          </td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "SPDEF"}}" min="-6" max="6" id="spdef_mod"></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "SPDEF"}}" readonly></td>
         </tr>
         <tr>
           <td>Velocidade</td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Base "SPD"}}" readonly></td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .LvlUp "SPD"}}" readonly></td>
+          <td>
+            <button disabled class="stat_allocate_button" onclick="allocateStat('HP', -1, this)">-</button>
+            <input class="stat_field" type="number" accept="numeric" value="{{index .LvlUp "SPD"}}" readonly>
+            <button disabled class="stat_allocate_button" onclick="allocateStat('HP', 1, this)">+</button>
+          </td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "SPD"}}" min="-6" max="6" id="spd_mod"></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "SPD"}}" readonly></td>
+        </tr>
+        <tr>
+          <td>
+            Pontos Alocados
+          </td>
+          <td>
+            <span id="stats_allocated">{{index .Distributable 0}}</span> /
+            <span id="stats_total">{{index .Distributable 1}}</span>
+          </td>
+          <td colspan="3">
+            <button disabled id="finish_stat_allocation_button" onclick="finishStatAllocation()">Alocar pontos</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Relação Basal
+          </td>
+          <td colspan="4">
+            {{.BaseRelation}}
+          </td>
         </tr>
       </table>
       {{end}}
@@ -221,64 +265,75 @@
             GOLPES PADRÃO
           </th>
         </tr>
-        {{$stdMovesQtt := 0}}
         {{range index .Moves 0}}
         {{if .}}
-        {{$stdMovesQtt = (add $stdMovesQtt 1)}}
         <tr>
-          <td>{{.Name}}</td>
+          <td>
+            <select class="move_name" onchange="switchMoveInfo(this.parentElement.parentElement)">
+              <option value="{{.Name}}">{{.Name}}</option>
+            </select>
+          </td>
           <td>
             <div class="move_box">
               <div>
-                <h2>{{range .Descriptors}}{{.}}{{end}}</h2>
-                <h2>{{.Type}}</h2>
+                <h2 class="move_descriptors">{{range .Descriptors}}{{.}}{{end}}</h2>
+                <h2 class="move_type">{{.Type}}</h2>
               </div>
               <div>
-                <h2>{{.Damage.Mod}}</h2>
-                <h2>{{.AccDiff}}</h2>
+                <h2 class="move_damage">{{.Damage.Mod}}</h2>
+                <h2 class="move_accuracy">{{.AccDiff}}</h2>
               </div>
               <div>
-                <h2>{{.Frequency}}</h2>
+                <h2 class="move_frequency">{{.Frequency}}</h2>
+                <h2 class="move_reach">{{.Reach}}</h2>
               </div>
               <div>
-                <p>{{.Effect}}</p>
+                <p class="move_effect">{{.Effect}}</p>
               </div>
             </div>
           </td>
         </tr>
-        {{end}}
-        {{end}}
-        {{if ne $stdMovesQtt 4}}
+        {{else}}
         <tr>
-          <td>Novo golpe</td>
           <td>
-            <div class="move_box" id="new_move_box">
+            <select class="move_name" onchange="switchMoveInfo(this.parentElement.parentElement)">
+              <option value="">---</option>
+            </select>
+          </td>
+          <td>
+            <div class="move_box">
               <div>
-                <h2>Descrição do novo golpe</h2>
-                <h2>Tipo do novo golpe</h2>
+                <h2 class="move_descriptors"></h2>
+                <h2 class="move_type"></h2>
               </div>
               <div>
-                <h2>mod de dano</h2>
-                <h2>acurácia</h2>
+                <h2 class="move_damage"></h2>
+                <h2 class="move_accuracy"></h2>
               </div>
               <div>
-                <h2>frequência</h2>
+                <h2 class="move_frequency"></h2>
+                <h2 class="move_reach"></h2>
               </div>
               <div>
-                <p>Efeito</p>
+                <p class="move_effect"></p>
               </div>
             </div>
           </td>
         </tr>
         {{end}}
-
+        {{end}}
         <tr>
           <th colspan=2>GOLPES ENSINADOS</th>
         </tr>
         {{range index .Moves 0}}
         {{if .}}
         <tr>
-          <td>{{.Name}}</td>
+          <td>
+            <select onchange="switchMoveInfo(this.parentElement.parentElement)">
+              <option value="">---</option>
+              <option value="a">---</option>
+            </select>
+          </td>
           <td>
             <div class="move_box">
               <div>
@@ -291,6 +346,7 @@
               </div>
               <div>
                 <h2>{{.Frequency}}</h2>
+                <h2>{{.Reach}}</h2>
               </div>
               <div>
                 <p>{{.Effect}}</p>
@@ -298,8 +354,68 @@
             </div>
           </td>
         </tr>
+        {{else}}
+        <tr>
+          <td>
+            <select>
+              <option value="">---</option>
+            </select>
+          </td>
+          <td>
+            <div class="move_box">
+              <div>
+                <h2 class="move_descriptors"></h2>
+                <h2 class="move_type"></h2>
+              </div>
+              <div>
+                <h2 class="move_damage"></h2>
+                <h2 class="move_accuracy"></h2>
+              </div>
+              <div>
+                <h2 class="move_frequency"></h2>
+                <h2 class="move_reach"></h2>
+              </div>
+              <div>
+                <p class="move_effect"></p>
+              </div>
+            </div>
+          </td>
+        </tr>
         {{end}}
         {{end}}
+        <th colspan="2">CADASTRAR GOLPE</th>
+
+        <tr>
+          <td>
+            <input type="text" id="new_move_name" placeholder="Nome do golpe">
+            <button onclick="registerNewMove()" id="new_move_send_button">enviar</button>
+          </td>
+          <td>
+            <div class="move_box" id="new_move_box">
+              <div>
+                <input type="text" id="new_move_descriptors" placeholder="desc1,desc2,desc3...">
+                <select id="new_move_type">
+                  <option selected>Normal</option>
+                </select>
+              </div>
+              <div>
+                <span>
+                  <input type="number" accept="numeric" id="new_move_damage_1"> d
+                  <input type="number" accept="numeric" id="new_move_damage_2"> + 
+                  <input type="number" accept="numeric" id="new_move_damage_3">
+                </span>
+                <input type="number" accept="numeric" id="new_move_accuracy" placeholder="acc">
+              </div>
+              <div>
+                <input type="text" id="new_move_frequency" placeholder="Frequência">
+                <input type="text" id="new_move_reach" placeholder="Alcance">
+              </div>
+              <div>
+                <textarea id="new_move_effect" placeholder="Efeito"></textarea>
+              </div>
+            </div>
+          </td>
+        </tr>
 
       </table>
     </div>

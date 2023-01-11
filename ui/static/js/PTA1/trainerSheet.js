@@ -112,7 +112,7 @@ function finishStatAllocation(){
   }
 
   document.getElementById("finish_stat_allocation_button").disabled = true
-  fetch("/sheet/?id="+sheet_, {method: "POST", body:USP}).then( setTimeout(() => window.location.reload(), 1000) )
+  fetch("/sheet/?id="+sheet_, {method: "POST", body:USP}).then(response => {if(response.ok) {winndow.location.reload()}})
 }
 
 function openTab(event, tab_name){

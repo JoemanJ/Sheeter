@@ -275,6 +275,7 @@ func (a *application) sheet(w http.ResponseWriter, r *http.Request) {
       f := r.Form 
       a.handleSheetUpdates(path, Type, f)
     }
+    
   }
 
 	a.renderSheet(w, r, path, Type)
