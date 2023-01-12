@@ -168,55 +168,55 @@
           <td>Ataque</td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Base "ATK"}}" readonly></td>
           <td>
-            <button disabled class="stat_allocate_button" onclick="allocateStat('HP', -1, this)">-</button>
+            <button disabled class="stat_allocate_button" onclick="allocateStat('ATK', -1, this)">-</button>
             <input class="stat_field" type="number" accept="numeric" value="{{index .LvlUp "ATK"}}" readonly>
-            <button disabled class="stat_allocate_button" onclick="allocateStat('HP', 1, this)">+</button>
+            <button disabled class="stat_allocate_button" onclick="allocateStat('ATK', 1, this)">+</button>
           </td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "ATK"}}" min="-6" max="6" id="atk_mod"></td>
+          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "ATK"}}" min="-6" max="6" id="ATK_stage"></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "ATK"}}" readonly></td>
         </tr>
         <tr>
           <td>Defesa</td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Base "DEF"}}" readonly></td>
           <td>
-            <button disabled class="stat_allocate_button" onclick="allocateStat('HP', -1, this)">-</button>
+            <button disabled class="stat_allocate_button" onclick="allocateStat('DEF', -1, this)">-</button>
             <input class="stat_field" type="number" accept="numeric" value="{{index .LvlUp "DEF"}}" readonly>
-            <button disabled class="stat_allocate_button" onclick="allocateStat('HP', 1, this)">+</button>
+            <button disabled class="stat_allocate_button" onclick="allocateStat('DEF', 1, this)">+</button>
           </td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "DEF"}}" min="-6" max="6" id="def_mod"></td>
+          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "DEF"}}" min="-6" max="6" id="DEF_stage"></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "DEF"}}" readonly></td>
         </tr>
         <tr>
           <td>Ataque Especial</td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Base "SPATK"}}" readonly></td>
           <td>
-            <button disabled class="stat_allocate_button" onclick="allocateStat('HP', -1, this)">-</button>
+            <button disabled class="stat_allocate_button" onclick="allocateStat('SPATK', -1, this)">-</button>
             <input class="stat_field" type="number" accept="numeric" value="{{index .LvlUp "SPATK"}}" readonly>
-            <button disabled class="stat_allocate_button" onclick="allocateStat('HP', 1, this)">+</button>
+            <button disabled class="stat_allocate_button" onclick="allocateStat('SPATK', 1, this)">+</button>
           </td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "SPATK"}}" min="-6" max="6" id="spatk_mod"></td>
+          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "SPATK"}}" min="-6" max="6" id="SPATK_stage"></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "SPATK"}}" readonly></td>
         </tr>
         <tr>
           <td>Defesa Especial</td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Base "SPDEF"}}" readonly></td>
           <td>
-            <button disabled class="stat_allocate_button" onclick="allocateStat('HP', -1, this)">-</button>
+            <button disabled class="stat_allocate_button" onclick="allocateStat('SPDEF', -1, this)">-</button>
             <input class="stat_field" type="number" accept="numeric" value="{{index .LvlUp "SPDEF"}}" readonly>
-            <button disabled class="stat_allocate_button" onclick="allocateStat('HP', 1, this)">+</button>
+            <button disabled class="stat_allocate_button" onclick="allocateStat('SPDEF', 1, this)">+</button>
           </td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "SPDEF"}}" min="-6" max="6" id="spdef_mod"></td>
+          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "SPDEF"}}" min="-6" max="6" id="SPDEF_stage"></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "SPDEF"}}" readonly></td>
         </tr>
         <tr>
           <td>Velocidade</td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Base "SPD"}}" readonly></td>
           <td>
-            <button disabled class="stat_allocate_button" onclick="allocateStat('HP', -1, this)">-</button>
+            <button disabled class="stat_allocate_button" onclick="allocateStat('SPD', -1, this)">-</button>
             <input class="stat_field" type="number" accept="numeric" value="{{index .LvlUp "SPD"}}" readonly>
-            <button disabled class="stat_allocate_button" onclick="allocateStat('HP', 1, this)">+</button>
+            <button disabled class="stat_allocate_button" onclick="allocateStat('SPD', 1, this)">+</button>
           </td>
-          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "SPD"}}" min="-6" max="6" id="spd_mod"></td>
+          <td><input class="stat_field" type="number" accept="numeric" value="{{index .Stages "SPD"}}" min="-6" max="6" id="SPD_stage"></td>
           <td><input class="stat_field" type="number" accept="numeric" value="{{index .Total "SPD"}}" readonly></td>
         </tr>
         <tr>

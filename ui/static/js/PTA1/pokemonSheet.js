@@ -6,8 +6,19 @@ var remPoints
 window.onload = () => {
   updateXpMeter()
   sheet_ = document.getElementById("sheet").value
-
   remPoints = (parseInt(document.getElementById("stats_total").innerHTML) - parseInt(document.getElementById("stats_allocated").innerHTML))
+
+  if (remPoints > 0){
+    document.getElementById("finish_stat_allocation_button").disabled = false
+    let buttons = document.getElementsByClassName("stat_allocate_button")
+
+    for(let i=0; i<buttons.length; i++){
+      let btn = buttons.item(i)
+
+      btn.style.display = "inline"
+      btn.disabled = false
+    }
+  }
 
   fetch("/data/PTA1/moveData").then(response => response.json()).then(data => {
     movesData = data
@@ -20,6 +31,28 @@ window.onload = () => {
       }
     }
   })
+}
+
+window.onbeforeunload = () => {
+  let data={id:0, form_name: "update", atkStage:0, defStage:0, spatkStage:0, spdefStage:0, spdStage:0, notes:""}
+
+  data.id = sheet_
+
+  data.atkStage = document.getElementById("ATK_stage").value
+  data.defStage = document.getElementById("DEF_stage").value
+  data.spatkStage = document.getElementById("SPATK_stage").value
+  data.spdefStage = document.getElementById("SPDEF_stage").value
+  data.spdStage = document.getElementById("SPD_stage").value
+
+  data.notes = document.getElementById("notes_textbox").value
+
+  let USP = new URLSearchParams()
+
+  for(let [name, value] of Object.entries(data)){
+    USP.append(name, value)
+  }
+
+  fetch("/sheet/?id="+data.id, {method: "POST", body: USP})
 }
 
 function openTab(event, tab_name){
@@ -86,4 +119,35 @@ function registerNewMove(){
   }
 
   fetch("/sheet/?id="+sheet_, {method: "POST", body: USP}).then(response => {if (response.ok){window.location.reload()}})
+}
+
+var statsAllocated = {"form_name":"allocate_stats", "HP":0, "ATK":0, "DEF":0, "SPATK":0, "SPDEF":0, "SPD":0}
+function allocateStat(stat, qtt, tag){
+  let stat_text = tag.parentElement.children.item(1)
+  
+  if ((remPoints > 0 && qtt == 1) || (qtt == -1 && statsAllocated[stat] > 0)){
+    statsAllocated[stat] += qtt
+    stat_text.value = parseInt(stat_text.value) + qtt
+    remPoints -= qtt
+
+    let aux = document.getElementById("stats_allocated")
+    aux.innerHTML = parseInt(aux.innerHTML) + qtt
+  }
+
+  if (statsAllocated[stat] > 0){
+    stat_text.style.color = "green"
+  } else{
+    stat_text.style.color = "black"
+  }
+}
+
+function finishStatAllocation(){
+  let USP = new URLSearchParams()
+
+  for(const [key, value] of Object.entries(statsAllocated)){
+    USP.append(key, value)
+  }
+
+  document.getElementById("finish_stat_allocation_button").disabled = true
+  fetch("/sheet/?id="+sheet_, {method: "POST", body:USP}).then(response => {if(response.ok) {window.location.reload()}})
 }

@@ -103,6 +103,67 @@ type PokemonSheet struct {
 	Notes string
 }
 
+func (s *PokemonSheet) LvlUp(x int){
+  s.Lvl += x
+  s.Status.Distributable[1] += x
+
+  general.SetJsonData("data/sheets/"+strconv.Itoa(s.Id)+"_1.json", s)
+}
+
+func (s *PokemonSheet) CalcEvasions(){
+  s.Evasion[0] = general.Capped(s.Status.Total["DEF"] / 5, 0, 6)
+  s.Evasion[1] = general.Capped(s.Status.Total["SPDEF"] / 5, 0, 6)
+  s.Evasion[2] = general.Capped(s.Status.Total["SPD"] / 5, 0, 6)
+}
+
+//Calculates the pokemon's total stats (accounting stages) and elemental bonus
+func (s *PokemonSheet) CalcStats(){
+  for stat, val := range s.Status.Total{
+    if s.Status.Stages[stat] < 0{
+      s.Status.Total[stat] = val + ((val/10) * (s.Status.Stages[stat]))
+    }else{
+      s.Status.Total[stat] = val + ((val/4) * (s.Status.Stages[stat]))
+    }
+  }
+
+  s.ElemBonus = s.Lvl/5
+}
+
+func (s *PokemonSheet) CalcHp(){
+  s.Hp[1] = (s.Lvl + s.Status.Total["HP"]) * 4
+  s.Hp[0] = s.Hp[1]
+}
+
+func (s *PokemonSheet) AllocateStats(vector map[string]int){
+  var allocSum int
+
+  for key, val := range vector{
+    s.Status.LvlUp[key] += val
+    allocSum += val
+  }
+
+  s.Status.Distributable[0] += allocSum
+
+  s.CalcStats()
+  s.CalcEvasions()
+  s.CalcHp()
+
+  general.SetJsonData("data/sheets/"+strconv.Itoa(s.Id)+"_1.json", s)
+}
+func (s *PokemonSheet) Update(atkStage, defStage, spatkStage, spdefStage, spdStage int, notes string){
+  s.Status.Stages["ATK"] = atkStage
+  s.Status.Stages["DEF"] = defStage
+  s.Status.Stages["SPATK"] = spatkStage
+  s.Status.Stages["SPDEF"] = spdefStage
+  s.Status.Stages["SPD"] = spdStage
+
+  s.Notes = notes
+
+  s.CalcStats()
+
+  general.SetJsonData("data/sheets/"+strconv.Itoa(s.Id)+"_1.json", s)
+}
+
 func (s *PokemonSheet) Render(w http.ResponseWriter) error {
 	template := new(template.Template)
 
@@ -246,8 +307,8 @@ func (s *TrainerSheet) AllocateStats(vector map[string]int){
 
   s.Status.Distributable[0] += allocSum
 
-  s.CalcEvasions()
   s.CalcStats()
+  s.CalcEvasions()
   s.CalcHp()
 
   general.SetJsonData("data/sheets/"+strconv.Itoa(s.Id)+"_0.json", s)

@@ -386,6 +386,77 @@ func (a *application) handleSheetUpdates(path string, Type int, form url.Values)
       }
 
       fmt.Println("Registered move: ", move)
+
+    case "allocate_stats":
+      hp, err := strconv.Atoi(form.Get("HP"))
+      if err != nil{
+        fmt.Println(err)
+      }
+
+      atk, err := strconv.Atoi(form.Get("ATK"))
+      if err != nil{
+        fmt.Println(err)
+      }
+
+      def, err := strconv.Atoi(form.Get("DEF"))
+      if err != nil{
+        fmt.Println(err)
+      }
+
+      spatk, err := strconv.Atoi(form.Get("SPATK"))
+      if err != nil{
+        fmt.Println(err)
+      }
+
+      spdef, err := strconv.Atoi(form.Get("SPDEF"))
+      if err != nil{
+        fmt.Println(err)
+      }
+
+      spd, err := strconv.Atoi(form.Get("SPD"))
+      if err != nil{
+        fmt.Println(err)
+      }
+
+      vector := map[string]int{"HP": hp, "ATK":atk, "DEF":def, "SPATK":spatk, "SPDEF":spdef, "SPD":spd}
+
+      sheet.AllocateStats(vector)
+
+    case "update":
+      atkStage, err := strconv.Atoi(form.Get("atkStage"))
+      if err != nil || atkStage < -6 || atkStage > 6{
+        fmt.Println(err)
+        atkStage = 0
+      }
+
+      defStage, err := strconv.Atoi(form.Get("defStage"))
+      if err != nil || defStage < -6 || defStage > 6{
+        fmt.Println(err)
+        defStage = 0
+      }
+
+      spatkStage, err := strconv.Atoi(form.Get("spatkStage"))
+      if err != nil || spatkStage < -6 || spatkStage > 6{
+        fmt.Println(err)
+        spatkStage = 0
+      }
+
+      spdefStage, err := strconv.Atoi(form.Get("spdefStage"))
+      if err != nil || spdefStage < -6 || spdefStage > 6{
+        fmt.Println(err)
+        spdefStage = 0
+      }
+
+      spdStage, err := strconv.Atoi(form.Get("spdStage"))
+      if err != nil || spdStage < -6 || spdStage > 6{
+        fmt.Println(err)
+        spdStage = 0
+      }
+
+      notes := form.Get("notes")
+
+      sheet.Update(atkStage, defStage, spatkStage, spdefStage, spdStage, notes)
+
     }
 
 
