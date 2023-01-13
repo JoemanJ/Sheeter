@@ -58,7 +58,7 @@ window.onload = () => {
 }
 
 window.onbeforeunload = () => {
-  let data={id:0, form_name: "update", class1:"", class2:"", class3:"", class4:"", atkStage:0, defStage:0, spatkStage:0, spdefStage:0, spdStage:0, notes:""}
+  let data={id:0, form_name: "update", class1:"", class2:"", class3:"", class4:"", hp:0, atkStage:0, defStage:0, spatkStage:0, spdefStage:0, spdStage:0, notes:""}
 
   data.id = sheet_
 
@@ -67,6 +67,7 @@ window.onbeforeunload = () => {
   data.class3 = document.getElementById("class_3").value
   data.class4 = document.getElementById("class_4").value
   
+  data.hp = document.getElementById("current_hp")
   data.atkStage = document.getElementById("ATK_stage").value
   data.defStage = document.getElementById("DEF_stage").value
   data.spatkStage = document.getElementById("SPATK_stage").value
@@ -274,6 +275,10 @@ function selectPoke(tag){
     aux = selectedPoke.id
     selectedPoke.id = tag.id
     tag.id = aux
+    
+    aux = selectedPoke.ondblclick
+    selectedPoke.ondblclick = tag.ondblclick
+    tag.ondblclick = aux
 
     selectedPoke = ""
   }

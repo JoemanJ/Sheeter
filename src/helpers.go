@@ -12,6 +12,8 @@ import (
 	"runtime/debug"
 	"strconv"
 	"strings"
+
+	"github.com/golang-jwt/jwt"
 )
 
 func (a *application) serverError(w http.ResponseWriter, err error) {
@@ -232,6 +234,11 @@ func (a *application) handleSheetUpdates(path string, Type int, form url.Values)
       general.SetJsonData(path, sheet)
 
     case "update":
+      hp, err := strconv.Atoi(form.Get("hp"))
+      if err != nil{
+        fmt.Println(err)
+      }
+
       atkStage, err := strconv.Atoi(form.Get("atkStage"))
       if err != nil || atkStage < -6 || atkStage > 6{
         fmt.Println(err)
@@ -294,6 +301,7 @@ func (a *application) handleSheetUpdates(path string, Type int, form url.Values)
         class4 = nil
       }
 
+      sheet.Hp[0] = hp
       sheet.Status.Stages["ATK"] = atkStage
       sheet.Status.Stages["DEF"] = defStage
       sheet.Status.Stages["SPATK"] = spatkStage
@@ -423,6 +431,11 @@ func (a *application) handleSheetUpdates(path string, Type int, form url.Values)
       sheet.AllocateStats(vector)
 
     case "update":
+      hp, err := strconv.Atoi(form.Get("hp"))
+      if err != nil{
+        fmt.Println(err)
+      }
+
       atkStage, err := strconv.Atoi(form.Get("atkStage"))
       if err != nil || atkStage < -6 || atkStage > 6{
         fmt.Println(err)
@@ -455,7 +468,7 @@ func (a *application) handleSheetUpdates(path string, Type int, form url.Values)
 
       notes := form.Get("notes")
 
-      sheet.Update(atkStage, defStage, spatkStage, spdefStage, spdStage, notes)
+      sheet.Update(form.Get("nickname"), hp, atkStage, defStage, spatkStage, spdefStage, spdStage, notes)
 
     }
 
@@ -465,4 +478,18 @@ func (a *application) handleSheetUpdates(path string, Type int, form url.Values)
 	}
 
   return nil
+}
+
+func generateJWT(username string) (string, error){
+  tok := jwt.New(jwt.SigningMethodHS256)
+
+  claims := tok.Claims.(jwt.MapClaims)
+  claims["Username"] = username
+
+  tokenString, err:= tok.SignedString([]byte(JWTKEY))
+  if err != nil{
+    return "", err
+  }
+
+  return tokenString, nil
 }

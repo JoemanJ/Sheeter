@@ -34,10 +34,14 @@ window.onload = () => {
 }
 
 window.onbeforeunload = () => {
-  let data={id:0, form_name: "update", atkStage:0, defStage:0, spatkStage:0, spdefStage:0, spdStage:0, notes:""}
+  let data={id:0, form_name: "update", nickname:"", hp:0, atkStage:0, defStage:0, spatkStage:0, spdefStage:0, spdStage:0, notes:""}
 
   data.id = sheet_
 
+  data.nickname = document.getElementById("nickname")
+
+  data.hp = document.getElementById("current_hp")
+  data.atkStage = document.getElementById("ATK_stage").value
   data.atkStage = document.getElementById("ATK_stage").value
   data.defStage = document.getElementById("DEF_stage").value
   data.spatkStage = document.getElementById("SPATK_stage").value

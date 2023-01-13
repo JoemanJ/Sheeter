@@ -2,6 +2,7 @@ package main
 
 import (
 	general "Joe/sheeter/pkg/general"
+	sheeters "Joe/sheeter/pkg/general"
 	"Joe/sheeter/pkg/pokemon/PTA1"
 	"encoding/json"
 	"fmt"
@@ -9,7 +10,39 @@ import (
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/golang-jwt/jwt"
 )
+
+func (a *application) registerNewUser(w http.ResponseWriter, r *http.Request) {
+  if r.Method == "POST"{
+    r.ParseForm()
+
+    user := sheeters.User{
+      Username: r.Form.Get("username"),
+      Password: r.Form.Get("password"),
+    }
+
+    userList := map[string]sheeters.User{}
+
+    err := general.GetJsonData(sheeters.USERSDATA, &userList)
+    if err != nil{
+      fmt.Println(err)
+    }
+
+    userList[user.Username] = user
+
+    err = general.SetJsonData(sheeters.USERSDATA, userList)
+    if err != nil{
+      fmt.Println(err)
+    }
+
+    a.login(w, r)
+    return
+  }
+
+  a.templateCache["register.page.html"].Execute(w, nil)
+}
 
 func (a *application) getData(w http.ResponseWriter, r *http.Request) {
 	var str string
@@ -260,6 +293,41 @@ func (a *application) sheet(w http.ResponseWriter, r *http.Request) {
     return
   }
 
+  c, err := r.Cookie("sheeter_token")
+  if err != nil{
+    fmt.Println(err)
+  }
+
+  jwtStr := c.Value
+
+  token, _, err := new(jwt.Parser).ParseUnverified(jwtStr, jwt.MapClaims{})
+  if err != nil{
+    fmt.Println(err)
+  }
+
+  var username string
+
+  if claims, ok := token.Claims.(jwt.MapClaims); ok{
+    username = fmt.Sprint(claims["Username"])
+  }
+
+  user, err := sheeters.GetUser(username)
+  if err != nil{
+    a.serverError(w, err)
+  }
+
+  ok := false
+  for i:= 0; i < len(user.OwnedSheets); i++{
+    if user.OwnedSheets[i] == id{
+      ok = true
+    }
+  }
+
+  if !ok{
+    a.login(w, r)
+    return
+  }
+
 	path, Type, err := general.GetSheetType(id)
 	if err != nil {
 		fmt.Print(err.Error())
@@ -284,6 +352,43 @@ func (a *application) sheet(w http.ResponseWriter, r *http.Request) {
 }
 
 func (a *application) login(w http.ResponseWriter, r *http.Request) {
-	a.templateCache["home.page.html"].Execute(w, nil)
-	fmt.Println(a.templateCache["home.page.html"])
+  r.ParseForm()
+  form := r.Form
+
+  if form.Has("username") && form.Has("password"){
+    ul := map[string]sheeters.User{}
+
+    err := general.GetJsonData(sheeters.USERSDATA, &ul)
+    if err != nil{
+      fmt.Println(err)
+    }
+
+    usr, ok := ul[form.Get("username")]
+
+    if !ok || usr.Password != form.Get("password"){
+      r.Header.Add("error", "invalid_combination")
+      a.templateCache["login.page.html"].Execute(w, nil)
+      return
+    }
+
+    jwt, err := generateJWT(usr.Username)
+    if err != nil{
+      r.Header.Add("error", "token_generation_failed")
+      fmt.Println("a")
+      fmt.Println(err)
+      fmt.Println("b")
+      a.templateCache["login.page.html"].Execute(w, nil)
+      return
+    }
+    fmt.Println(jwt)
+
+    http.SetCookie(w, &http.Cookie{
+      Name: "sheeter_token",
+      Value: jwt,
+    })
+  }
+
+  a.templateCache["login.page.html"].Execute(w, nil)
+  return
+
 }

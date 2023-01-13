@@ -16,7 +16,7 @@
       <div>
         <img src="{{.Species.Sprite}}" alt="{{.Species.Name}} sprite">
         <div>
-          <h2>Apelido</h2><input type="text" value="{{.Nick}}">
+          <h2>Apelido</h2><input type="text" id="nickname" value="{{.Nick}}">
         </div>
         <div>
           <h2>Espécie</h2>
@@ -66,7 +66,7 @@
         <div class="HP_DA">
           <div class="HP_display">
             <h2>HP</h2>
-            <input type="number" max="{{index .Hp 1}}" value="{{index .Hp 0}}">
+            <input type="number" id="current_hp" max="{{index .Hp 1}}" value="{{index .Hp 0}}">
             <h2>/</h2>
             <input type="number" readonly value="{{index .Hp 1}}">
           </div>

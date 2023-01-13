@@ -107,6 +107,8 @@ func (s *PokemonSheet) LvlUp(x int){
   s.Lvl += x
   s.Status.Distributable[1] += x
 
+  s.ElemBonus = s.Lvl/5
+
   general.SetJsonData("data/sheets/"+strconv.Itoa(s.Id)+"_1.json", s)
 }
 
@@ -150,7 +152,10 @@ func (s *PokemonSheet) AllocateStats(vector map[string]int){
 
   general.SetJsonData("data/sheets/"+strconv.Itoa(s.Id)+"_1.json", s)
 }
-func (s *PokemonSheet) Update(atkStage, defStage, spatkStage, spdefStage, spdStage int, notes string){
+func (s *PokemonSheet) Update(nickname string, hp, atkStage, defStage, spatkStage, spdefStage, spdStage int, notes string){
+  s.Nick = nickname
+
+  s.Hp[0] = hp
   s.Status.Stages["ATK"] = atkStage
   s.Status.Stages["DEF"] = defStage
   s.Status.Stages["SPATK"] = spatkStage

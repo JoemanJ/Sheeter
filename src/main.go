@@ -30,6 +30,8 @@ type application struct {
 
 const PORT string = ":4000"
 
+const JWTKEY = "CHANGETHIS!"
+
 func main() {
 	_, err := os.Stat("./data")
 	if errors.Is(err, os.ErrNotExist) {
@@ -54,6 +56,7 @@ func main() {
 	}
 
 	cache, err := app.newTemplateCache("./ui/html")
+
 	if err != nil {
 		panic(err)
 	}
@@ -65,13 +68,15 @@ func main() {
 	fileServer := http.FileServer(http.Dir("ui/static/"))
 	mux.Handle("/static/", http.StripPrefix("/static", fileServer))
 
-	mux.HandleFunc("/", app.generalNew)
+	mux.HandleFunc("/", app.login)
 	mux.HandleFunc("/new/", app.generalNew)
 	mux.HandleFunc("/new/pokemon", app.newPokemon)
 	mux.HandleFunc("/new/trainer", app.newTrainer)
 	mux.HandleFunc("/data/", app.getData)
-	mux.HandleFunc("/sheet/", app.sheet)
-
+	// mux.HandleFunc("/sheet/", app.sheet)
+	mux.Handle("/sheet/", validateJWT(http.HandlerFunc(app.sheet)))
+	mux.HandleFunc("/register", app.registerNewUser)
+	mux.HandleFunc("/login", app.login)
 	// sheet, err := PTA1.CreateSampleTrainerSheet()
 	if err != nil {
 		panic(err)
