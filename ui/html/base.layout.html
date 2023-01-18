@@ -13,24 +13,25 @@
 <body>
   <header>
     <h1><a href='/'>Sheeter</a></h1>
-    <div id="header_roll_div">
-      <input type="number" min="1" value="1" id="header_dice_qtt">
-      <h2> d</h2>
-      <input type="number" min="2" value="20" id="header_dice_sides">
-      <h2> + </h2>
-      <input type="number" value="0" id="header_dice_mod">
-      <button type="button" onclick="Roll()"><img src="/static/img/die_icon_.png" alt="roll dice"></button>
-      <h2 id="header_roll_result"></h2>
-    </div>
   </header>
   <nav>
-    <a href='/sheet/?id=4'>Home</a>
-    <a href="/sheet/?id=1">My account</a>
+    <a href='/login'>Home</a>
+    <a href="/account">My account</a>
+    <a href="/logout">Logout</a>
   </nav>
   <div class="slate" id="main_slate">
     {{template "body" .}}
   </div>
-  {{template "footer" .}}
+    <div id="roller_div">
+      <input type="number" min="1" value="1" id="roller_dice_qtt">
+      <h2> d</h2>
+      <input type="number" min="2" value="20" id="roller_dice_sides">
+      <h2> + </h2>
+      <input type="number" value="0" id="roller_dice_mod">
+      <button type="button" onclick="Roll()"><img src="/static/img/die_icon_.png" alt="roll dice"></button>
+      <h2 id="roller_result"></h2>
+    </div>
+  {{template "footer"}}
   <script src="/static/js/main.js" type="text/javascript"></script>
 </body>
 

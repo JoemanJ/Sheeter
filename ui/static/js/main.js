@@ -7,12 +7,10 @@ for (var i = 0; i < navLinks.length; i++) {
 	}
 }
 
-function Roll(n = parseInt(document.getElementById("header_dice_qtt").value), d = parseInt(document.getElementById("header_dice_sides").value), x = parseInt(document.getElementById("header_dice_mod").value)){
-  let result = document.getElementById("header_roll_result")
+function Roll(n = parseInt(document.getElementById("roller_dice_qtt").value), d = parseInt(document.getElementById("roller_dice_sides").value), x = parseInt(document.getElementById("roller_dice_mod").value)){
+  let result = document.getElementById("roller_result")
 
   let sum = 0
-
-  console.log(x)
 
   for (let i=0; i<n; i++){
     let die = Math.floor(Math.random()*d + 1)
@@ -20,4 +18,8 @@ function Roll(n = parseInt(document.getElementById("header_dice_qtt").value), d 
   }
 
   result.innerHTML = sum + x
+
+  result.classList.remove("blinker")
+  result.classList.add("blinker")
+  result.onanimationiteration = () => result.classList.remove("blinker")
 }

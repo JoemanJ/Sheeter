@@ -1,0 +1,12 @@
+{{template "base" .}}
+
+{{define "title"}}account{{end}}
+
+{{define "body"}}
+  <link rel="stylesheet" href="/static/css/account.css">
+  <div id=sheets_list>
+    {{range $id, $name := .OwnedSheets}}
+    <a href="/sheet/?id={{$id}}">{{$name}}</a>
+    {{end}}
+  </div>
+{{end}}

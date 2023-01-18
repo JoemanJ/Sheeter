@@ -2,6 +2,7 @@ package main
 
 import (
 	general "Joe/sheeter/pkg/general"
+	sheeters "Joe/sheeter/pkg/general"
 	"Joe/sheeter/pkg/pokemon/PTA1"
 	"errors"
 	"fmt"
@@ -269,37 +270,39 @@ func (a *application) handleSheetUpdates(path string, Type int, form url.Values)
         spdStage = 0
       }
 
-      class1, err := PTA1.GetTrainerClass(form.Get("class1"))
-      if err != nil{
-        fmt.Println(err)
-      }
-      if class1.Name == ""{
-        class1 = nil
-      }
 
-      class2, err := PTA1.GetTrainerClass(form.Get("class2"))
-      if err != nil{
-        fmt.Println(err)
-      }
-      if class2.Name == ""{
-        class2 = nil
-      }
+      // class1, err := PTA1.GetTrainerClass(form.Get("class1"))
+      // fmt.Println(class1.Name)
+      // if err != nil{
+      //   fmt.Println(err)
+      // }
+      // if class1.Name == ""{
+      //   class1 = nil
+      // }
 
-      class3, err := PTA1.GetTrainerClass(form.Get("class3"))
-      if err != nil{
-        fmt.Println(err)
-      }
-      if class3.Name == ""{
-        class3 = nil
-      }
+      // class2, err := PTA1.GetTrainerClass(form.Get("class2"))
+      // if err != nil{
+      //   fmt.Println(err)
+      // }
+      // if class2.Name == ""{
+      //   class2 = nil
+      // }
 
-      class4, err := PTA1.GetTrainerClass(form.Get("class4"))
-      if err != nil{
-        fmt.Println(err)
-      }
-      if class4.Name == ""{
-        class4 = nil
-      }
+      // class3, err := PTA1.GetTrainerClass(form.Get("class3"))
+      // if err != nil{
+      //   fmt.Println(err)
+      // }
+      // if class3.Name == ""{
+      //   class3 = nil
+      // }
+
+      // class4, err := PTA1.GetTrainerClass(form.Get("class4"))
+      // if err != nil{
+      //   fmt.Println(err)
+      // }
+      // if class4.Name == ""{
+      //   class4 = nil
+      // }
 
       sheet.Hp[0] = hp
       sheet.Status.Stages["ATK"] = atkStage
@@ -307,6 +310,10 @@ func (a *application) handleSheetUpdates(path string, Type int, form url.Values)
       sheet.Status.Stages["SPATK"] = spatkStage
       sheet.Status.Stages["SPDEF"] = spdefStage
       sheet.Status.Stages["SPD"] = spdStage
+      // sheet.Classes[0] = class1
+      // sheet.Classes[1] = class2
+      // sheet.Classes[2] = class3
+      // sheet.Classes[3] = class4
       sheet.Notes = form.Get("notes")
 
       sheet.CalcStats()
@@ -347,6 +354,28 @@ func (a *application) handleSheetUpdates(path string, Type int, form url.Values)
       vector := map[string]int{"HP": hp, "ATK":atk, "DEF":def, "SPATK":spatk, "SPDEF":spdef, "SPD":spd}
 
       sheet.AllocateStats(vector)
+
+    case "add_class":
+      class, err := PTA1.GetTrainerClass(form.Get("class"))
+      if err != nil{
+        fmt.Println(err)
+        return err
+      }
+
+      sheet.AddClass(class)
+
+      for key := range form{
+        if strings.HasPrefix(key, "expertise_"){
+          ex, err := PTA1.GetExpertise(strings.Replace(key, "expertise_", "", 1))
+          if err != nil{
+            fmt.Println(err)
+            return err
+          }
+
+          sheet.AddExpertise(ex)
+          sheet.Write()
+        }
+      }
 
     default:
       // err = sheet.Update(form)
@@ -492,4 +521,40 @@ func generateJWT(username string) (string, error){
   }
 
   return tokenString, nil
+}
+
+func getUsernameFromJWT(c *http.Cookie) (string){
+  jwtStr := c.Value
+
+  token, _, err := new(jwt.Parser).ParseUnverified(jwtStr, jwt.MapClaims{})
+  if err != nil{
+    fmt.Println(err)
+  }
+
+  var username string
+
+  if claims, ok := token.Claims.(jwt.MapClaims); ok{
+    username = fmt.Sprint(claims["Username"])
+  }
+
+  user, err := sheeters.GetUser(username)
+  if err != nil{
+    return ""
+  }
+
+  return user.Username
+}
+
+func validateJWT_(c *http.Cookie) bool{
+    tknString := c.Value
+    claims := &sheeters.Claims{}
+
+    tkn, err := jwt.ParseWithClaims(tknString, claims, func(token *jwt.Token) (any, error){
+      return []byte(JWTKEY), nil 
+    })
+    if err != nil{
+      return false
+    }
+
+    return tkn.Valid
 }

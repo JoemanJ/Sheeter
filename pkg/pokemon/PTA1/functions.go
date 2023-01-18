@@ -677,6 +677,7 @@ func CreateTrainerSheet(name, player, gender string, lvl, age, height, weight in
 
 		Talents:     stdTalents,
 		TalentSlots: talentSlots,
+    Expertises: []Expertise{},
 	}
   newSheet.Hp[1] = newSheet.Hp[0]
 

@@ -32,6 +32,8 @@ const PORT string = ":4000"
 
 const JWTKEY = "CHANGETHIS!"
 
+const SHEETSPATH = "data/sheet/"
+
 func main() {
 	_, err := os.Stat("./data")
 	if errors.Is(err, os.ErrNotExist) {
@@ -73,10 +75,11 @@ func main() {
 	mux.HandleFunc("/new/pokemon", app.newPokemon)
 	mux.HandleFunc("/new/trainer", app.newTrainer)
 	mux.HandleFunc("/data/", app.getData)
-	// mux.HandleFunc("/sheet/", app.sheet)
 	mux.Handle("/sheet/", validateJWT(http.HandlerFunc(app.sheet)))
+  mux.Handle("/account/", validateJWT(http.HandlerFunc(app.account)))
 	mux.HandleFunc("/register", app.registerNewUser)
 	mux.HandleFunc("/login", app.login)
+  mux.HandleFunc("/logout/", app.logout)
 	// sheet, err := PTA1.CreateSampleTrainerSheet()
 	if err != nil {
 		panic(err)

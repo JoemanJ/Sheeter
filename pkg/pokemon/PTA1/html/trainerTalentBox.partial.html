@@ -1,0 +1,17 @@
+{{define "trainerTalentBox"}}
+  <div class="talent_box">
+    <div class="talent_box_header">
+      <div class="talent_box_info">
+        <h2 class="talent_name" readonly>{{.Name}}</h2>
+        <div class="talent_box_middle">
+          <h2 class="talent_target" readonly>{{.Target}}</h2>
+          <h2 class="talent_frequency" readonly>{{.Frequency}}</h2>
+        </div>
+        <textarea class="talent_description" name="description" readonly>{{.Description}}</textarea>
+      </div>
+      <div class="talent_icons">
+        <img src="/static/img/PTA1/Pokeball_icon.png">
+      </div>
+    </div>
+  </div>
+{{end}}

@@ -67,7 +67,7 @@ window.onbeforeunload = () => {
   data.class3 = document.getElementById("class_3").value
   data.class4 = document.getElementById("class_4").value
   
-  data.hp = document.getElementById("current_hp")
+  data.hp = document.getElementById("current_hp").value
   data.atkStage = document.getElementById("ATK_stage").value
   data.defStage = document.getElementById("DEF_stage").value
   data.spatkStage = document.getElementById("SPATK_stage").value
@@ -142,14 +142,16 @@ function openSheet(id){
   window.open("/sheet/?id="+id, "", "width="+w+", height="+h+", menubar=no, toolbar=no, status=no")
 }
 
-function switchClassFormDisplay(){
+function switchClassFormDisplay(tag){
   let form = document.getElementById("class_form")
+  let classInfo = document.getElementById("new_class_info")
   let class1 = document.getElementById("class_1").value
   let class2 = document.getElementById("class_2").value
   let class3 = document.getElementById("class_3").value
   let class4 = document.getElementById("class_4").value
 
   if (class1=="new_class" || class2=="new_class" || class3=="new_class" || class4=="new_class"){
+    classInfo.style.display = "none"
     form.style.display="flex"
 
     fetch("/data/PTA1/talentData").then(response => response.json()).then(data =>{
@@ -203,7 +205,7 @@ function switchClassFormDisplay(){
     fetch("/data/PTA1/classData").then(response => response.json()).then(data =>{
       classData = data
 
-      let classList = document.getElementById("parentClass")
+      let classList = document.getElementById("class_parent")
 
       for (key of Object.keys(classData)){
         op = document.createElement("option")
@@ -218,7 +220,83 @@ function switchClassFormDisplay(){
     return
   }
 
+  classInfo.style.display = "flex"
   form.style.display="none"
+
+  fetch("/data/specific/?module=PTA2&type=trainerClass&id=" + tag.value).then(response => response.json()).then(data => {
+    console.log(data)
+    document.getElementById("new_class_info_name").innerHTML = data.Name
+    document.getElementById("new_class_info_description").innerHTML = data.Description
+
+    let expertiseList = document.getElementById("new_class_info_expertises")
+    expertiseList.innerHTML = ""
+    for (exp of data.Expertises){
+      let span = document.createElement("span")
+
+      let checkbox = document.createElement("input")
+      checkbox.type = "checkbox"
+      checkbox.id = "expertise_"+exp.Name
+      checkbox.name = "expertise_"+exp.Name
+
+      let label = document.createElement("label")
+      label.for = checkbox.id
+      label.innerHTML = exp.Name
+
+      span.appendChild(checkbox)
+      span.appendChild(label)
+      expertiseList.appendChild(span)
+    }
+
+    let talentsList = document.getElementById("new_class_info_talents")
+    talentsList.innerHTML = ""
+    for (tal of data.BasicTalents){
+      let talentBox = document.createElement("div")
+      let str = `\
+<div class="talent_box_header">\
+  <div class="talent_box_info">\
+    <h2 class="talent_name" readonly>${tal.Name}</h2>\
+    <div class="talent_box_middle">\
+      <h2 class="talent_target" readonly>${tal.Target}</h2>\
+      <h2 class="talent_frequency" readonly>${tal.Frequency}</h2>\
+    </div>\
+    <textarea class="talent_description" name="description" readonly>${tal.Description}</textarea>\
+  </div>\
+  <div class="talent_icons">\
+    <img src="/static/img/PTA1/Pokeball_icon.png">\
+  </div>\
+</div>`
+
+      talentBox.classList.add("talent_box")
+      talentBox.innerHTML = str
+
+      talentsList.appendChild(talentBox)
+    }
+      talentsList.children[0].style.backgroundColor="#A0F33F"
+      talentsList.children[1].style.backgroundColor="#A0F33F"
+
+  })
+
+}
+
+function selectClass(tag){
+  tag.disabled = true
+  let USP = new URLSearchParams()
+  let data = {id:sheet_, form_name:"add_class", class: document.getElementById("new_class_info_name").innerHTML}
+  let expertises = document.getElementById("new_class_info_expertises").getElementsByTagName("input")
+  for (ex of expertises){
+    if (ex.checked){
+      data[ex.name]=ex.checked
+    }
+  }
+
+  for (const [key, val] of Object.entries(data)){
+    USP.append(key, val)
+  }
+
+  fetch('/sheet/?id='+sheet_, {method: "POST", body: USP}).then(response => {
+    if (response.ok) {window.location.reload()}
+    else{alert("Erro ao adicionar classe. Por favor tente novamente mais tarde.")}
+  })
 }
 
 function switchTalentFormDisplay(){
@@ -366,13 +444,14 @@ function fetchDexData(){
     }
 
     if (Array.from(dexSeen)[data.Number-1] == 0){
-      sprite.style.filter = "brightness:(0%)"
+      sprite.style.filter = "brightness(0)"
       desc.innerHTML = "???"
     }else{
       sprite.style.filter = ""
       desc.innerHTML = data.Name
     }
 
+    name.innerHTML = data.Name
     sprite.src = data.Sprite
 
     if (Array.from(dexCaught)[data.Number-1] == 0){
@@ -382,4 +461,9 @@ function fetchDexData(){
     }
       
   })
+}
+
+function addClass(n, tag){
+  tag.style.display = "none"
+  document.getElementById("class_" + n).hidden = false
 }

@@ -219,6 +219,7 @@ type TrainerSheet struct {
 
 	Talents     []*TrainerTalent
 	TalentSlots int
+  Expertises  []Expertise
 
 	TotalSeenPokemon   int
 	SeenPokemon        [807]bool
@@ -233,8 +234,21 @@ type TrainerSheet struct {
 
 	Notes string
 }
+func (s *TrainerSheet) Write(){
+  general.SetJsonData(sheeters.SHEETSPATH + strconv.Itoa(s.Id) + "_" + strconv.Itoa(TRAINER_SHEETID) + ".json", s)
+}
 
-func (a *TrainerSheet) GeneralUpdate(f url.Values) error{
+func (s *TrainerSheet) AddExpertise(ex *Expertise){
+  s.Expertises = append(s.Expertises, *ex)
+}
+
+func (s *TrainerSheet) AddClass(class *TrainerClass){
+  i := 0
+  for i = 0; s.Classes[i] != nil; i++{}
+  s.Classes[i] = class
+}
+
+func (s *TrainerSheet) GeneralUpdate(f url.Values) error{
   return nil
 }
 
@@ -244,6 +258,7 @@ func (s *TrainerSheet) Render(w http.ResponseWriter) error {
 		return err
 	}
 
+	tmpl, err = tmpl.ParseFiles("./pkg/pokemon/PTA1/html/trainerTalentBox.partial.html")
 	tmpl, err = tmpl.ParseFiles("./pkg/pokemon/PTA1/html/trainerSheet.partial.html")
 
 	buf := new(bytes.Buffer)

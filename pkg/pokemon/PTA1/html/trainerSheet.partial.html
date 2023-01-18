@@ -37,44 +37,48 @@
               <th colspan="2">Classes</th>
               <tr>
                 <td>
-                  <select class="class_select" id="class_1" onchange="switchClassFormDisplay()">
-                    {{if index . 0}}
-                    <option value="{{index . 0}}">{{index . 0}}</option>
-                    {{else}}
+                  {{if index . 0}}
+                  <p>{{(index . 0).Name}}</p>
+                  {{else}}
+                  <button class="stat_allocate_button" onclick="addClass('1', this)">+</button>
+                  {{end}}
+                  <select hidden class="class_select" id="class_1" onchange="switchClassFormDisplay(this)">
                     <option selected hidden value></option>
-                    {{end}}
                     <option value="new_class">[new class]</option>
                   </select>
                 </td>
                 <td>
-                  <select class="class_select" id="class_2" onchange="switchClassFormDisplay()">
-                    {{if index . 1}}
-                    <option value="{{index . 1}}">{{index . 1}}</option>
-                    {{else}}
+                  {{if index . 1}}
+                  <p>{{(index . 1).Name}}</p>
+                  {{else}}
+                  {{if index . 0}}<button class="stat_allocate_button" onclick="addClass('2', this)">+</button>{{end}}
+                  {{end}}
+                  <select hidden class="class_select" id="class_2" onchange="switchClassFormDisplay(this)">
                     <option selected hidden value></option>
-                    {{end}}
                     <option value="new_class">[new class]</option>
                   </select>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <select class="class_select" id="class_3" onchange="switchClassFormDisplay()">
-                    {{if index . 2}}
-                    <option value="{{index . 2}}">{{index . 2}}</option>
-                    {{else}}
+                  {{if index . 2}}
+                  <p>{{(index . 2).Name}}</p>
+                  {{else}}
+                  {{if index . 1}}<button class="stat_allocate_button" onclick="addClass('3', this)">+</button>{{end}}
+                  {{end}}
+                  <select hidden class="class_select" id="class_3" onchange="switchClassFormDisplay(this)">
                     <option selected hidden value></option>
-                    {{end}}
                     <option value="new_class">[new class]</option>
                   </select>
                 </td>
                 <td>
-                  <select class="class_select" id="class_4" onchange="switchClassFormDisplay()">
-                    {{if index . 3}}
-                    <option value="{{index . 3}}">{{index . 3}}</option>
-                    {{else}}
+                  {{if index . 3}}
+                  <p>{{(index . 3).Name}}</p>
+                  {{else}}
+                  {{if index . 2}}<button class="stat_allocate_button" onclick="addClass('4', this)">+</button>{{end}}
+                  {{end}}
+                  <select hidden class="class_select" id="class_4" onchange="switchClassFormDisplay(this)">
                     <option selected hidden value></option>
-                    {{end}}
                     <option value="new_class">[new class]</option>
                   </select>
                 </td>
@@ -203,60 +207,99 @@
         <input type="submit" value="Submit">
       </form>
     </div>
+
+    {{range .Classes}}
+    {{if .}}
+      <div id="class_info" class="class_info">
+        <div id="class_info_header">
+          <h2 id="class_info_name">{{.Name}}</h2>
+          <p id="class_info_description">{{.Description}}<p>
+        </div>
+        <div id="class__info_expertises">
+          {{range .Expertises}}
+          {{.Name}}
+          {{end}}
+        </div>
+        <div class="talents_grid" id="class_info_talents">
+          {{range .BasicTalents}}
+          {{template "trainerTalentBox" .}}
+          {{end}}
+          {{range .PossibleTalents}}
+          {{template "trainerTalentBox" .}}
+          {{end}}
+        </div>
+      </div>
+    {{end}}
+    {{end}}
+
+    <div id="new_class_info" class="class_info" method="POST">
+      <div id="new_class_info_header">
+        <h2 id="new_class_info_name"></h2>
+        <p id="new_class_info_description"><p>
+      </div>
+      <div id="new_class_info_expertises" class="class_expertises">
+      </div>
+      <div class="talents_grid" id="new_class_info_talents">
+        <div class="talent_box"></div>
+        <div class="talent_box"></div>
+      </div>
+      <input type="button" onclick="selectClass(this)" value="escolher classe">
+    </div>
+
   </div>
 
   <div class="tab_body" id="pokemon_tab">
     <img src="/static/img/PTA1/Pokeball_plus_icon.png" alt="add pokemon" id="add_pokemon_icon" onclick='window.open("/new/pokemon", "", "width=800, height=600, menubar=no, toolbar=no, status=no")'>
-    <div class="party">
-      {{with .PokemonList}}
+    {{with .PokemonList}}
+      <div class="party">
+        {{if gt (len .) 6}}
+          {{range $index, $poke := (slice . 0 6)}}
+            <div class="poke_box" id="{{$index}}" onclick="selectPoke(this)" ondblclick="openSheet(parseInt({{$poke.Id}}))" onmouseover='switchBallIcons(this)'>
+              <img class="ball_icon" src="/static/img/PTA1/Pokeball_icon.png">
+              <img class="gender_icon" src="{{if eq .Gender "m"}}/static/img/PTA1/male_icon.png{{else if eq .Gender "f"}}/static/img/PTA1/female_icon.png{{else}}?{{end}}">
+              <img class="poke_icon" src="{{$poke.Species.Sprite}}">
+              <div class="box_stats">
+                <h3 class="poke_lvl"> lvl: {{$poke.Lvl}}</h3>
+                <h3>{{$poke.Nick}}</h3>
+                <meter class="HP_bar" value="{{index $poke.Hp 0}}" max="{{index $poke.Hp 1}}"></meter>
+                <p>{{index $poke.Hp 0}}/{{index $poke.Hp 1}}</p>
+              </div>
+            </div>
+          {{end}}
+        {{else}}
+          {{range $index, $poke := .}}
+            <div class="poke_box" id="{{$index}}" onclick="selectPoke(this)" ondblclick="openSheet(parseInt({{$poke.Id}}))" onmouseover="switchBallIcons(this)">
+              <img class="ball_icon" src="/static/img/PTA1/Pokeball_icon.png">
+              <img class="gender_icon" src="{{if eq $poke.Gender "m"}}/static/img/PTA1/male_icon.png{{else if eq $poke.Gender "f"}}/static/img/PTA1/female_icon.png{{else}}?{{end}}">
+              <img class="poke_icon" src="{{$poke.Species.Sprite}}">
+              <div class="box_stats">
+                <h3 class="poke_lvl"> lvl: {{$poke.Lvl}}</h3>
+                <h3>{{$poke.Nick}}</h3>
+                <meter class="HP_bar" value="{{index $poke.Hp 0}}" max="{{index $poke.Hp 1}}"></meter>
+                <p>{{index $poke.Hp 0}}/{{index $poke.Hp 1}}</p>
+              </div>
+            </div>
+          {{end}}
+        {{end}}
+      </div>
       {{if gt (len .) 6}}
-      {{range $index, $poke := (slice . 0 6)}}
-      <div class="poke_box" id="{{$index}}" onclick="selectPoke(this)" ondblclick="openSheet(parseInt({{$poke.Id}}))" onmouseover='switchBallIcons(this)'>
-        <img class="ball_icon" src="/static/img/PTA1/Pokeball_icon.png">
-        <img class="gender_icon" src="{{if eq .Gender "m"}}/static/img/PTA1/male_icon.png{{else if eq .Gender "f"}}/static/img/PTA1/female_icon.png{{else}}?{{end}}">
-        <img class="poke_icon" src="{{$poke.Species.Sprite}}">
-        <div class="box_stats">
-          <h3 class="poke_lvl"> lvl: {{$poke.Lvl}}</h3>
-          <h3>{{$poke.Nick}}</h3>
-          <meter class="HP_bar" value="{{index $poke.Hp 0}}" max="{{index $poke.Hp 1}}"></meter>
-          <p>{{index $poke.Hp 0}}/{{index $poke.Hp 1}}</p>
+        <div class="party" id="pc">
+          {{range $index, $poke := (slice . 6)}}
+            <div class="poke_box" id="{{$index}}" onclick="selectPoke(this)" ondblclick="openSheet(parseInt({{$poke.Id}}))" onmouseover="switchBallIcons(this)">
+              <img class="ball_icon" src="/static/img/PTA1/Pokeball_icon.png">
+              <img class="gender_icon" src="{{if eq $poke.Gender "m"}}/static/img/PTA1/male_icon.png{{else if eq $poke.Gender "f"}}/static/img/PTA1/female_icon.png{{else}}?{{end}}">
+              <img class="poke_icon" src="{{$poke.Species.Sprite}}">
+              <div class="box_stats">
+                <h3 class="poke_lvl"> lvl: {{$poke.Lvl}}</h3>
+                <h3>{{$poke.Nick}}</h3>
+                <meter class="HP_bar" value="{{index $poke.Hp 0}}" max="{{index $poke.Hp 1}}"></meter>
+                <p>{{index $poke.Hp 0}}/{{index $poke.Hp 1}}</p>
+              </div>
+            </div>
+          {{end}}
         </div>
-      </div>
       {{end}}
-      {{else}}
-      {{range $index, $poke := .}}
-      <div class="poke_box" id="{{$index}}" onclick="selectPoke(this)" ondblclick="openSheet(parseInt({{$poke.Id}}))" onmouseover="switchBallIcons(this)">
-        <img class="ball_icon" src="/static/img/PTA1/Pokeball_icon.png">
-        <img class="gender_icon" src="{{if eq $poke.Gender "m"}}/static/img/PTA1/male_icon.png{{else if eq $poke.Gender "f"}}/static/img/PTA1/female_icon.png{{else}}?{{end}}">
-        <img class="poke_icon" src="{{$poke.Species.Sprite}}">
-        <div class="box_stats">
-          <h3 class="poke_lvl"> lvl: {{$poke.Lvl}}</h3>
-          <h3>{{$poke.Nick}}</h3>
-          <meter class="HP_bar" value="{{index $poke.Hp 0}}" max="{{index $poke.Hp 1}}"></meter>
-          <p>{{index $poke.Hp 0}}/{{index $poke.Hp 1}}</p>
-        </div>
-      </div>
-      {{end}}
-      {{end}}
-    </div>
-    {{if gt (len .) 6}}
-    <div class="party" id="pc">
-    {{range $index, $poke := (slice . 6)}}
-    <div class="poke_box" id="{{$index}}" onclick="selectPoke(this)" ondblclick="openSheet(parseInt({{$poke.Id}}))" onmouseover="switchBallIcons(this)">
-        <img class="ball_icon" src="/static/img/PTA1/Pokeball_icon.png">
-        <img class="gender_icon" src="{{if eq $poke.Gender "m"}}/static/img/PTA1/male_icon.png{{else if eq $poke.Gender "f"}}/static/img/PTA1/female_icon.png{{else}}?{{end}}">
-        <img class="poke_icon" src="{{$poke.Species.Sprite}}">
-        <div class="box_stats">
-          <h3 class="poke_lvl"> lvl: {{$poke.Lvl}}</h3>
-          <h3>{{$poke.Nick}}</h3>
-          <meter class="HP_bar" value="{{index $poke.Hp 0}}" max="{{index $poke.Hp 1}}"></meter>
-          <p>{{index $poke.Hp 0}}/{{index $poke.Hp 1}}</p>
-        </div>
-      </div>
-      {{end}}
-    </div>
-      {{end}}
-      {{end}}
+    {{end}}
   </div>
 
   <div class="tab_body" id="bag_tab">
@@ -345,55 +388,53 @@
             <input type="number" readonly value="{{index .Hp 1}}">
           </div>
         </div>
-        <div class="move_stats">
-          <table class="stats_table">
-            <tr>
-              <th colspan="2">EVASÃO</th>
-            </tr>
-            <tr>
-              <th>Física</th>
-              <td>{{index .Evasion 0}}</td>
-            </tr>
-            <tr>
-              <th>Especial</th>
-              <td>{{index .Evasion 1}}</td>
-            </tr>
-            <tr>
-              <th>Veloz</th>
-              <td>{{index .Evasion 2}}</td>
-            </tr>
+        <table class="stats_table">
+          <tr>
+            <th colspan="2">EVASÃO</th>
+          </tr>
+          <tr>
+            <th>Física</th>
+            <td>{{index .Evasion 0}}</td>
+          </tr>
+          <tr>
+            <th>Especial</th>
+            <td>{{index .Evasion 1}}</td>
+          </tr>
+          <tr>
+            <th>Veloz</th>
+            <td>{{index .Evasion 2}}</td>
+          </tr>
 
-          </table>
-          <table class="stats_table">
-            <tr>
-              <th colspan="2">DESLOCAMENTOS</th>
-            </tr>
-            <tr>
-              <th>Terrestre</th>
-              <td>{{index .Movement "land"}}</td>
-            </tr>
-            <tr>
-              <th>Natação</th>
-              <td>{{index .Movement "swimming"}}</td>
-            </tr>
-            <tr>
-              <th>Subaquático</th>
-              <td>{{index .Movement "underwater"}}</td>
-            </tr>
-            {{if index .Movement "burrow"}}
-            <tr>
-              <th>Escavação</th>
-              <td>{{index .Movement "burrow"}}</td>
-            </tr>
-            {{end}}
-            {{if index .Movement "fly"}}
-            <tr>
-              <th>Vôo</th>
-              <td>{{index .Movement "fly"}}</td>
-            </tr>
-            {{end}}
-          </table>
-        </div>
+        </table>
+        <table class="stats_table">
+          <tr>
+            <th colspan="2">DESLOCAMENTOS</th>
+          </tr>
+          <tr>
+            <th>Terrestre</th>
+            <td>{{index .Movement "land"}}</td>
+          </tr>
+          <tr>
+            <th>Natação</th>
+            <td>{{index .Movement "swimming"}}</td>
+          </tr>
+          <tr>
+            <th>Subaquático</th>
+            <td>{{index .Movement "underwater"}}</td>
+          </tr>
+          {{if index .Movement "burrow"}}
+          <tr>
+            <th>Escavação</th>
+            <td>{{index .Movement "burrow"}}</td>
+          </tr>
+          {{end}}
+          {{if index .Movement "fly"}}
+          <tr>
+            <th>Vôo</th>
+            <td>{{index .Movement "fly"}}</td>
+          </tr>
+          {{end}}
+        </table>
       </div>
       {{with .Status}}
       <table class="stats_table">
@@ -485,25 +526,19 @@
         </tr>
       </table>
       {{end}}
+      {{if gt (len .Expertises) 0}}
+        <table class="stats_table">
+          <th>PERÍCIAS</th>
+          {{range .Expertises}}
+          <tr><td>{{.Name}}{{if .Double}}(x2){{end}}({{.AssociatedStat}})<br>{{.Description}}</td>
+          {{end}}
+        </table>
+      {{end}}
     </div>
     <div class="talents_space">
       <div class="talents_grid">
         {{range .Talents}}
-        <div class="talent_box">
-          <div class="talent_box_header">
-            <div class="talent_box_info">
-              <h2 class="talent_name" readonly>{{.Name}}</h2>
-              <div class="talent_box_middle">
-                <h2 class="talent_target" readonly>{{.Target}}</h2>
-                <h2 class="talent_frequency" readonly>{{.Frequency}}</h2>
-              </div>
-              <textarea class="talent_description" name="description" readonly>{{.Description}}</textarea>
-            </div>
-            <div class="talent_icons">
-              <img src="/static/img/PTA1/Pokeball_icon.png">
-            </div>
-          </div>
-        </div>
+          {{template "trainerTalentBox" .}}
         {{end}}
       </div>
     </div>

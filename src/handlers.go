@@ -11,7 +11,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/golang-jwt/jwt"
+	// "github.com/golang-jwt/jwt"
 )
 
 func (a *application) registerNewUser(w http.ResponseWriter, r *http.Request) {
@@ -21,6 +21,7 @@ func (a *application) registerNewUser(w http.ResponseWriter, r *http.Request) {
     user := sheeters.User{
       Username: r.Form.Get("username"),
       Password: r.Form.Get("password"),
+      OwnedSheets: map[int]string{},
     }
 
     userList := map[string]sheeters.User{}
@@ -52,7 +53,7 @@ func (a *application) getData(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if strings.Contains(str, "sheets/") {
+	if strings.Contains(str, "sheets/") || strings.Contains(str, "users") {
 		return
 	}
 
@@ -94,10 +95,19 @@ func (a *application) newTrainer(w http.ResponseWriter, r *http.Request) {
 
 		f := r.Form
 
-    fmt.Println(f)
+    c, err := r.Cookie("sheeter_token")
+    if err != nil{
+      a.serverError(w, err)
+    }
+
+    username := getUsernameFromJWT(c)
+
+    user, err := sheeters.GetUser(username)
+    if err != nil{
+      a.serverError(w, err)
+    }
 
     dataString := fmt.Sprintf("%s;%s;%s;%s;%s;%s;%s;%s;%s;%s", f["hp"][0], f["atk"][0], f["def"][0], f["spatk"][0], f["spdef"][0], f["spd"][0], f["lvl"][0], f["age"][0], f["height"][0], f["weight"][0])
-    fmt.Println(dataString)
 
     var hp, atk, def, spatk, spdef, spd, lvl, age, i_height, i_weight int
     var height, weight float32
@@ -110,12 +120,21 @@ func (a *application) newTrainer(w http.ResponseWriter, r *http.Request) {
     statMap := map[string]int{"HP":hp, "ATK":atk, "DEF":def, "SPATK":spatk, "SPDEF":spdef, "SPD":spd}
 
 
-    p, err := PTA1.CreateTrainerSheet(f.Get("name"), "DEBUG", f.Get("gender"), lvl, age, i_height, i_weight, statMap)
+    p, err := PTA1.CreateTrainerSheet(f.Get("name"), user.Username, f.Get("gender"), lvl, age, i_height, i_weight, statMap)
     if err != nil{
       fmt.Println(err)
     }
 
-    fmt.Println(p)
+    fmt.Printf("%+v", user)
+    
+    m := make(map[int]string)
+    m = user.OwnedSheets
+    m[p.Id] = p.Name
+
+    user.OwnedSheets = m
+    sheeters.SetUser(user)
+
+    http.Redirect(w, r, "/sheet/?id="+strconv.Itoa(p.Id), http.StatusSeeOther)
 	}
 
 	err := a.templateCache["newTrainer.page.html"].Execute(w, nil)
@@ -133,10 +152,21 @@ func (a *application) newPokemon(w http.ResponseWriter, r *http.Request) {
 		}
 
 		f := r.Form
+    
+    c, err := r.Cookie("sheeter_token")
+    if err != nil{
+      a.serverError(w, err)
+    }
+
+    username := getUsernameFromJWT(c)
+
+    user, err := sheeters.GetUser(username)
+    if err != nil{
+      a.serverError(w, err)
+    }
 
 		switch f.Get("form_name") {
 		case "pokemon_form":
-			fmt.Println(r.Form)
 			a, err := PTA1.GetAbility(f.Get("ability"))
 			if err != nil {
 				fmt.Println(err)
@@ -152,10 +182,8 @@ func (a *application) newPokemon(w http.ResponseWriter, r *http.Request) {
 			if err != nil {
 				fmt.Println(err)
 			}
-			fmt.Println(poke)
       
       if f.Get("referrer_sheet") != ""{
-        fmt.Println("A")
         refs := &PTA1.TrainerSheet{}
 
         err = general.GetJsonData("data/sheets/" + f.Get("referrer_sheet") + "_0.json", refs)
@@ -176,8 +204,12 @@ func (a *application) newPokemon(w http.ResponseWriter, r *http.Request) {
 
         refs.PokemonList = append(refs.PokemonList, poke)
         general.SetJsonData("data/sheets/" + f.Get("referrer_sheet") + "_0.json", refs)
+
+        user.OwnedSheets[poke.Id] = poke.Nick
+        general.SetUser(user)
+
+        http.Redirect(w, r, "/sheet/?id="+strconv.Itoa(poke.Id), http.StatusSeeOther)
       }
-      fmt.Println("B")
 
 		case "species_form":
 			var abilities []*PTA1.PokemonAbility
@@ -185,7 +217,6 @@ func (a *application) newPokemon(w http.ResponseWriter, r *http.Request) {
 			var capacities []*PTA1.Capacity
 			basicCapacities := [3]int{0, 0, 0}
 			movement := map[string]int{"land": 0, "surface": 0, "underwater": 0, "burrow": 0, "fly": 0}
-			fmt.Println(f)
 
 			for k, v := range f {
 				if strings.Contains(k, "c_") {
@@ -206,7 +237,6 @@ func (a *application) newPokemon(w http.ResponseWriter, r *http.Request) {
 						fmt.Println(err)
 					}
 
-					fmt.Println(ha, k, aux)
 					if err != nil {
 						fmt.Println(err)
 					}
@@ -271,8 +301,7 @@ func (a *application) newPokemon(w http.ResponseWriter, r *http.Request) {
 			}
 
 		case "capacity_form":
-			a, err := PTA1.RegisterCapacity(f.Get("c_name"), f.Get("c_description"))
-			fmt.Println(a)
+			_, err := PTA1.RegisterCapacity(f.Get("c_name"), f.Get("c_description"))
 			if err != nil {
 				fmt.Println(err)
 			}
@@ -298,33 +327,15 @@ func (a *application) sheet(w http.ResponseWriter, r *http.Request) {
     fmt.Println(err)
   }
 
-  jwtStr := c.Value
-
-  token, _, err := new(jwt.Parser).ParseUnverified(jwtStr, jwt.MapClaims{})
-  if err != nil{
-    fmt.Println(err)
-  }
-
-  var username string
-
-  if claims, ok := token.Claims.(jwt.MapClaims); ok{
-    username = fmt.Sprint(claims["Username"])
-  }
+  username := getUsernameFromJWT(c)
 
   user, err := sheeters.GetUser(username)
   if err != nil{
     a.serverError(w, err)
   }
 
-  ok := false
-  for i:= 0; i < len(user.OwnedSheets); i++{
-    if user.OwnedSheets[i] == id{
-      ok = true
-    }
-  }
-
-  if !ok{
-    a.login(w, r)
+  if _, ok := user.OwnedSheets[id]; !ok{
+    http.Redirect(w, r, "/login", http.StatusUnauthorized)
     return
   }
 
@@ -352,6 +363,12 @@ func (a *application) sheet(w http.ResponseWriter, r *http.Request) {
 }
 
 func (a *application) login(w http.ResponseWriter, r *http.Request) {
+  c, err := r.Cookie("sheeter_token")
+  if err == nil && validateJWT_(c){
+    a.generalNew(w, r)
+    return
+  }
+
   r.ParseForm()
   form := r.Form
 
@@ -374,21 +391,54 @@ func (a *application) login(w http.ResponseWriter, r *http.Request) {
     jwt, err := generateJWT(usr.Username)
     if err != nil{
       r.Header.Add("error", "token_generation_failed")
-      fmt.Println("a")
       fmt.Println(err)
-      fmt.Println("b")
       a.templateCache["login.page.html"].Execute(w, nil)
       return
     }
-    fmt.Println(jwt)
 
     http.SetCookie(w, &http.Cookie{
       Name: "sheeter_token",
       Value: jwt,
     })
+
+    a.generalNew(w, r)
+    return
   }
 
   a.templateCache["login.page.html"].Execute(w, nil)
   return
 
+}
+
+func (a *application) account(w http.ResponseWriter, r *http.Request){
+  t, err := sheeters.RenderVolatile("account.page.html", "ui/html")
+  if err != nil{
+    fmt.Println(err)
+    return
+  }
+
+  c, err := r.Cookie("sheeter_token")
+  if err != nil{
+    http.Redirect(w, r, "/login", http.StatusUnauthorized)
+  }
+
+  username := getUsernameFromJWT(c)
+
+  user, err := sheeters.GetUser(username)
+  if err != nil{
+    http.Redirect(w, r, "/login", http.StatusUnauthorized)
+  }
+  fmt.Printf("%+v\n", user)
+
+  t.Execute(w, *user)
+}
+
+func (a *application) logout(w http.ResponseWriter, r *http.Request){
+    http.SetCookie(w, &http.Cookie{
+      Name: "sheeter_token",
+      Value: "invalid",
+      Path: "/",
+    })
+
+    http.Redirect(w, r, "/login", http.StatusOK)
 }

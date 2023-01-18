@@ -1,0 +1,16 @@
+
+{{template "base"}}
+
+{{define "title"}}register{{end}}
+
+{{define "body"}}
+  <form action="/register" method="POST">
+    <label for="username">Nome de usuário:</label>
+    <input required type="text" name="username" id="username">
+
+    <label for="password">Senha:</label>
+    <input required type="password" name="password" id="password">
+    
+    <input type="submit" value="Submit">
+  </form>
+{{end}}
