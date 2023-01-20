@@ -55,6 +55,9 @@ window.onload = () => {
       }
     }
   })
+
+  fetch("/data/PTA1/talentData").then(response => response.json()).then(data => talentData = data)
+
 }
 
 window.onbeforeunload = () => {
@@ -116,6 +119,54 @@ function finishStatAllocation(){
   fetch("/sheet/?id="+sheet_, {method: "POST", body:USP}).then(response => {if(response.ok) {window.location.reload()}})
 }
 
+function switchTalent(){
+  let select = document.getElementById("add_talent")
+  let description = document.getElementById("add_talent_description")
+  let target = document.getElementById("add_talent_target")
+  let frequency = document.getElementById("add_talent_frequency")
+  let icons = document.getElementById("add_talent_icons")
+
+  console.log(talentData)
+  let talent = talentData[select.value.toLowerCase()]
+
+  description.innerHTML = talent.Description
+  target.innerHTML = talent.Target
+  frequency.innerHTML = talent.Frequency
+
+  if(talent.IsContinuous){
+    icons.children[0].hidden = false
+  } else{
+    icons.children[0].hidden = true
+  }
+  if(talent.IsStandart){
+    icons.children[1].hidden = false
+  } else{
+    icons.children[1].hidden = true
+  }
+  if(talent.IsFree){
+    icons.children[2].hidden = false
+  } else{
+    icons.children[2].hidden = true
+  }
+  if(talent.IsInterrupt){
+    icons.children[3].hidden = false
+  } else{
+    icons.children[3].hidden = true
+  }
+  if(talent.IsExtended){
+    icons.children[4].hidden = false
+  } else{
+    icons.children[4].hidden = true
+  }
+  if(talent.IsLegal){
+    icons.children[5].hidden = false
+    icons.children[6].hidden = true
+  } else{
+    icons.children[5].hidden = true
+    icons.children[6].hidden = false
+  }
+}
+
 function openTab(event, tab_name){
     var tabs = document.getElementsByClassName("tab_body")
     
@@ -154,9 +205,6 @@ function switchClassFormDisplay(tag){
     classInfo.style.display = "none"
     form.style.display="flex"
 
-    fetch("/data/PTA1/talentData").then(response => response.json()).then(data =>{
-      talentData = data
-
       let talentList = document.getElementById("talents")
 
       for (key of Object.keys(talentData)){
@@ -181,7 +229,6 @@ function switchClassFormDisplay(tag){
         document.getElementById("class_basic_talent1").appendChild(op)
         document.getElementById("class_basic_talent2").appendChild(op2)
       }
-    })
 
     fetch("/data/PTA1/expertiseData").then(response => response.json()).then(data =>{
       expertiseData = data
@@ -491,4 +538,18 @@ function fetchDexData(){
 function addClass(n, tag){
   tag.style.display = "none"
   document.getElementById("class_" + n).hidden = false
+}
+
+function addTalent(){
+  let talent = document.getElementById("add_talent").value.toLowerCase()
+  let data = {form_name: "add_talent", id: sheet, talent: talent}
+
+  let USP = new URLSearchParams()
+
+  for (const [key, val] of Object.entries(data)){
+    USP.append(key, val)
+  }
+
+  fetch("/sheet/?id=" + sheet_, {method: "POST", body: USP})
+  .then(response => {if (response.ok){window.location.reload()}})
 }

@@ -377,7 +377,18 @@ func (a *application) handleSheetUpdates(path string, Type int, form url.Values)
         }
       }
 
+    case "add_talent":
+      talent, err := PTA1.GetTrainerTalent(form.Get("talent"))
+      if err != nil{
+        fmt.Println(err)
+        return err
+      }
+
+      sheet.AddTalent(talent)
+      sheet.Write()
+
     default:
+      fmt.Println("unknown form_name")
       // err = sheet.Update(form)
       if err != nil{
         return err

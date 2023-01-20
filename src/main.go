@@ -58,7 +58,6 @@ func main() {
 	}
 
 	cache, err := app.newTemplateCache("./ui/html")
-
 	if err != nil {
 		panic(err)
 	}
@@ -80,12 +79,7 @@ func main() {
 	mux.HandleFunc("/register", app.registerNewUser)
 	mux.HandleFunc("/login", app.login)
   mux.HandleFunc("/logout/", app.logout)
-	// sheet, err := PTA1.CreateSampleTrainerSheet()
-	if err != nil {
-		panic(err)
-	}
 
-	// fmt.Println(sheet)
 	fmt.Printf("starting server on port %s\n", PORT)
 	err = http.ListenAndServe(PORT, mux)
 	if err != nil {

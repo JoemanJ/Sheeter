@@ -529,7 +529,7 @@
         <table class="stats_table">
           <th>PERÍCIAS</th>
           {{range .Expertises}}
-          <tr><td title="{{.Description}}">{{.Name}}{{if .Double}}(x2){{end}}({{.AssociatedStat}})</td></tr>
+            <tr><td title="{{.Description}}">{{.Name}}{{if .Double}}(x2){{end}}({{.AssociatedStat}})</td></tr>
           {{end}}
         </table>
       {{end}}
@@ -545,14 +545,21 @@
         <div class="talent_box">
           <div class="talent_box_header">
             <div class="talent_box_info">
-              <select class="talent_name" id="add_talent">
-
+              <select onchange="switchTalent()" class="talent_name" id="add_talent">
+                {{range .Classes}}
+                {{if .}}
+                  {{range .PossibleTalents}}
+                    <option value="{{.Name}}">{{.Name}}</option>
+                  {{end}}
+                {{end}}
+                {{end}}
               </select>
               <div class="talent_box_middle">
-                <h2 class="talent_target"></h2>
-                <h2 class="talent_frequency"></h2>
+                <h2 id="add_talent_target" class="talent_target"></h2>
+                <h2 id="add_talent_frequency" class="talent_frequency"></h2>
               </div>
-              <textarea class="talent_description"></textarea>
+              <textarea readonly id="add_talent_description" class="talent_description"></textarea>
+              <button onclick="addTalent()">Escolher talento</button>
             </div>
             <div class="talent_icons" id="add_talent_icons">
               <img hidden src="/static/img/PTA1/talent_icon_continuous.png" alt="continuous icon">
@@ -564,7 +571,6 @@
               <img hidden src="/static/img/PTA1/talent_icon_illegal.png" alt="illegal icon">
             </div>
           </div>
-          <button>Escolher talento</button>
         </div>
         {{end}}
 
