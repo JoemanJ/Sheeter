@@ -34,13 +34,13 @@ window.onload = () => {
 }
 
 window.onbeforeunload = () => {
-  let data={id:0, form_name: "update", nickname:"", hp:0, atkStage:0, defStage:0, spatkStage:0, spdefStage:0, spdStage:0, notes:""}
+  let data={id:0, form_name: "update", nickname:"", hp:0, atkStage:0, defStage:0, spatkStage:0, spdefStage:0, spdStage:0, move0, move1: "", move2: "", move3: "", move4: "", move5: "", move6: "", move7: "", notes:""}
 
   data.id = sheet_
 
-  data.nickname = document.getElementById("nickname")
+  data.nickname = document.getElementById("nickname").value
 
-  data.hp = document.getElementById("current_hp")
+  data.hp = document.getElementById("current_hp").value
   data.atkStage = document.getElementById("ATK_stage").value
   data.atkStage = document.getElementById("ATK_stage").value
   data.defStage = document.getElementById("DEF_stage").value
@@ -49,6 +49,12 @@ window.onbeforeunload = () => {
   data.spdStage = document.getElementById("SPD_stage").value
 
   data.notes = document.getElementById("notes_textbox").value
+
+  let i=0
+  for ( el of document.getElementsByClassName("move_name")){
+    data[`move${i}`] = el.value
+    i++
+  }
 
   let USP = new URLSearchParams()
 
@@ -90,14 +96,19 @@ function switchMoveInfo(tag){
   let effect = tag.getElementsByClassName("move_effect")[0]
   
   let move = movesData[select.value]
-  console.log(move)
   descriptors.innerHTML = move.Descriptors
   type.innerHTML = move.Type
-  damage.innerHTML = move.Damage.X.toString() + " d" + move.Damage.N.toString() + " + " + move.Damage.Mod.toString()
+  if (move.Damage.X){
+    damage.innerHTML = `<h3 class="clickable" onclick="Roll(${move.Damage.X}, ${move.Damage.N}, ${move.Damage.Mod})">${move.Damage.X} d${move.Damage.N} + ${move.Damage.Mod}</h3>`
+  } else{
+    damage.innerHTML = "---"
+  }
   acc.innerHTML = move.AccDiff.toString()
   frequency.innerHTML = move.Frequency
   reach.innerHTML = move.Reach
   effect.innerHTML = move.Effect
+
+  console.log(document.getElementsByClassName("move_name"))
 }
 
 function registerNewMove(){

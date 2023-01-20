@@ -8,6 +8,9 @@ for (var i = 0; i < navLinks.length; i++) {
 }
 
 function Roll(n = parseInt(document.getElementById("roller_dice_qtt").value), d = parseInt(document.getElementById("roller_dice_sides").value), x = parseInt(document.getElementById("roller_dice_mod").value)){
+  document.getElementById("roller_dice_qtt").value = n
+  document.getElementById("roller_dice_sides").value = d
+  document.getElementById("roller_dice_mod").value = x
   let result = document.getElementById("roller_result")
 
   let sum = 0

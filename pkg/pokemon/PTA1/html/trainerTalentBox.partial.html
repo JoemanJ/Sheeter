@@ -10,7 +10,13 @@
         <textarea class="talent_description" name="description" readonly>{{.Description}}</textarea>
       </div>
       <div class="talent_icons">
-        <img src="/static/img/PTA1/Pokeball_icon.png">
+        {{if .IsContinuous}}<img src="/static/img/PTA1/talent_icon_continuous.png" alt="continuous icon">{{end}}
+        {{if .IsStandart}}<img src="/static/img/PTA1/talent_icon_standart.png" alt="standart icon">{{end}}
+        {{if .IsFree}}<img src="/static/img/PTA1/talent_icon_free.png" alt="free icon">{{end}}
+        {{if .IsInterrupt}}<img src="/static/img/PTA1/talent_icon_interrupt.png" alt="interrupt icon">{{end}}
+        {{if .IsExtended}}<img src="/static/img/PTA1/talent_icon_extended.png" alt="extended icon">{{end}}
+        <img src="/static/img/PTA1/talent_icon_{{if (not .IsLegal)}}il{{end}}legal.png" alt="legal icon">
+        
       </div>
     </div>
   </div>

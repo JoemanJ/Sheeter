@@ -495,6 +495,21 @@ func (a *application) handleSheetUpdates(path string, Type int, form url.Values)
         spdStage = 0
       }
 
+      for i:= 0; i<8; i++{
+        move, err := PTA1.GetMove(form.Get("move"+strconv.Itoa(i)))
+        if err != nil{
+          fmt.Println(err)
+        }
+
+        if move.Name != ""{
+          sheet.Moves[i/4][i%4] = move
+        }else{
+          sheet.Moves[i/4][i%4] = nil
+        }
+      }
+
+      sheet.Write()
+
       notes := form.Get("notes")
 
       sheet.Update(form.Get("nickname"), hp, atkStage, defStage, spatkStage, spdefStage, spdStage, notes)

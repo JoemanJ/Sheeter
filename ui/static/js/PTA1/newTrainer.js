@@ -24,7 +24,7 @@ function calcMod(tag) {
   let spdef = parseInt(document.getElementById("spdef").value, 10)
   let spd = parseInt(document.getElementById("spd").value, 10)
 
-  remPts.innerHTML = 60 + trainerLvlTable.total_status[lvl] - (hp + atk + def + spatk + spdef + spd)
+  remPts.innerHTML = 66 + trainerLvlTable.total_status[lvl] - (hp + atk + def + spatk + spdef + spd)
 
   let mod = document.getElementById(tag.id + "_mod")
 

@@ -146,7 +146,7 @@
         <input type="text" id="talent_frequency" name="talent_frequency">
 
         <label for="talent_description"> Descrição </label>
-        <input type="text" id="talent_description" name="talent_description">
+        <textarea id="talent_description" name="talent_description"></textarea>
 
         <label for="talent_requirements"> Requisitos </label>
         <input type="text" id="talent_requirements" name="talent_requirements">
@@ -194,6 +194,7 @@
 
         <label for="expertise_stat"> Status associado </label>
         <select id="expertise_stat" name="expertise_stat">
+          <option value="HP">HP</option>
           <option value="ATK">ATK</option>
           <option value="DEF">DEF</option>
           <option value="SPATK">SPATK</option>
@@ -212,13 +213,8 @@
     {{if .}}
       <div id="class_info" class="class_info">
         <div id="class_info_header">
-          <h2 id="class_info_name">{{.Name}}</h2>
-          <p id="class_info_description">{{.Description}}<p>
-        </div>
-        <div id="class__info_expertises">
-          {{range .Expertises}}
-          {{.Name}}
-          {{end}}
+          <h1 id="class_info_name">{{.Name}}</h1>
+          <p id="class_info_description" class="class_info_description">{{.Description}}<p>
         </div>
         <div class="talents_grid" id="class_info_talents">
           {{range .BasicTalents}}
@@ -234,14 +230,17 @@
 
     <div id="new_class_info" class="class_info" method="POST">
       <div id="new_class_info_header">
-        <h2 id="new_class_info_name"></h2>
-        <p id="new_class_info_description"><p>
+        <h1 id="new_class_info_name"></h1>
+        <p id="new_class_info_description" class="class_info_description"><p>
+        <p>Classe Derivada: </p><p id="new_class_info_parent_class"></p>
+        <p>Requisitos: </p><p id="new_class_info_requisites"></p>
       </div>
-      <div id="new_class_info_expertises" class="class_expertises">
+      <br>
+      <h2>Perícias</h2>
+      <div id="new_class_info_expertises" class="class_info_expertises">
       </div>
+      <br>
       <div class="talents_grid" id="new_class_info_talents">
-        <div class="talent_box"></div>
-        <div class="talent_box"></div>
       </div>
       <input type="button" onclick="selectClass(this)" value="escolher classe">
     </div>
@@ -530,16 +529,45 @@
         <table class="stats_table">
           <th>PERÍCIAS</th>
           {{range .Expertises}}
-          <tr><td>{{.Name}}{{if .Double}}(x2){{end}}({{.AssociatedStat}})<br>{{.Description}}</td>
+          <tr><td title="{{.Description}}">{{.Name}}{{if .Double}}(x2){{end}}({{.AssociatedStat}})</td></tr>
           {{end}}
         </table>
       {{end}}
     </div>
     <div class="talents_space">
+      <h1>Espaços de Talento: {{.TalentSlots}}</h1>
       <div class="talents_grid">
         {{range .Talents}}
           {{template "trainerTalentBox" .}}
         {{end}}
+
+        {{if (gt .TalentSlots 0)}}
+        <div class="talent_box">
+          <div class="talent_box_header">
+            <div class="talent_box_info">
+              <select class="talent_name" id="add_talent">
+
+              </select>
+              <div class="talent_box_middle">
+                <h2 class="talent_target"></h2>
+                <h2 class="talent_frequency"></h2>
+              </div>
+              <textarea class="talent_description"></textarea>
+            </div>
+            <div class="talent_icons" id="add_talent_icons">
+              <img hidden src="/static/img/PTA1/talent_icon_continuous.png" alt="continuous icon">
+              <img hidden src="/static/img/PTA1/talent_icon_standart.png" alt="standart icon">
+              <img hidden src="/static/img/PTA1/talent_icon_free.png" alt="free icon">
+              <img hidden src="/static/img/PTA1/talent_icon_interrupt.png" alt="interrupt icon">
+              <img hidden src="/static/img/PTA1/talent_icon_extended.png" alt="extended icon">
+              <img hidden src="/static/img/PTA1/talent_icon_legal.png" alt="legal icon">
+              <img hidden src="/static/img/PTA1/talent_icon_illegal.png" alt="illegal icon">
+            </div>
+          </div>
+          <button>Escolher talento</button>
+        </div>
+        {{end}}
+
       </div>
     </div>
   </div>

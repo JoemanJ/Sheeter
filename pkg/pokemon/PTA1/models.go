@@ -103,6 +103,10 @@ type PokemonSheet struct {
 	Notes string
 }
 
+func (s *PokemonSheet) Write(){
+  general.SetJsonData(sheeters.SHEETSPATH + strconv.Itoa(s.Id) + "_" + strconv.Itoa(POKEMON_SHEETID) + ".json", s)
+}
+
 func (s *PokemonSheet) LvlUp(x int){
   s.Lvl += x
   s.Status.Distributable[1] += x
@@ -166,7 +170,7 @@ func (s *PokemonSheet) Update(nickname string, hp, atkStage, defStage, spatkStag
 
   s.CalcStats()
 
-  general.SetJsonData("data/sheets/"+strconv.Itoa(s.Id)+"_1.json", s)
+  s.Write()
 }
 
 func (s *PokemonSheet) Render(w http.ResponseWriter) error {
@@ -246,6 +250,17 @@ func (s *TrainerSheet) AddClass(class *TrainerClass){
   i := 0
   for i = 0; s.Classes[i] != nil; i++{}
   s.Classes[i] = class
+
+  s.TalentSlots--
+
+  s.Talents = append(s.Talents, class.BasicTalents[0])
+  s.Talents = append(s.Talents, class.BasicTalents[1])
+}
+
+func (s *TrainerSheet) AddTalent(talent *TrainerTalent){
+  s.Talents = append(s.Talents, talent)
+
+  s.TalentSlots--
 }
 
 func (s *TrainerSheet) GeneralUpdate(f url.Values) error{
@@ -276,7 +291,7 @@ func (s *TrainerSheet) Render(w http.ResponseWriter) error {
 func (s *TrainerSheet) LvlUp(x int){
   s.Lvl += x
   s.Status.Distributable[1] = TRAINERLVLTABLE["total_status"][s.Lvl + x]
-  s.TalentSlots = TRAINERLVLTABLE["total_talents"][s.Lvl + x]
+  s.TalentSlots += TRAINERLVLTABLE["talents"][s.Lvl + x]
 
   general.SetJsonData("data/sheets/"+strconv.Itoa(s.Id)+"_0.json", s)
 }

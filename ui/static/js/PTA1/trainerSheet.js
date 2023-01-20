@@ -227,6 +227,8 @@ function switchClassFormDisplay(tag){
     console.log(data)
     document.getElementById("new_class_info_name").innerHTML = data.Name
     document.getElementById("new_class_info_description").innerHTML = data.Description
+    document.getElementById("new_class_info_parent_class").innerHTML = data.ParentClass
+    document.getElementById("new_class_info_requisites").innerHTML = data.Requirements
 
     let expertiseList = document.getElementById("new_class_info_expertises")
     expertiseList.innerHTML = ""
@@ -250,6 +252,29 @@ function switchClassFormDisplay(tag){
     let talentsList = document.getElementById("new_class_info_talents")
     talentsList.innerHTML = ""
     for (tal of data.BasicTalents){
+      let talentBox = document.createElement("div")
+      let str = `\
+<div class="talent_box_header">\
+  <div class="talent_box_info">\
+    <h2 class="talent_name" readonly>${tal.Name}</h2>\
+    <div class="talent_box_middle">\
+      <h2 class="talent_target" readonly>${tal.Target}</h2>\
+      <h2 class="talent_frequency" readonly>${tal.Frequency}</h2>\
+    </div>\
+    <textarea class="talent_description" name="description" readonly>${tal.Description}</textarea>\
+  </div>\
+  <div class="talent_icons">\
+    <img src="/static/img/PTA1/Pokeball_icon.png">\
+  </div>\
+</div>`
+
+      talentBox.classList.add("talent_box")
+      talentBox.innerHTML = str
+
+      talentsList.appendChild(talentBox)
+    }
+
+    for (tal of data.PossibleTalents){
       let talentBox = document.createElement("div")
       let str = `\
 <div class="talent_box_header">\

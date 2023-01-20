@@ -325,31 +325,30 @@
         <tr>
           <th colspan=2>GOLPES ENSINADOS</th>
         </tr>
-        {{range index .Moves 0}}
+        {{range index .Moves 1}}
         {{if .}}
         <tr>
           <td>
-            <select onchange="switchMoveInfo(this.parentElement.parentElement)">
-              <option value="">---</option>
-              <option value="a">---</option>
+            <select class="move_name" onchange="switchMoveInfo(this.parentElement.parentElement)">
+              <option value="{{.Name}}">{{.Name}}</option>
             </select>
           </td>
           <td>
             <div class="move_box">
               <div>
-                <h2>{{range .Descriptors}}{{.}}{{end}}</h2>
-                <h2>{{.Type}}</h2>
+                <h2 class="move_descriptors">{{range .Descriptors}}{{.}}{{end}}</h2>
+                <h2 class="move_type">{{.Type}}</h2>
               </div>
               <div>
-                <h2>{{.Damage.Mod}}</h2>
-                <h2>{{.AccDiff}}</h2>
+                <h2 class="move_damage">{{.Damage.Mod}}</h2>
+                <h2 class="move_accuracy">{{.AccDiff}}</h2>
               </div>
               <div>
-                <h2>{{.Frequency}}</h2>
-                <h2>{{.Reach}}</h2>
+                <h2 class="move_frequency">{{.Frequency}}</h2>
+                <h2 class="move_reach">{{.Reach}}</h2>
               </div>
               <div>
-                <p>{{.Effect}}</p>
+                <p class="move_effect">{{.Effect}}</p>
               </div>
             </div>
           </td>
@@ -357,7 +356,7 @@
         {{else}}
         <tr>
           <td>
-            <select>
+            <select class="move_name" onchange="switchMoveInfo(this.parentElement.parentElement)">
               <option value="">---</option>
             </select>
           </td>

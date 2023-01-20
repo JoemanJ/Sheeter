@@ -64,6 +64,7 @@
     width: 100%;
     display: flex;
     margin: 20px;
+  height: fit-content;
 }
 
 #id_tab .header *{
@@ -82,9 +83,11 @@
 }
 
 .personal_info{
-   font-size: 40px;
-   height: 300px;
-   min-width: 30%;
+  font-size: 30px;
+  height: 300px;
+  min-height: fit-content;
+  min-width: 30%;
+  
 }
 
 .header_stats{
@@ -126,6 +129,7 @@
 }
 
 .stat_allocate_button{
+  display: none;
   height: 40px;
   width: 40px;
   border-radius: 20px;
@@ -144,15 +148,23 @@
   display: flex;
   flex-direction: column;
   align-content: center;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.class_info_description{
+  text-align: left;
+  background-color: #EFEFEF;
+  padding: 5px;
+}
+
+.class_info_expertises{
+  display: flex;
+  justify-content: space-around;
 }
 
 #new_class_info{
   display: none;
-}
-
-.class_info *{
-  text-align: center;
-  vertical-align: middle;
 }
 
 .class_expertises{
@@ -163,6 +175,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  width: 90%;
 }
 
 #trainer_forms > form{
