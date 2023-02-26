@@ -31,6 +31,22 @@ window.onload = () => {
       }
     }
   })
+
+  $("#new_move_form").submit(function(event){
+    event.preventDefault()
+    
+    $.ajax({
+      url: "/data/PTA2/move",
+      type: "POST",
+      success: (response)=>{
+        alert('golpe cadastrado' + response)
+      },
+
+      error: (xhr, status, error)=>{
+        alert(xhr.responseText)
+      }
+    })
+  })
 }
 
 window.onbeforeunload = () => {
@@ -166,3 +182,4 @@ function finishStatAllocation(){
   document.getElementById("finish_stat_allocation_button").disabled = true
   fetch("/sheet/?id="+sheet_, {method: "POST", body:USP}).then(response => {if(response.ok) {window.location.reload()}})
 }
+

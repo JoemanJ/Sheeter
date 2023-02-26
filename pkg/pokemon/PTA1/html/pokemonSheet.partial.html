@@ -384,37 +384,39 @@
         {{end}}
         <th colspan="2">CADASTRAR GOLPE</th>
 
+        <form id="new_move_form" target="_blank">
         <tr>
           <td>
-            <input type="text" id="new_move_name" placeholder="Nome do golpe">
-            <button onclick="registerNewMove()" id="new_move_send_button">enviar</button>
+            <input type="text" id="new_move_name" name="name" placeholder="Nome do golpe" required>
+            <input type="submit" id="new_move_send_button" value="cadastrar">
           </td>
           <td>
             <div class="move_box" id="new_move_box">
               <div>
-                <input type="text" id="new_move_descriptors" placeholder="desc1,desc2,desc3...">
-                <select id="new_move_type">
+                <input name="descriptors" type="text" id="new_move_descriptors" placeholder="desc1,desc2,desc3...">
+                <select name="type" id="new_move_type">
                   <option selected>Normal</option>
                 </select>
               </div>
               <div>
                 <span>
-                  <input type="number" accept="numeric" id="new_move_damage_1"> d
-                  <input type="number" accept="numeric" id="new_move_damage_2"> + 
-                  <input type="number" accept="numeric" id="new_move_damage_3">
+                  <input name="diceQtt" type="number" value="0" accept="numeric" id="new_move_damage_1" required> d
+                  <input name="diceSides" type="number" value="0" accept="numeric" id="new_move_damage_2" required> + 
+                  <input name="mod" type="number" value="0" accept="numeric" id="new_move_damage_3" required>
                 </span>
-                <input type="number" accept="numeric" id="new_move_accuracy" placeholder="acc">
+                <input name="accDif" type="number" value="0" accept="numeric" id="new_move_accuracy" placeholder="acc" required>
               </div>
               <div>
-                <input type="text" id="new_move_frequency" placeholder="Frequência">
-                <input type="text" id="new_move_reach" placeholder="Alcance">
+                <input name="frequency" type="text" id="new_move_frequency" placeholder="Frequência">
+                <input name="reach" type="text" id="new_move_reach" placeholder="Alcance">
               </div>
               <div>
-                <textarea id="new_move_effect" placeholder="Efeito"></textarea>
+                <textarea name="effect" id="new_move_effect" placeholder="Efeito" required></textarea>
               </div>
             </div>
           </td>
         </tr>
+        </form>
 
       </table>
     </div>

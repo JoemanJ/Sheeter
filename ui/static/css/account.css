@@ -2,6 +2,11 @@
   display: grid;
   grid-template-columns: 50% 50%;
   width: 90%;
-  row-gap: 30%;
-  column-gap: 30%;
+}
+
+#sheets_list a{
+  display: block;
+  width: auto;
+  height: auto;
+  margin: auto;
 }

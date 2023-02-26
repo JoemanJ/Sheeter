@@ -108,12 +108,20 @@ func (s *PokemonSheet) Write(){
 }
 
 func (s *PokemonSheet) LvlUp(x int){
-  s.Lvl += x
-  s.Status.Distributable[1] += x
+  if x < 1{
+    return
+  } else if x > 1{
+    for i:= 0; i < x; i++{
+      s.LvlUp(1)
+    }
+  } else{
+    s.Lvl ++
+    s.Status.Distributable[1] ++
 
-  s.ElemBonus = s.Lvl/5
+    s.ElemBonus = s.Lvl/5
 
-  general.SetJsonData("data/sheets/"+strconv.Itoa(s.Id)+"_1.json", s)
+    s.Write()
+  }
 }
 
 func (s *PokemonSheet) CalcEvasions(){
@@ -124,6 +132,10 @@ func (s *PokemonSheet) CalcEvasions(){
 
 //Calculates the pokemon's total stats (accounting stages) and elemental bonus
 func (s *PokemonSheet) CalcStats(){
+  for stat, val := range s.Status.Base{
+    s.Status.Total[stat] = val + s.Status.LvlUp[stat]
+  }
+
   for stat, val := range s.Status.Total{
     if s.Status.Stages[stat] < 0{
       s.Status.Total[stat] = val + ((val/10) * (s.Status.Stages[stat]))
@@ -154,8 +166,9 @@ func (s *PokemonSheet) AllocateStats(vector map[string]int){
   s.CalcEvasions()
   s.CalcHp()
 
-  general.SetJsonData("data/sheets/"+strconv.Itoa(s.Id)+"_1.json", s)
+  s.Write()
 }
+
 func (s *PokemonSheet) Update(nickname string, hp, atkStage, defStage, spatkStage, spdefStage, spdStage int, notes string){
   s.Nick = nickname
 
@@ -171,6 +184,19 @@ func (s *PokemonSheet) Update(nickname string, hp, atkStage, defStage, spatkStag
   s.CalcStats()
 
   s.Write()
+}
+
+func (s *PokemonSheet) UpdateNotes(notes string){
+  s.Notes = notes
+}
+
+
+func (s *PokemonSheet) UpdateStages(atkStage, defStage, spatkStage, spdefStage, spdStage int){
+  s.Status.Stages["ATK"] = atkStage
+  s.Status.Stages["DEF"] = defStage
+  s.Status.Stages["SPATK"] = spatkStage
+  s.Status.Stages["SPDEF"] = spdefStage
+  s.Status.Stages["SPD"] = spdStage
 }
 
 func (s *PokemonSheet) Render(w http.ResponseWriter) error {

@@ -134,51 +134,44 @@
 
       </form>
 
-      <form id="talent_form" method="POST">
+      <form id="talent_form" style="display: flex;" method="POST">
         <input type="hidden" name="form_name" value="talent_form">
+
         <label for="talent_name"> Nome do talento </label>
         <input type="text" id="talent_name" name="talent_name">
 
-        <label for="talent_target"> Alvo(s) </label>
-        <input type="text" id="talent_target" name="talent_target">
+        <label for="talent_requirements"> Requisitos </label>
+        <input type="text" id="talent_requirements" name="talent_requirements">
         
         <label for="talent_freqyency"> Frequência </label>
         <input type="text" id="talent_frequency" name="talent_frequency">
 
+        <label for="talent_target"> Alvo(s)/Gatilho </label>
+        <input type="text" id="talent_target" name="talent_target">
+
         <label for="talent_description"> Descrição </label>
         <textarea id="talent_description" name="talent_description"></textarea>
-
-        <label for="talent_requirements"> Requisitos </label>
-        <input type="text" id="talent_requirements" name="talent_requirements">
-
+        <br>
         <div id="talent_bools">
           <span>
-          <label for="talent_continuous"><img src="" alt="is_talent_continuous?"></label>
+          <label for="talent_continuous"><img class="talent_icon" src="/static/img/PTA1/talent_icon_continuous.png" alt="is_talent_continuous?"></label>
           <input id="talent_continuous" name="talent_continuous" type="checkbox">
-          </span>
 
-          <span>
-          <label for="talent_standart"><img src="" alt="is_talent_standart?"></label>
+          <label for="talent_standart"><img class="talent_icon" src="/static/img/PTA1/talent_icon_standart.png" alt="is_talent_standart?"></label>
           <input id="talent_standart" name="talent_standart" type="checkbox">
-          </span>
 
-          <span>
-          <label for="talent_free"><img src="" alt="is_talent_free?"></label>
+          <label for="talent_free"><img class="talent_icon" src="/static/img/PTA1/talent_icon_free.png" alt="is_talent_free?"></label>
           <input id="talent_free" name="talent_free" type="checkbox">
           </span>
 
           <span>
-          <label for="talent_interrupt"><img src="" alt="is_talent_interrupt?"></label>
+          <label for="talent_interrupt"><img class="talent_icon" src="/static/img/PTA1/talent_icon_interrupt.png" alt="is_talent_interrupt?"></label>
           <input id="talent_interrupt" name="talent_interrupt" type="checkbox">
-          </span>
 
-          <span>
-          <label for="talent_extended"><img src="" alt="is_talent_extended?"></label>
+          <label for="talent_extended"><img class="talent_icon" src="/static/img/PTA1/talent_icon_extended.png" alt="is_talent_extended?"></label>
           <input id="talent_extended" name="talent_extended" type="checkbox">
-          </span>
 
-          <span>
-          <label for="talent_legal"><img src="" alt="is_talent_legal?"></label>
+          <label for="talent_legal"><img class="talent_icon" src="/static/img/PTA1/talent_icon_legal.png" alt="is_talent_legal?"></label>
           <input id="talent_legal" name="talent_legal" type="checkbox">
           </span>
         </div>
@@ -562,13 +555,13 @@
               <button onclick="addTalent()">Escolher talento</button>
             </div>
             <div class="talent_icons" id="add_talent_icons">
-              <img hidden src="/static/img/PTA1/talent_icon_continuous.png" alt="continuous icon">
-              <img hidden src="/static/img/PTA1/talent_icon_standart.png" alt="standart icon">
-              <img hidden src="/static/img/PTA1/talent_icon_free.png" alt="free icon">
-              <img hidden src="/static/img/PTA1/talent_icon_interrupt.png" alt="interrupt icon">
-              <img hidden src="/static/img/PTA1/talent_icon_extended.png" alt="extended icon">
-              <img hidden src="/static/img/PTA1/talent_icon_legal.png" alt="legal icon">
-              <img hidden src="/static/img/PTA1/talent_icon_illegal.png" alt="illegal icon">
+              <img src="/static/img/PTA1/talent_icon_continuous.png" alt="continuous icon">
+              <img src="/static/img/PTA1/talent_icon_standart.png" alt="standart icon">
+              <img src="/static/img/PTA1/talent_icon_free.png" alt="free icon">
+              <img src="/static/img/PTA1/talent_icon_interrupt.png" alt="interrupt icon">
+              <img src="/static/img/PTA1/talent_icon_extended.png" alt="extended icon">
+              <img src="/static/img/PTA1/talent_icon_legal.png" alt="legal icon">
+              <img src="/static/img/PTA1/talent_icon_illegal.png" alt="illegal icon">
             </div>
           </div>
         </div>

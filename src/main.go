@@ -12,6 +12,7 @@ package main
 import (
 	// sheeters "Joe/sheeter/pkg/general"
 	// "Joe/sheeter/pkg/pokemon/PTA1"
+	"Joe/sheeter/pkg/pokemon/PTA1"
 	"errors"
 	"fmt"
 	"html/template"
@@ -45,8 +46,6 @@ func main() {
 		os.Mkdir("data/sheets", 0755)
 	}
 
-  // sheeters.SetJsonData("./data/PTA1/trainerLvlTable.json", PTA1.TRAINERLVLTABLE)
-
 	rand.Seed(time.Now().UnixNano())
 
 	infoLog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
@@ -74,6 +73,7 @@ func main() {
 	mux.HandleFunc("/new/pokemon", app.newPokemon)
 	mux.HandleFunc("/new/trainer", app.newTrainer)
 	mux.HandleFunc("/data/", app.getData)
+  mux.HandleFunc("/data/PTA2/move", PTA1.MovesEndpoint) 
 	mux.Handle("/sheet/", validateJWT(http.HandlerFunc(app.sheet)))
   mux.Handle("/account/", validateJWT(http.HandlerFunc(app.account)))
 	mux.HandleFunc("/register", app.registerNewUser)

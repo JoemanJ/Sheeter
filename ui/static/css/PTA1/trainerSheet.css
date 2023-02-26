@@ -718,6 +718,11 @@ input::-webkit-inner-spin-button {
   height: auto;
 }
 
+.talent_icon{
+  height: 60px;
+  width: auto;
+}
+
 .talent_description{
   grid-area: description;
     width: auto;

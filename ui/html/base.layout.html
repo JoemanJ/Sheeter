@@ -19,20 +19,23 @@
     <a href="/account">My account</a>
     <a href="/logout">Logout</a>
   </nav>
+
   <div class="slate" id="main_slate">
     {{template "body" .}}
   </div>
-    <div id="roller_div">
-      <input type="number" min="1" value="1" id="roller_dice_qtt">
-      <h2> d</h2>
-      <input type="number" min="2" value="20" id="roller_dice_sides">
-      <h2> + </h2>
-      <input type="number" value="0" id="roller_dice_mod">
-      <button type="button" onclick="Roll()"><img src="/static/img/die_icon_.png" alt="roll dice"></button>
-      <h2 id="roller_result"></h2>
-    </div>
-  {{template "footer"}}
+
+  <div id="roller_div">
+    <input type="number" min="1" value="1" id="roller_dice_qtt">
+    <h2> d</h2>
+    <input type="number" min="2" value="20" id="roller_dice_sides">
+    <h2> + </h2>
+    <input type="number" value="0" id="roller_dice_mod">
+    <button type="button" onclick="Roll()"><img src="/static/img/die_icon_.png" alt="roll dice"></button>
+    <h2 id="roller_result"></h2>
+  </div>
+{{template "footer"}}
   <script src="/static/js/main.js" type="text/javascript"></script>
+  <script src="/static/js/jquery-3.6.3.js" type="text/javascript"></script>
 </body>
 
 </html>
