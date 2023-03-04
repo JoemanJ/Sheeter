@@ -85,7 +85,7 @@ func GetAbility(name string) (*PokemonAbility, error) {
 	return &PA, nil
 }
 
-func RegisterMove(name, Type, aptitude string, descriptors []string, accDiff int, dice *general.DiceSet, reach, frequency, contests, effect string) (*PokemonMove, error) {
+func RegisterMove(name, Type, aptitude string, descriptors []string, accDiff, dmgType int, dice *general.DiceSet, reach, frequency, contests, effect string) (*PokemonMove, error) {
 	//ADD NEW MOVE TO MAP
 	newMove := &PokemonMove{
 		Name:        strings.Title(name),
@@ -93,12 +93,17 @@ func RegisterMove(name, Type, aptitude string, descriptors []string, accDiff int
 		Aptitude:    aptitude,
 		Descriptors: descriptors,
 		AccDiff:     accDiff,
+    DmgType:     dmgType,
 		Damage:      dice,
 		Reach:       reach,
 		Frequency:   frequency,
 		Contests:    contests,
 		Effect:      effect,
 	}
+
+  if dmgType == STATUS_MOVE{
+    newMove.Damage = general.CreateDiceSet(0, 0, 0)
+  }
 
 	var moves map[string]PokemonMove
 

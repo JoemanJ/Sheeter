@@ -36,6 +36,7 @@ window.onload = () => {
     event.preventDefault()
     
     $.ajax({
+      data: $(this).serialize(),
       url: "/data/PTA2/move",
       type: "POST",
       success: (response)=>{
@@ -115,7 +116,7 @@ function switchMoveInfo(tag){
   descriptors.innerHTML = move.Descriptors
   type.innerHTML = move.Type
   if (move.Damage.X){
-    damage.innerHTML = `<h3 class="clickable" onclick="Roll(${move.Damage.X}, ${move.Damage.N}, ${move.Damage.Mod})">${move.Damage.X} d${move.Damage.N} + ${move.Damage.Mod}</h3>`
+    damage.innerHTML = `<h3 class="clickable" onclick="Roll(${move.Damage.X}, ${move.Damage.N}, ${move.Damage.Mod})">${move.Damage.X} d${move.Damage.N} + ${move.Damage.Mod} (${move.DmgType == 0?'F':'E'})</h3>`
   } else{
     damage.innerHTML = "---"
   }

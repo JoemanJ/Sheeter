@@ -406,34 +406,34 @@ func (a *application) handleSheetUpdates(path string, Type int, form url.Values)
 		}
 
     switch form.Get("form_name") {
-    case "new_move":
-      fmt.Println(form)
+    // case "new_move":
+    //   fmt.Println(form)
 
-      N, err:= strconv.Atoi(form.Get("damage1"))
-      if err != nil{
-        fmt.Println(err)
-      }
-      X, err:= strconv.Atoi(form.Get("damage2"))
-      if err != nil{
-        fmt.Println(err)
-      }
-      mod, err:= strconv.Atoi(form.Get("damage3"))
-      if err != nil{
-        fmt.Println(err)
-      }
-      acc, err:= strconv.Atoi(form.Get("acc"))
-      if err != nil{
-        fmt.Println(err)
-      }
+    //   N, err:= strconv.Atoi(form.Get("damage1"))
+    //   if err != nil{
+    //     fmt.Println(err)
+    //   }
+    //   X, err:= strconv.Atoi(form.Get("damage2"))
+    //   if err != nil{
+    //     fmt.Println(err)
+    //   }
+    //   mod, err:= strconv.Atoi(form.Get("damage3"))
+    //   if err != nil{
+    //     fmt.Println(err)
+    //   }
+    //   acc, err:= strconv.Atoi(form.Get("acc"))
+    //   if err != nil{
+    //     fmt.Println(err)
+    //   }
 
-      descriptors := strings.Split(form.Get("descriptors"), ",")
-      
-      move, err:= PTA1.RegisterMove(form.Get("name"), form.Get("type"), "", descriptors, acc, general.CreateDiceSet(X, N, mod), form.Get("reach"), form.Get("frequency"), "", form.Get("effect"))
-      if err != nil{
-        fmt.Println(err)
-      }
+    //   descriptors := strings.Split(form.Get("descriptors"), ",")
+    //   
+    //   move, err:= PTA1.RegisterMove(form.Get("name"), form.Get("type"), "", descriptors, acc, , general.CreateDiceSet(X, N, mod), form.Get("reach"), form.Get("frequency"), "", form.Get("effect"))
+    //   if err != nil{
+    //     fmt.Println(err)
+    //   }
 
-      fmt.Println("Registered move: ", move)
+    //   fmt.Println("Registered move: ", move)
 
     case "allocate_stats":
       hp, err := strconv.Atoi(form.Get("HP"))

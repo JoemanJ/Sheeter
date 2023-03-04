@@ -30,6 +30,8 @@ func MovesEndpoint(w http.ResponseWriter, r *http.Request){
   case "POST":
     r.ParseForm()
 
+    // fmt.Println(r.Form)
+
     errLog := ""
 
     name := r.FormValue("name")
@@ -50,6 +52,11 @@ func MovesEndpoint(w http.ResponseWriter, r *http.Request){
       errLog = fmt.Sprintf("%s%s", errLog, "accDiff cannot be empty (if none, use 0)\n")
     }
 
+    dmgType, err := strconv.Atoi( r.FormValue("dmgType") )
+    if err != nil{
+      errLog = fmt.Sprintf("%s%s", errLog, "accDiff cannot be empty (if none, use 0)\n")
+    }
+
     diceQtt, err := strconv.Atoi( r.FormValue("diceQtt") )
     if err != nil{
       errLog = fmt.Sprintf("%s%s", errLog, "dice quantity cannot be empty (if none, use 0)\n")
@@ -66,9 +73,9 @@ func MovesEndpoint(w http.ResponseWriter, r *http.Request){
     }
 
     effect := r.FormValue("effect")
-    if effect == ""{
-      errLog = fmt.Sprintf("%s%s", errLog, "move effect cannot be empty\n")
-    }
+    // if effect == ""{
+    //   errLog = fmt.Sprintf("%s%s", errLog, "move effect cannot be empty\n")
+    // }
 
     if errLog != ""{
       w.WriteHeader(http.StatusBadRequest)
@@ -83,7 +90,7 @@ func MovesEndpoint(w http.ResponseWriter, r *http.Request){
 
     dice := sheeters.CreateDiceSet(diceQtt, diceSides, diceMod)
 
-    move, err := RegisterMove(name, Type, aptitude, descriptors, accDiff, dice, reach, frequency, contests, effect)
+    move, err := RegisterMove(name, Type, aptitude, descriptors, accDiff, dmgType, dice, reach, frequency, contests, effect)
     if err != nil{
       w.WriteHeader(http.StatusInternalServerError)
       return

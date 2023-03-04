@@ -280,7 +280,7 @@
                 <h2 class="move_type">{{.Type}}</h2>
               </div>
               <div>
-                <h2 class="move_damage">{{.Damage.Mod}}</h2>
+                <h2 class="move_damage">{{.Damage.Mod}} {{if eq .DmgType 0}}(F){{else if eq.DmgType 1}}(E){{end}}</h2>
                 <h2 class="move_accuracy">{{.AccDiff}}</h2>
               </div>
               <div>
@@ -340,7 +340,7 @@
                 <h2 class="move_type">{{.Type}}</h2>
               </div>
               <div>
-                <h2 class="move_damage">{{.Damage.Mod}}</h2>
+                <h2 class="move_damage">{{.Damage.Mod}} {{if eq .DmgType 0}}(F){{else if eq.DmgType 1}}(E){{end}}</h2>
                 <h2 class="move_accuracy">{{.AccDiff}}</h2>
               </div>
               <div>
@@ -396,6 +396,23 @@
                 <input name="descriptors" type="text" id="new_move_descriptors" placeholder="desc1,desc2,desc3...">
                 <select name="type" id="new_move_type">
                   <option selected>Normal</option>
+                  <option>Inseto</option>
+                  <option>Água</option>
+                  <option>Dragão</option>
+                  <option>Elétrico</option>
+                  <option>Fada</option>
+                  <option>Fantasma</option>
+                  <option>Fogo</option>
+                  <option>Gelo</option>
+                  <option>Lutador</option>
+                  <option>Metal</option>
+                  <option>Pedra</option>
+                  <option>Planta</option>
+                  <option>Psíquico</option>
+                  <option>Terra</option>
+                  <option>Trevas</option>
+                  <option>Venenoso</option>
+                  <option>Voador</option>
                 </select>
               </div>
               <div>
@@ -403,6 +420,11 @@
                   <input name="diceQtt" type="number" value="0" accept="numeric" id="new_move_damage_1" required> d
                   <input name="diceSides" type="number" value="0" accept="numeric" id="new_move_damage_2" required> + 
                   <input name="mod" type="number" value="0" accept="numeric" id="new_move_damage_3" required>
+                  <select name="dmgType">
+                    <option selected value="0">Físico</option>
+                    <option value="1">Especial</option>
+                    <option value="-1">Status</option>
+                  </select>
                 </span>
                 <input name="accDif" type="number" value="0" accept="numeric" id="new_move_accuracy" placeholder="acc" required>
               </div>
@@ -411,7 +433,7 @@
                 <input name="reach" type="text" id="new_move_reach" placeholder="Alcance">
               </div>
               <div>
-                <textarea name="effect" id="new_move_effect" placeholder="Efeito" required></textarea>
+                <textarea name="effect" id="new_move_effect" placeholder="Efeito" ></textarea>
               </div>
             </div>
           </td>
