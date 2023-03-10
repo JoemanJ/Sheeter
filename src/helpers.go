@@ -471,6 +471,47 @@ func (a *application) handleSheetUpdates(path string, Type int, form url.Values)
       sheet.AllocateStats(vector)
 
     case "update":
+      move1, err := PTA1.GetMove(form.Get("move1"))
+      if err == nil{
+        sheet.Moves[0][0] = move1
+      }
+
+      fmt.Printf("new move1: %s\n", move1.Name)
+
+      move2, err := PTA1.GetMove(form.Get("move2"))
+      if err == nil{
+        sheet.Moves[0][1] = move2
+      }
+
+      move3, err := PTA1.GetMove(form.Get("move3"))
+      if err == nil{
+        sheet.Moves[0][2] = move3
+      }
+
+      move4, err := PTA1.GetMove(form.Get("move4"))
+      if err == nil{
+        sheet.Moves[0][3] = move4
+      }
+
+      move5, err := PTA1.GetMove(form.Get("move5"))
+      if err == nil{
+        sheet.Moves[1][0] = move5
+      }
+
+      move6, err := PTA1.GetMove(form.Get("move6"))
+      if err == nil{ sheet.Moves[1][1] = move6
+      }
+
+      move7, err := PTA1.GetMove(form.Get("move7"))
+      if err == nil{
+        sheet.Moves[1][2] = move7
+      }
+
+      move8, err := PTA1.GetMove(form.Get("move8"))
+      if err == nil{
+        sheet.Moves[1][3] = move8
+      }
+
       hp, err := strconv.Atoi(form.Get("hp"))
       if err != nil{
         fmt.Println(err)

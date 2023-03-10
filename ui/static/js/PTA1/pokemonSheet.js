@@ -50,8 +50,8 @@ window.onload = () => {
   })
 }
 
-window.onbeforeunload = () => {
-  let data={id:0, form_name: "update", nickname:"", hp:0, atkStage:0, defStage:0, spatkStage:0, spdefStage:0, spdStage:0, move0, move1: "", move2: "", move3: "", move4: "", move5: "", move6: "", move7: "", notes:""}
+function save(){
+  let data={id:0, form_name: "update", nickname:"", hp:0, atkStage:0, defStage:0, spatkStage:0, spdefStage:0, spdStage:0, move1: "", move2: "", move3: "", move4: "", move5: "", move6: "", move7: "", move8: "", notes:""}
 
   data.id = sheet_
 
@@ -64,6 +64,15 @@ window.onbeforeunload = () => {
   data.spatkStage = document.getElementById("SPATK_stage").value
   data.spdefStage = document.getElementById("SPDEF_stage").value
   data.spdStage = document.getElementById("SPD_stage").value
+
+  data.move1 = document.getElementsByClassName("move_name")[0]
+  data.move2 = document.getElementsByClassName("move_name")[1]
+  data.move3 = document.getElementsByClassName("move_name")[2]
+  data.move4 = document.getElementsByClassName("move_name")[3]
+  data.move5 = document.getElementsByClassName("move_name")[4]
+  data.move6 = document.getElementsByClassName("move_name")[5]
+  data.move7 = document.getElementsByClassName("move_name")[6]
+  data.move8 = document.getElementsByClassName("move_name")[7]
 
   data.notes = document.getElementById("notes_textbox").value
 
@@ -80,6 +89,10 @@ window.onbeforeunload = () => {
   }
 
   fetch("/sheet/?id="+data.id, {method: "POST", body: USP})
+}
+
+window.onbeforeunload = () => {
+  save()
 }
 
 function openTab(event, tab_name){
@@ -125,7 +138,7 @@ function switchMoveInfo(tag){
   reach.innerHTML = move.Reach
   effect.innerHTML = move.Effect
 
-  console.log(document.getElementsByClassName("move_name"))
+  save()
 }
 
 function registerNewMove(){
