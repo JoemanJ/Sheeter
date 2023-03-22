@@ -70,8 +70,9 @@ func (a *application) renderSheet(w http.ResponseWriter, r *http.Request, path s
 	case 0:
 		sheet := &PTA1.TrainerSheet{}
 
-		general.GetJsonData(path, sheet)
-		err := sheet.Render(w)
+    err := general.GetJsonData(path, sheet)
+
+		err = sheet.Render(w)
 		if err != nil {
 			a.serverError(w, err)
 		}
@@ -314,6 +315,7 @@ func (a *application) handleSheetUpdates(path string, Type int, form url.Values)
       // sheet.Classes[1] = class2
       // sheet.Classes[2] = class3
       // sheet.Classes[3] = class4
+      fmt.Println(form.Get("notes"))
       sheet.Notes = form.Get("notes")
 
       sheet.CalcStats()

@@ -91,6 +91,7 @@ func GetJsonData(path string, m interface{}) error {
 	}
 
 	err = json.Unmarshal(content, m)
+    fmt.Println(err)
 	if err != nil {
 		return err
 	}

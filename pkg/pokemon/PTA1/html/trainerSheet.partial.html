@@ -40,7 +40,7 @@
                   {{if index . 0}}
                   <p>{{(index . 0).Name}}</p>
                   {{else}}
-                  <button class="stat_allocate_button" onclick="addClass('1', this)">+</button>
+                  <button class="class_add_button" onclick="addClass('1', this)">+</button>
                   {{end}}
                   <select hidden class="class_select" id="class_1" onchange="switchClassFormDisplay(this)">
                     <option selected hidden value></option>
@@ -51,7 +51,7 @@
                   {{if index . 1}}
                   <p>{{(index . 1).Name}}</p>
                   {{else}}
-                  {{if index . 0}}<button class="stat_allocate_button" onclick="addClass('2', this)">+</button>{{end}}
+                  {{if index . 0}}<button class="class_add_button" onclick="addClass('2', this)">+</button>{{end}}
                   {{end}}
                   <select hidden class="class_select" id="class_2" onchange="switchClassFormDisplay(this)">
                     <option selected hidden value></option>
@@ -64,7 +64,7 @@
                   {{if index . 2}}
                   <p>{{(index . 2).Name}}</p>
                   {{else}}
-                  {{if index . 1}}<button class="stat_allocate_button" onclick="addClass('3', this)">+</button>{{end}}
+                  {{if index . 1}}<button class="class_add_button" onclick="addClass('3', this)">+</button>{{end}}
                   {{end}}
                   <select hidden class="class_select" id="class_3" onchange="switchClassFormDisplay(this)">
                     <option selected hidden value></option>
@@ -75,7 +75,7 @@
                   {{if index . 3}}
                   <p>{{(index . 3).Name}}</p>
                   {{else}}
-                  {{if index . 2}}<button class="stat_allocate_button" onclick="addClass('4', this)">+</button>{{end}}
+                  {{if index . 2}}<button class="class_add_button" onclick="addClass('4', this)">+</button>{{end}}
                   {{end}}
                   <select hidden class="class_select" id="class_4" onchange="switchClassFormDisplay(this)">
                     <option selected hidden value></option>
@@ -366,7 +366,7 @@
   </div>
 
   <div class="tab_body" id="notes_tab">
-    <textarea id="notes_textbox" value="{{.Notes}}" placeholder="Insira suas anotações aqui"></textarea>
+    <textarea id="notes_textbox" placeholder="Insira suas anotações aqui">{{.Notes}}</textarea>
   </div>
 
   <div class="tab_body" id="stats_tab">
